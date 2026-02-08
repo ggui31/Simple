@@ -1,0 +1,121 @@
+{
+  "title": "Le Musée des Objets qui Parlent",
+  "description": "Des objets animés donnent des indices pour résoudre un mystère.",
+  "coverImage": "🏛️",
+  "difficulty": "moyen",
+  "estimatedTime": "9 min",
+  "startScene": "start",
+  "scenes": {
+    "start": {
+      "id": "start",
+      "title": "Le hall du musée",
+      "text": "Les vitrines chuchotent. Deux salles semblent importantes.",
+      "image": "🗝️",
+      "xp": 5,
+      "choices": [
+        {
+          "text": "Aller à la salle de l'horloge",
+          "nextScene": "horloge",
+          "keyword": "horloge"
+        },
+        {
+          "text": "Aller à la salle du miroir",
+          "nextScene": "miroir",
+          "keyword": "miroir"
+        }
+      ]
+    },
+    "horloge": {
+      "id": "horloge",
+      "title": "La salle de l'horloge",
+      "text": "L'horloge parle d'une aiguille secrète.",
+      "image": "🕰️",
+      "xp": 10,
+      "item": "indice_aiguille",
+      "itemLabel": "Indice de l'aiguille",
+      "choices": [
+        {
+          "text": "Aller au coffre",
+          "nextScene": "coffre",
+          "keyword": "coffre"
+        }
+      ]
+    },
+    "miroir": {
+      "id": "miroir",
+      "title": "La salle du miroir",
+      "text": "Le miroir murmure qu'il faut suivre un reflet.",
+      "image": "🪞",
+      "xp": 10,
+      "item": "indice_reflet",
+      "itemLabel": "Indice du reflet",
+      "choices": [
+        {
+          "text": "Aller au coffre",
+          "nextScene": "coffre",
+          "keyword": "coffre"
+        }
+      ]
+    },
+    "coffre": {
+      "id": "coffre",
+      "title": "Le coffre parlant",
+      "text": "Le coffre propose un puzzle : aiguille ou reflet ?",
+      "image": "📦",
+      "xp": 12,
+      "choices": [
+        {
+          "text": "Tourner l'aiguille",
+          "nextScene": "fin_aiguille",
+          "requirement": "indice_aiguille",
+          "fallbackText": "L'aiguille manque d'indice.",
+          "keyword": "aiguille"
+        },
+        {
+          "text": "Suivre le reflet",
+          "nextScene": "fin_reflet",
+          "requirement": "indice_reflet",
+          "fallbackText": "Le reflet reste muet.",
+          "keyword": "reflet"
+        },
+        {
+          "text": "Retourner à l'entrée",
+          "nextScene": "start",
+          "keyword": "entrée"
+        }
+      ]
+    },
+    "fin_aiguille": {
+      "id": "fin_aiguille",
+      "title": "Le secret des heures",
+      "text": "Le coffre s'ouvre et révèle un trésor d'histoires.",
+      "image": "📜",
+      "xp": 45,
+      "isEnd": true,
+      "choices": [
+        {
+          "text": "Recommencer l'aventure",
+          "nextScene": "start",
+          "reset": true,
+          "keyword": "recommencer"
+        }
+      ]
+    },
+    "fin_reflet": {
+      "id": "fin_reflet",
+      "title": "La lumière du miroir",
+      "text": "Le reflet montre un passage secret vers la sortie.",
+      "image": "🔆",
+      "xp": 45,
+      "isEnd": true,
+      "choices": [
+        {
+          "text": "Recommencer l'aventure",
+          "nextScene": "start",
+          "reset": true,
+          "keyword": "recommencer"
+        }
+      ]
+    }
+  }
+}

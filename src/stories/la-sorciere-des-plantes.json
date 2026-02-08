@@ -1,0 +1,105 @@
+{
+  "title": "La Sorcière des Plantes",
+  "description": "Une jardinière magique cherche la graine qui soigne le village.",
+  "coverImage": "🧙‍♀️",
+  "difficulty": "moyen",
+  "estimatedTime": "10 min",
+  "startScene": "start",
+  "scenes": {
+    "start": {
+      "id": "start",
+      "title": "Le jardin secret",
+      "text": "La sorcière des plantes te confie une mission : trouver la graine qui soigne.",
+      "image": "🌿",
+      "xp": 5,
+      "choices": [
+        {
+          "text": "Aller à la serre",
+          "nextScene": "serre",
+          "keyword": "serre"
+        },
+        {
+          "text": "Aller à la rivière",
+          "nextScene": "riviere",
+          "keyword": "rivière"
+        }
+      ]
+    },
+    "serre": {
+      "id": "serre",
+      "title": "La serre chaude",
+      "text": "Dans la serre, un pot contient de la terre spéciale.",
+      "image": "🪴",
+      "xp": 10,
+      "item": "terre_speciale",
+      "itemLabel": "Terre spéciale",
+      "choices": [
+        {
+          "text": "Rejoindre l'autel",
+          "nextScene": "autel",
+          "keyword": "autel"
+        }
+      ]
+    },
+    "riviere": {
+      "id": "riviere",
+      "title": "La rivière claire",
+      "text": "Près de la rivière, tu recueilles une eau lumineuse.",
+      "image": "💧",
+      "xp": 10,
+      "item": "eau_lumineuse",
+      "itemLabel": "Eau lumineuse",
+      "choices": [
+        {
+          "text": "Rejoindre l'autel",
+          "nextScene": "autel",
+          "keyword": "autel"
+        }
+      ]
+    },
+    "autel": {
+      "id": "autel",
+      "title": "L'autel des graines",
+      "text": "Sur l'autel, une graine attend. Elle pousse seulement avec la bonne aide.",
+      "image": "🌱",
+      "xp": 12,
+      "choices": [
+        {
+          "text": "Planter avec la terre spéciale",
+          "nextScene": "fin_soin",
+          "requirement": "terre_speciale",
+          "fallbackText": "Il te manque une terre spéciale.",
+          "keyword": "terre"
+        },
+        {
+          "text": "Arroser avec l'eau lumineuse",
+          "nextScene": "fin_soin",
+          "requirement": "eau_lumineuse",
+          "fallbackText": "Il te manque une eau lumineuse.",
+          "keyword": "eau"
+        },
+        {
+          "text": "Retourner au jardin",
+          "nextScene": "start",
+          "keyword": "jardin"
+        }
+      ]
+    },
+    "fin_soin": {
+      "id": "fin_soin",
+      "title": "La plante qui soigne",
+      "text": "La graine pousse et une plante lumineuse apparaît. Le village est sauvé.",
+      "image": "🌟",
+      "xp": 50,
+      "isEnd": true,
+      "choices": [
+        {
+          "text": "Recommencer l'aventure",
+          "nextScene": "start",
+          "reset": true,
+          "keyword": "Recommencer"
+        }
+      ]
+    }
+  }
+}

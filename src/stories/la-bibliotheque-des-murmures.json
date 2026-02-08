@@ -1,0 +1,105 @@
+{
+  "title": "La Bibliothèque des Murmures",
+  "description": "Des livres chuchotent des énigmes. Retrouve un chapitre perdu.",
+  "coverImage": "📚",
+  "difficulty": "facile",
+  "estimatedTime": "8 min",
+  "startScene": "start",
+  "scenes": {
+    "start": {
+      "id": "start",
+      "title": "La porte silencieuse",
+      "text": "La bibliothèque est calme, mais tu entends des murmures entre les rayons.",
+      "image": "🚪",
+      "xp": 5,
+      "choices": [
+        {
+          "text": "Aller au rayon des contes",
+          "nextScene": "contes",
+          "keyword": "contes"
+        },
+        {
+          "text": "Aller au rayon des cartes",
+          "nextScene": "cartes",
+          "keyword": "cartes"
+        }
+      ]
+    },
+    "contes": {
+      "id": "contes",
+      "title": "Le rayon des contes",
+      "text": "Un livre s'ouvre et te donne un marque-page magique.",
+      "image": "📖",
+      "xp": 10,
+      "item": "marque_page",
+      "itemLabel": "Marque-page magique",
+      "choices": [
+        {
+          "text": "Aller à la salle secrète",
+          "nextScene": "salle",
+          "keyword": "secrète"
+        }
+      ]
+    },
+    "cartes": {
+      "id": "cartes",
+      "title": "Le rayon des cartes",
+      "text": "Une carte pliée chuchote : le chapitre perdu est derrière une étagère.",
+      "image": "🧾",
+      "xp": 10,
+      "item": "indice_etagere",
+      "itemLabel": "Indice de l'étagère",
+      "choices": [
+        {
+          "text": "Aller à la salle secrète",
+          "nextScene": "salle",
+          "keyword": "secrète"
+        }
+      ]
+    },
+    "salle": {
+      "id": "salle",
+      "title": "La salle secrète",
+      "text": "Une étagère bouge un peu. Deux façons d'ouvrir le passage apparaissent.",
+      "image": "🕯️",
+      "xp": 10,
+      "choices": [
+        {
+          "text": "Glisser le marque-page",
+          "nextScene": "fin_chapitre",
+          "requirement": "marque_page",
+          "fallbackText": "Il te faut un marque-page magique.",
+          "keyword": "marque-page"
+        },
+        {
+          "text": "Suivre l'indice de l'étagère",
+          "nextScene": "fin_chapitre",
+          "requirement": "indice_etagere",
+          "fallbackText": "Sans indice, tu ne sais pas quelle étagère bouger.",
+          "keyword": "indice"
+        },
+        {
+          "text": "Retourner à l'entrée",
+          "nextScene": "start",
+          "keyword": "entrée"
+        }
+      ]
+    },
+    "fin_chapitre": {
+      "id": "fin_chapitre",
+      "title": "Le chapitre retrouvé",
+      "text": "Le passage s'ouvre et tu retrouves le chapitre perdu. Les livres applaudissent en chuchotant.",
+      "image": "🏆",
+      "xp": 45,
+      "isEnd": true,
+      "choices": [
+        {
+          "text": "Recommencer l'aventure",
+          "nextScene": "start",
+          "reset": true,
+          "keyword": "Recommencer"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "title": "Le Chameau des Neiges",
+  "description": "Un chameau s'est perdu dans une station de ski ! Pars à sa recherche sur les pistes enneigées et aide-le à retrouver sa chaleur.",
+  "coverImage": "🐫",
+  "difficulty": "facile",
+  "estimatedTime": "5 min",
+  "startScene": "start",
+  "scenes": {
+    "start": {
+      "id": "start",
+      "title": "Le Sommet du Pic Glacé",
+      "text": "Tu es en haut de la montagne. Il fait très froid ! Le gardien du ski te dit qu'un animal très étrange s'est perdu ce matin. Il n'a pas voulu dire lequel...",
+      "image": "🏔️",
+      "xp": 10,
+      "choices": [
+        { "text": "Descendre la piste verte tranquille", "nextScene": "green_slope", "keyword": "verte" },
+        { "text": "Foncer sur la piste noire rapide", "nextScene": "black_slope", "keyword": "noire" }
+      ]
+    },
+    "green_slope": {
+      "id": "green_slope",
+      "title": "La Piste Verte",
+      "text": "Tu skies doucement entre les sapins. C'est calme. Soudain, tu vois une grosse écharpe rouge en laine oubliée sur un rocher.",
+      "image": "🧣",
+      "xp": 15,
+      "item": "scarf",
+      "itemLabel": "Écharpe Rouge",
+      "choices": [
+        { "text": "Prendre l'écharpe rouge", "nextScene": "forest_edge", "keyword": "écharpe" },
+        { "text": "Laisser l'écharpe là", "nextScene": "forest_edge", "keyword": "laisser" }
+      ]
+    },
+    "black_slope": {
+      "id": "black_slope",
+      "title": "La Piste Noire",
+      "text": "Wouhou ! Tu vas super vite ! Le vent siffle à tes oreilles. Tu remarques des traces bizarres dans la neige... On dirait de grosses assiettes rondes !",
+      "image": "⛷️",
+      "xp": 20,
+      "choices": [
+        { "text": "Suivre les traces rondes", "nextScene": "forest_edge", "keyword": "traces" },
+        { "text": "Retourner au sommet", "nextScene": "start", "keyword": "sommet" }
+      ]
+    },
+    "forest_edge": {
+      "id": "forest_edge",
+      "title": "L'Orée de la Forêt",
+      "text": "Les pistes se rejoignent ici. Tu entends un bruit drôle : 'Blater !'. Ce n'est pas le cri d'un ours, ni d'un loup. Cela vient de derrière le gros sapin.",
+      "image": "🌲",
+      "xp": 15,
+      "choices": [
+        { "text": "Aller voir derrière le sapin", "nextScene": "camel_encounter", "keyword": "sapin" },
+        { "text": "Crier pour demander qui est là", "nextScene": "camel_encounter", "keyword": "crier" }
+      ]
+    },
+    "camel_encounter": {
+      "id": "camel_encounter",
+      "title": "Une Rencontre Insolite",
+      "text": "Incroyable ! C'est un chameau ! Il est assis dans la neige et il tremble de tous ses membres. Le pauvre a deux bosses gelées. Il te regarde avec des yeux tristes.",
+      "image": "🐫",
+      "xp": 30,
+      "choices": [
+        {
+          "text": "Lui donner l'écharpe rouge",
+          "nextScene": "happy_camel",
+          "requirement": "scarf",
+          "fallbackText": "Tu n'as rien pour le réchauffer...",
+          "keyword": "écharpe"
+        },
+        { "text": "Lui faire un gros câlin", "nextScene": "cold_hug", "keyword": "câlin" },
+        { "text": "Retourner chercher un vêtement", "nextScene": "start", "keyword": "retourner" }
+      ]
+    },
+    "cold_hug": {
+      "id": "cold_hug",
+      "title": "Brrr !",
+      "text": "Le chameau apprécie ton câlin, mais ça ne suffit pas ! Il claque des dents. Il a besoin de quelque chose de chaud, comme de la laine...",
+      "image": "🥶",
+      "xp": 5,
+      "choices": [
+        { "text": "Aller chercher l'écharpe en haut", "nextScene": "start", "keyword": "chercher" }
+      ]
+    },
+    "happy_camel": {
+      "id": "happy_camel",
+      "title": "Le Chameau Réchauffé",
+      "text": "Tu enroules l'écharpe autour de son long cou. Il arrête de trembler et te fait un bisou baveux ! Il s'appelle Ali et s'était échappé du Cirque des Neiges.",
+      "image": "🎪",
+      "xp": 50,
+      "choices": [
+        { "text": "Ramener Ali au village", "nextScene": "victory", "keyword": "village" }
+      ]
+    },
+    "victory": {
+      "id": "victory",
+      "title": "Héros de la Station",
+      "text": "Tu arrives au village sur le dos du chameau ! Tout le monde applaudit. Le directeur du cirque t'offre un chocolat chaud géant pour te remercier.",
+      "image": "🏆",
+      "xp": 100,
+      "isEnd": true,
+      "choices": [
+        { "text": "Recommencer l'aventure", "nextScene": "start", "reset": true, "keyword": "recommencer" }
+      ]
+    }
+  }
+}

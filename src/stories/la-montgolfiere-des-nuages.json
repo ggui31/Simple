@@ -1,0 +1,136 @@
+{
+  "title": "La Montgolfière des Nuages",
+  "description": "Un voyage aérien où chaque choix change les vents et l'itinéraire.",
+  "coverImage": "🎈",
+  "difficulty": "moyen",
+  "estimatedTime": "9 min",
+  "startScene": "start",
+  "scenes": {
+    "start": {
+      "id": "start",
+      "title": "Le décollage",
+      "text": "La montgolfière est prête. Un panier contient une carte des vents.",
+      "image": "🧭",
+      "xp": 5,
+      "choices": [
+        {
+          "text": "Prendre la carte des vents",
+          "nextScene": "carte",
+          "keyword": "carte"
+        },
+        {
+          "text": "Décoller tout de suite",
+          "nextScene": "ciel",
+          "keyword": "décoller"
+        }
+      ]
+    },
+    "carte": {
+      "id": "carte",
+      "title": "La carte précieuse",
+      "text": "Tu glisses la carte des vents dans ton sac.",
+      "image": "🗺️",
+      "xp": 8,
+      "item": "carte_vents",
+      "itemLabel": "Carte des vents",
+      "choices": [
+        {
+          "text": "Décoller avec la carte",
+          "nextScene": "ciel",
+          "keyword": "carte"
+        }
+      ]
+    },
+    "ciel": {
+      "id": "ciel",
+      "title": "Le ciel ouvert",
+      "text": "Le ballon flotte entre les nuages. Les vents changent vite.",
+      "image": "☁️",
+      "xp": 8,
+      "choices": [
+        {
+          "text": "Suivre le vent est",
+          "nextScene": "vent_est",
+          "keyword": "est"
+        },
+        {
+          "text": "Suivre le vent ouest",
+          "nextScene": "vent_ouest",
+          "keyword": "ouest"
+        }
+      ]
+    },
+    "vent_est": {
+      "id": "vent_est",
+      "title": "Le couloir de l'orage",
+      "text": "Un nuage sombre approche. La route est risquée.",
+      "image": "⛈️",
+      "xp": 10,
+      "choices": [
+        {
+          "text": "Éviter l'orage grâce à la carte",
+          "nextScene": "plateau",
+          "requirement": "carte_vents",
+          "fallbackText": "Sans carte, tu hésites devant l'orage.",
+          "keyword": "carte"
+        },
+        {
+          "text": "Traverser l'orage",
+          "nextScene": "fin_orage",
+          "keyword": "orage"
+        }
+      ]
+    },
+    "vent_ouest": {
+      "id": "vent_ouest",
+      "title": "Le vent doux",
+      "text": "Un courant tranquille mène vers un plateau lumineux.",
+      "image": "🌤️",
+      "xp": 10,
+      "choices": [
+        {
+          "text": "Atterrir sur le plateau",
+          "nextScene": "plateau",
+          "keyword": "plateau"
+        },
+        {
+          "text": "Changer de cap",
+          "nextScene": "ciel",
+          "keyword": "cap"
+        }
+      ]
+    },
+    "plateau": {
+      "id": "plateau",
+      "title": "Le plateau des nuages",
+      "text": "Tu découvres un jardin suspendu au-dessus du monde.",
+      "image": "🏞️",
+      "xp": 40,
+      "isEnd": true,
+      "choices": [
+        {
+          "text": "Recommencer l'aventure",
+          "nextScene": "start",
+          "reset": true,
+          "keyword": "recommencer"
+        }
+      ]
+    },
+    "fin_orage": {
+      "id": "fin_orage",
+      "title": "Le défi du ciel",
+      "text": "Tu traverses l'orage et apprends le courage des pilotes.",
+      "image": "⚡",
+      "xp": 40,
+      "isEnd": true,
+      "choices": [
+        {
+          "text": "Recommencer l'aventure",
+          "nextScene": "start",
+          "reset": true,
+          "keyword": "recommencer"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,134 @@
+{
+  "title": "Le Train des Étoiles",
+  "description": "Un train magique traverse le ciel. Choisis les bonnes constellations pour arriver à temps.",
+  "coverImage": "🚆",
+  "difficulty": "moyen",
+  "estimatedTime": "10 min",
+  "startScene": "start",
+  "scenes": {
+    "start": {
+      "id": "start",
+      "title": "Le quai de la nuit",
+      "text": "Un train d'étoiles t'attend. Le chef de bord dit : il faut une carte du ciel pour choisir les constellations.",
+      "image": "🌙",
+      "xp": 5,
+      "choices": [
+        {
+          "text": "Prendre la carte du ciel",
+          "nextScene": "carte",
+          "keyword": "carte"
+        },
+        {
+          "text": "Monter dans le train",
+          "nextScene": "wagon",
+          "keyword": "train"
+        }
+      ]
+    },
+    "carte": {
+      "id": "carte",
+      "title": "La carte du ciel",
+      "text": "La carte scintille et montre des constellations comme des chemins.",
+      "image": "🗺️",
+      "xp": 10,
+      "item": "carte_ciel",
+      "itemLabel": "Carte du ciel",
+      "choices": [
+        {
+          "text": "Monter dans le train",
+          "nextScene": "wagon",
+          "keyword": "train"
+        }
+      ]
+    },
+    "wagon": {
+      "id": "wagon",
+      "title": "Le wagon des fenêtres",
+      "text": "Par les fenêtres, tu vois des constellations briller. Deux aiguillages s'approchent.",
+      "image": "✨",
+      "xp": 8,
+      "choices": [
+        {
+          "text": "Choisir la constellation du Lion",
+          "nextScene": "lion",
+          "keyword": "Lion"
+        },
+        {
+          "text": "Choisir la constellation du Cygne",
+          "nextScene": "cygne",
+          "keyword": "Cygne"
+        }
+      ]
+    },
+    "lion": {
+      "id": "lion",
+      "title": "La voie du Lion",
+      "text": "La voie rugit doucement. Le train accélère et une barrière de nuages apparaît.",
+      "image": "🦁",
+      "xp": 12,
+      "choices": [
+        {
+          "text": "Lire la carte pour éviter les nuages",
+          "nextScene": "arrivee",
+          "requirement": "carte_ciel",
+          "fallbackText": "Sans carte, les nuages te font peur et tu hésites.",
+          "keyword": "carte"
+        },
+        {
+          "text": "Forcer à travers les nuages",
+          "nextScene": "retard",
+          "keyword": "nuages"
+        }
+      ]
+    },
+    "cygne": {
+      "id": "cygne",
+      "title": "La voie du Cygne",
+      "text": "La voie glisse comme une plume. Le train passe près d'une cloche d'étoile.",
+      "image": "🦢",
+      "xp": 12,
+      "choices": [
+        {
+          "text": "Sonner la cloche d'étoile",
+          "nextScene": "arrivee",
+          "keyword": "cloche"
+        },
+        {
+          "text": "Changer de voie vers le Lion",
+          "nextScene": "lion",
+          "keyword": "Lion"
+        }
+      ]
+    },
+    "retard": {
+      "id": "retard",
+      "title": "Le passage difficile",
+      "text": "Le train secoue et perd du temps, mais il continue.",
+      "image": "🌪️",
+      "xp": 6,
+      "choices": [
+        {
+          "text": "Revenir au wagon",
+          "nextScene": "wagon",
+          "keyword": "wagon"
+        }
+      ]
+    },
+    "arrivee": {
+      "id": "arrivee",
+      "title": "La gare des constellations",
+      "text": "La gare apparaît dans un ciel clair. Tu es arrivé à temps !",
+      "image": "🏁",
+      "xp": 50,
+      "isEnd": true,
+      "choices": [
+        {
+          "text": "Recommencer l'aventure",
+          "nextScene": "start",
+          "reset": true,
+          "keyword": "Recommencer"
+        }
+      ]
+    }
+  }
+}

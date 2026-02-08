@@ -1,0 +1,105 @@
+{
+  "title": "Le Lac aux Nuages",
+  "description": "Un lac reflète les nuages. Aide à calmer une tempête qui s'approche.",
+  "coverImage": "☁️",
+  "difficulty": "facile",
+  "estimatedTime": "7 min",
+  "startScene": "start",
+  "scenes": {
+    "start": {
+      "id": "start",
+      "title": "Le bord du lac",
+      "text": "Le lac reflète des nuages agités. Une tempête approche si rien ne change.",
+      "image": "🌊",
+      "xp": 5,
+      "choices": [
+        {
+          "text": "Chercher une pierre lune",
+          "nextScene": "pierre",
+          "keyword": "pierre"
+        },
+        {
+          "text": "Parler au vent",
+          "nextScene": "vent",
+          "keyword": "vent"
+        }
+      ]
+    },
+    "pierre": {
+      "id": "pierre",
+      "title": "La pierre lune",
+      "text": "Sous une racine, tu trouves une pierre lune qui brille doucement.",
+      "image": "🪨",
+      "xp": 10,
+      "item": "pierre_lune",
+      "itemLabel": "Pierre lune",
+      "choices": [
+        {
+          "text": "Aller au miroir du lac",
+          "nextScene": "miroir",
+          "keyword": "lac"
+        }
+      ]
+    },
+    "vent": {
+      "id": "vent",
+      "title": "Le vent inquiet",
+      "text": "Le vent souffle trop fort. Il accepte de se calmer si tu lui donnes un chant.",
+      "image": "🌬️",
+      "xp": 10,
+      "item": "chant",
+      "itemLabel": "Chant du vent",
+      "choices": [
+        {
+          "text": "Aller au miroir du lac",
+          "nextScene": "miroir",
+          "keyword": "lac"
+        }
+      ]
+    },
+    "miroir": {
+      "id": "miroir",
+      "title": "Le miroir du lac",
+      "text": "La surface du lac devient un miroir. Il faut un geste pour apaiser les nuages.",
+      "image": "🪞",
+      "xp": 10,
+      "choices": [
+        {
+          "text": "Poser la pierre lune",
+          "nextScene": "fin_calme",
+          "requirement": "pierre_lune",
+          "fallbackText": "Il te manque une pierre lune.",
+          "keyword": "pierre"
+        },
+        {
+          "text": "Chanter pour le vent",
+          "nextScene": "fin_calme",
+          "requirement": "chant",
+          "fallbackText": "Tu n'as pas le chant du vent.",
+          "keyword": "Chanter"
+        },
+        {
+          "text": "Retourner au bord",
+          "nextScene": "start",
+          "keyword": "bord"
+        }
+      ]
+    },
+    "fin_calme": {
+      "id": "fin_calme",
+      "title": "Le ciel s'éclaircit",
+      "text": "Les nuages se calment et le lac redevient paisible. La tempête est partie.",
+      "image": "🌤️",
+      "xp": 40,
+      "isEnd": true,
+      "choices": [
+        {
+          "text": "Recommencer l'aventure",
+          "nextScene": "start",
+          "reset": true,
+          "keyword": "Recommencer"
+        }
+      ]
+    }
+  }
+}

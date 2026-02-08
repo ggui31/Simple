@@ -1,0 +1,180 @@
+{
+  "title": "Le Champion et la Baleine de Course",
+  "description": "Un champion du monde de course raconte sa rencontre avec une baleine qui roulait comme une voiture.",
+  "coverImage": "🐋",
+  "difficulty": "moyen",
+  "estimatedTime": "9 min",
+  "startScene": "start",
+  "scenes": {
+    "start": {
+      "id": "start",
+      "title": "Le circuit en fête",
+      "text": "Aujourd'hui, le champion du monde arrive au circuit. Il sourit et te chuchote : il a vu une baleine voiture de course.",
+      "image": "🏎️",
+      "xp": 5,
+      "choices": [
+        {
+          "text": "Écouter l'histoire du champion",
+          "nextScene": "histoire",
+          "keyword": "champion"
+        },
+        {
+          "text": "Aller au port",
+          "nextScene": "port",
+          "keyword": "port"
+        }
+      ]
+    },
+    "histoire": {
+      "id": "histoire",
+      "title": "Une rencontre incroyable",
+      "text": "Le champion explique : \"un soir, près du port, il a entendu un bruit de moteur dans la mer. Puis il a vu une baleine avec des traces de pneus de lumière sur l'eau !\"",
+      "image": "🌊",
+      "xp": 8,
+      "choices": [
+        {
+          "text": "Demander un indice",
+          "nextScene": "indice",
+          "keyword": "indice"
+        },
+        {
+          "text": "Courir au port",
+          "nextScene": "port",
+          "keyword": "port"
+        }
+      ]
+    },
+    "indice": {
+      "id": "indice",
+      "title": "Le badge du champion",
+      "text": "Le champion te donne un badge spécial. Il ouvre la barrière du ponton pour regarder la mer.",
+      "image": "🎫",
+      "xp": 10,
+      "item": "badge_ponton",
+      "itemLabel": "Badge du ponton",
+      "choices": [
+        {
+          "text": "Aller au port",
+          "nextScene": "port",
+          "keyword": "port"
+        }
+      ]
+    },
+    "port": {
+      "id": "port",
+      "title": "Le port des reflets",
+      "text": "Au port, l'eau brille. Une barrière mène au ponton. Plus loin, un vieux hangar cache un atelier.",
+      "image": "⚓",
+      "xp": 8,
+      "choices": [
+        {
+          "text": "Passer la barrière du ponton",
+          "nextScene": "ponton",
+          "requirement": "badge_ponton",
+          "fallbackText": "La barrière est fermée. Il te faut un badge.",
+          "keyword": "barrière"
+        },
+        {
+          "text": "Explorer le hangar",
+          "nextScene": "hangar",
+          "keyword": "hangar"
+        },
+        {
+          "text": "Retourner au circuit",
+          "nextScene": "start",
+          "keyword": "circuit"
+        }
+      ]
+    },
+    "hangar": {
+      "id": "hangar",
+      "title": "Le hangar de mécanique",
+      "text": "Dans le hangar, tu trouves une paire de jumelles. Parfait pour observer la mer.",
+      "image": "🔧",
+      "xp": 10,
+      "item": "jumelles",
+      "itemLabel": "Jumelles",
+      "choices": [
+        {
+          "text": "Retourner au port",
+          "nextScene": "port",
+          "keyword": "port"
+        }
+      ]
+    },
+    "ponton": {
+      "id": "ponton",
+      "title": "Le ponton des vagues",
+      "text": "Tu avances sur le ponton. La mer fait un drôle de vrombissement, comme une voiture très loin.",
+      "image": "🪵",
+      "xp": 12,
+      "choices": [
+        {
+          "text": "Regarder avec les jumelles",
+          "nextScene": "rencontre",
+          "requirement": "jumelles",
+          "fallbackText": "Tu vois mal au loin. Il te faut des jumelles.",
+          "keyword": "jumelles"
+        },
+        {
+          "text": "Écouter les vagues",
+          "nextScene": "rencontre",
+          "keyword": "vagues"
+        }
+      ]
+    },
+    "rencontre": {
+      "id": "rencontre",
+      "title": "La baleine voiture de course",
+      "text": "Une baleine surgit et file sur l'eau comme une voiture de course ! Elle laisse une trace brillante, puis ralentit pour te saluer.",
+      "image": "🐋",
+      "xp": 15,
+      "choices": [
+        {
+          "text": "Faire coucou à la baleine",
+          "nextScene": "fin_ami",
+          "keyword": "baleine"
+        },
+        {
+          "text": "Montrer le badge du champion",
+          "nextScene": "fin_champion",
+          "requirement": "badge_ponton",
+          "fallbackText": "Tu n'as pas de badge à montrer.",
+          "keyword": "badge"
+        }
+      ]
+    },
+    "fin_ami": {
+      "id": "fin_ami",
+      "title": "Un salut rapide",
+      "text": "La baleine fait une petite pirouette et repart doucement. Tu as vécu un moment magique.",
+      "image": "💫",
+      "xp": 45,
+      "isEnd": true,
+      "choices": [
+        {
+          "text": "Recommencer l'aventure",
+          "nextScene": "start",
+          "reset": true,
+          "keyword": "Recommencer"
+        }
+      ]
+    },
+    "fin_champion": {
+      "id": "fin_champion",
+      "title": "Le secret du champion",
+      "text": "La baleine klaxonne comme une voiture, puis éclabousse de joie. Le champion avait raison !",
+      "image": "🏆",
+      "xp": 50,
+      "isEnd": true,
+      "choices": [
+        {
+          "text": "Recommencer l'aventure",
+          "nextScene": "start",
+          "reset": true,
+          "keyword": "Recommencer"
+        }
+      ]
+    }
+  }
+}

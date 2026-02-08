@@ -1,0 +1,105 @@
+{
+  "title": "Le Robot du Marché",
+  "description": "Un petit robot livre des fruits et apprend à écouter les habitants.",
+  "coverImage": "🤖",
+  "difficulty": "facile",
+  "estimatedTime": "8 min",
+  "startScene": "start",
+  "scenes": {
+    "start": {
+      "id": "start",
+      "title": "Le marché du matin",
+      "text": "Le robot livreur a une liste, mais il se perd entre les étals.",
+      "image": "🍎",
+      "xp": 5,
+      "choices": [
+        {
+          "text": "Demander au boulanger",
+          "nextScene": "boulanger",
+          "keyword": "boulanger"
+        },
+        {
+          "text": "Demander à la fleuriste",
+          "nextScene": "fleuriste",
+          "keyword": "fleuriste"
+        }
+      ]
+    },
+    "boulanger": {
+      "id": "boulanger",
+      "title": "Le boulanger souriant",
+      "text": "Le boulanger donne une étiquette avec l'adresse du client.",
+      "image": "🥖",
+      "xp": 10,
+      "item": "etiquette",
+      "itemLabel": "Étiquette d'adresse",
+      "choices": [
+        {
+          "text": "Aller chez le client",
+          "nextScene": "client",
+          "keyword": "client"
+        }
+      ]
+    },
+    "fleuriste": {
+      "id": "fleuriste",
+      "title": "La fleuriste attentive",
+      "text": "La fleuriste apprend au robot une phrase polie pour se présenter.",
+      "image": "💐",
+      "xp": 10,
+      "item": "phrase_polie",
+      "itemLabel": "Phrase polie",
+      "choices": [
+        {
+          "text": "Aller chez le client",
+          "nextScene": "client",
+          "keyword": "client"
+        }
+      ]
+    },
+    "client": {
+      "id": "client",
+      "title": "La porte du client",
+      "text": "Le robot est devant la porte. Il faut bien livrer et bien parler.",
+      "image": "🏠",
+      "xp": 10,
+      "choices": [
+        {
+          "text": "Montrer l'étiquette",
+          "nextScene": "fin_livraison",
+          "requirement": "etiquette",
+          "fallbackText": "Sans étiquette, le robot ne sait pas à qui livrer.",
+          "keyword": "étiquette"
+        },
+        {
+          "text": "Dire la phrase polie",
+          "nextScene": "fin_livraison",
+          "requirement": "phrase_polie",
+          "fallbackText": "Sans phrase polie, le robot hésite.",
+          "keyword": "phrase"
+        },
+        {
+          "text": "Retourner au marché",
+          "nextScene": "start",
+          "keyword": "marché"
+        }
+      ]
+    },
+    "fin_livraison": {
+      "id": "fin_livraison",
+      "title": "La livraison réussie",
+      "text": "Le client sourit. Le robot a appris à écouter et à aider.",
+      "image": "✅",
+      "xp": 40,
+      "isEnd": true,
+      "choices": [
+        {
+          "text": "Recommencer l'aventure",
+          "nextScene": "start",
+          "reset": true,
+          "keyword": "Recommencer"
+        }
+      ]
+    }
+  }
+}

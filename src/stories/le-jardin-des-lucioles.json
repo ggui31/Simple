@@ -1,0 +1,121 @@
+{
+  "title": "Le Jardin des Lucioles",
+  "description": "Une pluie d'étoiles attire les lucioles. Aide-les à rejoindre le lac.",
+  "coverImage": "✨",
+  "difficulty": "facile",
+  "estimatedTime": "7 min",
+  "startScene": "start",
+  "scenes": {
+    "start": {
+      "id": "start",
+      "title": "La porte du jardin",
+      "text": "Des milliers de lucioles volent sans direction. Il faut les guider.",
+      "image": "🌿",
+      "xp": 5,
+      "choices": [
+        {
+          "text": "Entrer dans le jardin",
+          "nextScene": "jardin",
+          "keyword": "jardin"
+        },
+        {
+          "text": "Suivre le sentier",
+          "nextScene": "cabane",
+          "keyword": "sentier"
+        }
+      ]
+    },
+    "jardin": {
+      "id": "jardin",
+      "title": "Les fleurs brillantes",
+      "text": "Tu trouves une lanterne douce pour attirer les lucioles.",
+      "image": "🏮",
+      "xp": 10,
+      "item": "lanterne",
+      "itemLabel": "Lanterne douce",
+      "choices": [
+        {
+          "text": "Aller au lac",
+          "nextScene": "lac",
+          "keyword": "lac"
+        }
+      ]
+    },
+    "cabane": {
+      "id": "cabane",
+      "title": "La vieille cabane",
+      "text": "Un filet délicat est accroché à la porte.",
+      "image": "🧺",
+      "xp": 10,
+      "item": "filet",
+      "itemLabel": "Filet doux",
+      "choices": [
+        {
+          "text": "Aller au lac",
+          "nextScene": "lac",
+          "keyword": "lac"
+        }
+      ]
+    },
+    "lac": {
+      "id": "lac",
+      "title": "Le lac des étoiles",
+      "text": "Les lucioles tournoient au-dessus de l'eau.",
+      "image": "🌌",
+      "xp": 10,
+      "choices": [
+        {
+          "text": "Guider avec la lanterne",
+          "nextScene": "fin_lanterne",
+          "requirement": "lanterne",
+          "fallbackText": "Il te faut une lanterne pour guider les lucioles.",
+          "keyword": "lanterne"
+        },
+        {
+          "text": "Attraper doucement avec le filet",
+          "nextScene": "fin_filet",
+          "requirement": "filet",
+          "fallbackText": "Sans filet, elles s'envolent.",
+          "keyword": "filet"
+        },
+        {
+          "text": "Revenir au jardin",
+          "nextScene": "jardin",
+          "keyword": "jardin"
+        }
+      ]
+    },
+    "fin_lanterne": {
+      "id": "fin_lanterne",
+      "title": "La danse des lucioles",
+      "text": "La lanterne les guide jusqu'au lac. La nuit devient magique.",
+      "image": "💫",
+      "xp": 40,
+      "isEnd": true,
+      "choices": [
+        {
+          "text": "Recommencer l'aventure",
+          "nextScene": "start",
+          "reset": true,
+          "keyword": "recommencer"
+        }
+      ]
+    },
+    "fin_filet": {
+      "id": "fin_filet",
+      "title": "Les lucioles retrouvées",
+      "text": "Avec le filet, tu les guides sans les blesser.",
+      "image": "🌟",
+      "xp": 40,
+      "isEnd": true,
+      "choices": [
+        {
+          "text": "Recommencer l'aventure",
+          "nextScene": "start",
+          "reset": true,
+          "keyword": "recommencer"
+        }
+      ]
+    }
+  }
+}

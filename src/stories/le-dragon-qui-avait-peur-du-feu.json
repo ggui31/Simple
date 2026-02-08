@@ -1,0 +1,121 @@
+{
+  "title": "Le Dragon qui avait peur du feu",
+  "description": "Un dragon timide doit apprendre à aider sans se brûler. À toi de l'encourager.",
+  "coverImage": "🐲",
+  "difficulty": "moyen",
+  "estimatedTime": "9 min",
+  "startScene": "start",
+  "scenes": {
+    "start": {
+      "id": "start",
+      "title": "La grotte timide",
+      "text": "Le dragon garde ses flammes. Il a besoin de confiance.",
+      "image": "🪨",
+      "xp": 5,
+      "choices": [
+        {
+          "text": "Aller au lac",
+          "nextScene": "lac",
+          "keyword": "lac"
+        },
+        {
+          "text": "Visiter la forge",
+          "nextScene": "forge",
+          "keyword": "forge"
+        }
+      ]
+    },
+    "lac": {
+      "id": "lac",
+      "title": "Le lac calme",
+      "text": "La respiration tranquille du lac apprend au dragon un souffle doux.",
+      "image": "🫧",
+      "xp": 10,
+      "item": "souffle_doux",
+      "itemLabel": "Souffle doux",
+      "choices": [
+        {
+          "text": "Revenir à la grotte",
+          "nextScene": "start",
+          "keyword": "grotte"
+        }
+      ]
+    },
+    "forge": {
+      "id": "forge",
+      "title": "La forge chaleureuse",
+      "text": "Le forgeron prête des gants épais pour tenir la braise.",
+      "image": "⚒️",
+      "xp": 10,
+      "item": "gants",
+      "itemLabel": "Gants de forge",
+      "choices": [
+        {
+          "text": "Aller à l'épreuve",
+          "nextScene": "epreuve",
+          "keyword": "épreuve"
+        }
+      ]
+    },
+    "epreuve": {
+      "id": "epreuve",
+      "title": "L'épreuve du feu",
+      "text": "Un feu de camp attend. Le dragon veut aider sans se brûler.",
+      "image": "🔥",
+      "xp": 12,
+      "choices": [
+        {
+          "text": "Souffler doucement",
+          "nextScene": "fin_souffle",
+          "requirement": "souffle_doux",
+          "fallbackText": "Le dragon ne sait pas encore souffler doucement.",
+          "keyword": "souffler"
+        },
+        {
+          "text": "Tenir la braise avec les gants",
+          "nextScene": "fin_gants",
+          "requirement": "gants",
+          "fallbackText": "Sans gants, c'est trop chaud.",
+          "keyword": "gants"
+        },
+        {
+          "text": "Revenir à la grotte",
+          "nextScene": "start",
+          "keyword": "grotte"
+        }
+      ]
+    },
+    "fin_souffle": {
+      "id": "fin_souffle",
+      "title": "Un souffle de courage",
+      "text": "Le dragon souffle doucement et le feu danse sans danger.",
+      "image": "🌟",
+      "xp": 45,
+      "isEnd": true,
+      "choices": [
+        {
+          "text": "Recommencer l'aventure",
+          "nextScene": "start",
+          "reset": true,
+          "keyword": "recommencer"
+        }
+      ]
+    },
+    "fin_gants": {
+      "id": "fin_gants",
+      "title": "Les braises protégées",
+      "text": "Avec les gants, le dragon aide et devient confiant.",
+      "image": "🧤",
+      "xp": 45,
+      "isEnd": true,
+      "choices": [
+        {
+          "text": "Recommencer l'aventure",
+          "nextScene": "start",
+          "reset": true,
+          "keyword": "recommencer"
+        }
+      ]
+    }
+  }
+}

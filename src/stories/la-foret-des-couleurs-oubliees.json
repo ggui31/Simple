@@ -1,0 +1,121 @@
+{
+  "title": "La Forêt des Couleurs Oubliées",
+  "description": "Les couleurs disparaissent une à une : retrouve les pigments pour réveiller la forêt.",
+  "coverImage": "🌈",
+  "difficulty": "facile",
+  "estimatedTime": "8 min",
+  "startScene": "start",
+  "scenes": {
+    "start": {
+      "id": "start",
+      "title": "La lisière grise",
+      "text": "La forêt est devenue terne. Deux chemins mènent aux pigments perdus.",
+      "image": "🌫️",
+      "xp": 5,
+      "choices": [
+        {
+          "text": "Chercher le rouge",
+          "nextScene": "clairiere_rouge",
+          "keyword": "rouge"
+        },
+        {
+          "text": "Suivre la rivière bleue",
+          "nextScene": "riviere_bleue",
+          "keyword": "bleue"
+        }
+      ]
+    },
+    "clairiere_rouge": {
+      "id": "clairiere_rouge",
+      "title": "La clairière rouge",
+      "text": "Un buisson garde un petit flacon de pigment rouge.",
+      "image": "🍓",
+      "xp": 10,
+      "item": "pigment_rouge",
+      "itemLabel": "Pigment rouge",
+      "choices": [
+        {
+          "text": "Aller à l'atelier",
+          "nextScene": "atelier",
+          "keyword": "atelier"
+        }
+      ]
+    },
+    "riviere_bleue": {
+      "id": "riviere_bleue",
+      "title": "La rivière bleue",
+      "text": "Sous une pierre, tu découvres un flacon de pigment bleu.",
+      "image": "💧",
+      "xp": 10,
+      "item": "pigment_bleu",
+      "itemLabel": "Pigment bleu",
+      "choices": [
+        {
+          "text": "Aller à l'atelier",
+          "nextScene": "atelier",
+          "keyword": "atelier"
+        }
+      ]
+    },
+    "atelier": {
+      "id": "atelier",
+      "title": "L'atelier des couleurs",
+      "text": "Un grand bol attend les pigments pour réveiller la forêt.",
+      "image": "🎨",
+      "xp": 8,
+      "choices": [
+        {
+          "text": "Verser le pigment rouge",
+          "nextScene": "fin_rouge",
+          "requirement": "pigment_rouge",
+          "fallbackText": "Tu n'as pas de pigment rouge.",
+          "keyword": "rouge"
+        },
+        {
+          "text": "Verser le pigment bleu",
+          "nextScene": "fin_bleu",
+          "requirement": "pigment_bleu",
+          "fallbackText": "Tu n'as pas de pigment bleu.",
+          "keyword": "bleu"
+        },
+        {
+          "text": "Retourner à la lisière",
+          "nextScene": "start",
+          "keyword": "lisière"
+        }
+      ]
+    },
+    "fin_rouge": {
+      "id": "fin_rouge",
+      "title": "La forêt s'embrase",
+      "text": "Le rouge revient et les fleurs s'illuminent de joie.",
+      "image": "🌺",
+      "xp": 40,
+      "isEnd": true,
+      "choices": [
+        {
+          "text": "Recommencer l'aventure",
+          "nextScene": "start",
+          "reset": true,
+          "keyword": "recommencer"
+        }
+      ]
+    },
+    "fin_bleu": {
+      "id": "fin_bleu",
+      "title": "La forêt se rafraîchit",
+      "text": "Le bleu revient et les ruisseaux chantent à nouveau.",
+      "image": "🦋",
+      "xp": 40,
+      "isEnd": true,
+      "choices": [
+        {
+          "text": "Recommencer l'aventure",
+          "nextScene": "start",
+          "reset": true,
+          "keyword": "recommencer"
+        }
+      ]
+    }
+  }
+}

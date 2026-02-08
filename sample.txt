@@ -1,0 +1,634 @@
+import React, { useState, useEffect, useRef } from 'react';
+import { BookOpen, Volume2, Settings, ArrowRight, Backpack, Map, Star, Reply, Type, Music, Mic, MicOff, AlertCircle, CheckCircle2, Wand2, VolumeX } from 'lucide-react';
+
+// --- NOUVELLE HISTOIRE : Le Chameau des Neiges ---
+const storyData = {
+  start: {
+    id: 'start',
+    title: "Le Sommet du Pic Glacé",
+    text: "Tu es en haut de la montagne. Il fait très froid ! Le gardien du ski te dit qu'un animal très étrange s'est perdu ce matin. Il n'a pas voulu dire lequel...",
+    image: "🏔️",
+    xp: 10,
+    choices: [
+      { text: "Descendre la piste verte tranquille", nextScene: 'green_slope', keyword: "verte" },
+      { text: "Foncer sur la piste noire rapide", nextScene: 'black_slope', keyword: "noire" }
+    ]
+  },
+  green_slope: {
+    id: 'green_slope',
+    title: "La Piste Verte",
+    text: "Tu skies doucement entre les sapins. C'est calme. Soudain, tu vois une grosse écharpe rouge en laine oubliée sur un rocher.",
+    image: "🧣",
+    xp: 15,
+    item: 'scarf',
+    itemLabel: "Écharpe Rouge",
+    choices: [
+      { text: "Prendre l'écharpe rouge", nextScene: 'forest_edge', keyword: "écharpe" },
+      { text: "Laisser l'écharpe là", nextScene: 'forest_edge', keyword: "laisser" }
+    ]
+  },
+  black_slope: {
+    id: 'black_slope',
+    title: "La Piste Noire",
+    text: "Wouhou ! Tu vas super vite ! Le vent siffle à tes oreilles. Tu remarques des traces bizarres dans la neige... On dirait de grosses assiettes rondes !",
+    image: "⛷️",
+    xp: 20,
+    choices: [
+      { text: "Suivre les traces rondes", nextScene: 'forest_edge', keyword: "traces" },
+      { text: "Retourner au sommet", nextScene: 'start', keyword: "sommet" }
+    ]
+  },
+  forest_edge: {
+    id: 'forest_edge',
+    title: "L'Orée de la Forêt",
+    text: "Les pistes se rejoignent ici. Tu entends un bruit drôle : 'Blater !'. Ce n'est pas le cri d'un ours, ni d'un loup. Cela vient de derrière le gros sapin.",
+    image: "🌲",
+    xp: 15,
+    choices: [
+      { text: "Aller voir derrière le sapin", nextScene: 'camel_encounter', keyword: "sapin" },
+      { text: "Crier pour demander qui est là", nextScene: 'camel_encounter', keyword: "crier" }
+    ]
+  },
+  camel_encounter: {
+    id: 'camel_encounter',
+    title: "Une Rencontre Insolite",
+    text: "Incroyable ! C'est un chameau ! Il est assis dans la neige et il tremble de tous ses membres. Le pauvre a deux bosses gelées. Il te regarde avec des yeux tristes.",
+    image: "🐫",
+    xp: 30,
+    choices: [
+      { 
+        text: "Lui donner l'écharpe rouge", 
+        nextScene: 'happy_camel', 
+        requirement: 'scarf',
+        fallbackText: "Tu n'as rien pour le réchauffer...",
+        keyword: "écharpe"
+      },
+      { text: "Lui faire un gros câlin", nextScene: 'cold_hug', keyword: "câlin" },
+      { text: "Retourner chercher un vêtement", nextScene: 'start', keyword: "retourner" }
+    ]
+  },
+  cold_hug: {
+    id: 'cold_hug',
+    title: "Brrr !",
+    text: "Le chameau apprécie ton câlin, mais ça ne suffit pas ! Il claque des dents. Il a besoin de quelque chose de chaud, comme de la laine...",
+    image: "🥶",
+    xp: 5,
+    choices: [
+      { text: "Aller chercher l'écharpe en haut", nextScene: 'start', keyword: "chercher" }
+    ]
+  },
+  happy_camel: {
+    id: 'happy_camel',
+    title: "Le Chameau Réchauffé",
+    text: "Tu enroules l'écharpe autour de son long cou. Il arrête de trembler et te fait un bisou baveux ! Il s'appelle Ali et s'était échappé du Cirque des Neiges.",
+    image: "🎪",
+    xp: 50,
+    choices: [
+      { text: "Ramener Ali au village", nextScene: 'victory', keyword: "village" }
+    ]
+  },
+  victory: {
+    id: 'victory',
+    title: "Héros de la Station",
+    text: "Tu arrives au village sur le dos du chameau ! Tout le monde applaudit. Le directeur du cirque t'offre un chocolat chaud géant pour te remercier.",
+    image: "🏆",
+    xp: 100,
+    isEnd: true,
+    choices: [
+      { text: "Recommencer l'aventure", nextScene: 'start', reset: true, keyword: "recommencer" }
+    ]
+  }
+};
+
+// --- UTILITAIRES ---
+
+const normalizeText = (text) => {
+  return text
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "") 
+    .replace(/[^a-z0-9\s]/g, "")
+    .trim();
+};
+
+const isMatch = (spoken, target, keyword, isSimplified) => {
+  const normSpoken = normalizeText(spoken);
+  const normTarget = normalizeText(target);
+  const normKeyword = keyword ? normalizeText(keyword) : null;
+  
+  if (isSimplified && normKeyword) {
+    return normSpoken.includes(normKeyword);
+  }
+
+  if (normTarget.length < 10) {
+    return normSpoken.includes(normTarget);
+  }
+
+  const spokenWords = normSpoken.split(/\s+/).filter(w => w.length > 2);
+  const targetWords = normTarget.split(/\s+/).filter(w => w.length > 2);
+  
+  if (targetWords.length === 0) return false;
+
+  let matchCount = 0;
+  targetWords.forEach(word => {
+    if (spokenWords.includes(word)) matchCount++;
+  });
+
+  return (matchCount / targetWords.length) >= 0.75;
+};
+
+// --- COMPOSANTS ---
+
+const Button = ({ choice, index, isSimplifiedMode, disabled = false, isMatched = false, isSpeaking, highlightIndex, onPlay }) => {
+  const baseStyle = "px-4 py-3 rounded-xl font-bold transition-all transform shadow-sm flex items-center justify-between gap-2 relative overflow-hidden";
+  
+  let variantStyle = "";
+  if (disabled) {
+    variantStyle = "bg-gray-100 text-gray-400 cursor-not-allowed border-2 border-gray-100";
+  } else if (isMatched) {
+    variantStyle = "bg-emerald-100 text-emerald-900 border-2 border-emerald-400 scale-105 shadow-md ring-2 ring-emerald-200 z-10";
+  } else {
+    variantStyle = "bg-white text-indigo-900 border-2 border-dashed border-indigo-200 hover:border-indigo-400 hover:bg-indigo-50 cursor-default";
+  }
+
+  const renderText = () => {
+    const text = disabled ? choice.fallbackText : choice.text;
+    
+    // Mode Karaoké
+    if (isSpeaking && highlightIndex !== null) {
+       let start = text.lastIndexOf(' ', highlightIndex) + 1;
+       let end = text.indexOf(' ', highlightIndex);
+       if (end === -1) end = text.length;
+       
+       const before = text.slice(0, start);
+       const current = text.slice(start, end);
+       const after = text.slice(end);
+       
+       return (
+         <span className="text-lg flex-1 text-left">
+           {before}
+           <span className="bg-yellow-300 text-gray-900 rounded px-0.5 shadow-sm">{current}</span>
+           {after}
+         </span>
+       );
+    }
+
+    // Mode Mot-Clé
+    if (isSimplifiedMode && choice.keyword && !disabled) {
+      const parts = text.split(new RegExp(`(${choice.keyword})`, 'gi'));
+      return (
+        <span className="text-lg flex-1 text-left">
+          {parts.map((part, i) => (
+            part.toLowerCase() === choice.keyword.toLowerCase() 
+              ? <span key={i} className="text-indigo-600 font-extrabold text-xl bg-indigo-50 px-1 rounded mx-0.5 border-b-2 border-indigo-200">{part}</span> 
+              : <span key={i} className="opacity-70 text-base">{part}</span>
+          ))}
+        </span>
+      );
+    }
+
+    return <span className="text-lg flex-1 text-left">{text}</span>;
+  };
+
+  return (
+    <div className={`${baseStyle} ${variantStyle} w-full h-auto min-h-[60px] transition-all duration-500 ease-out`}>
+      {!disabled && !isMatched && (
+        <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-indigo-400/50"></div>
+      )}
+      {isMatched && (
+        <div className="absolute left-0 top-0 bottom-0 w-2 bg-emerald-500"></div>
+      )}
+      
+      {renderText()}
+      
+      <div className="flex items-center gap-2 z-20">
+        {!disabled && !isMatched && (
+          <button 
+            onClick={(e) => {
+              e.stopPropagation();
+              onPlay(index, disabled ? choice.fallbackText : choice.text);
+            }}
+            className={`p-2 rounded-full transition-all transform active:scale-95 ${isSpeaking ? 'bg-indigo-600 text-white shadow-lg ring-2 ring-indigo-200' : 'bg-indigo-50 text-indigo-400 hover:bg-indigo-100 hover:text-indigo-600'}`}
+            title="Écouter ce choix"
+          >
+             {isSpeaking ? <Volume2 size={20} className="animate-pulse" /> : <Volume2 size={20} />}
+          </button>
+        )}
+        
+        {isMatched && (
+          <CheckCircle2 size={24} className="text-emerald-600 animate-bounce" />
+        )}
+        
+        {disabled && (
+          <div className="text-xs font-bold uppercase px-2 py-1 bg-gray-300 rounded text-gray-500">Verrouillé</div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+// Composant HighlightedText
+const HighlightedText = ({ text, highlightIndex, textSize, textColor }) => {
+  if (highlightIndex === null || highlightIndex < 0) {
+    return <p className={`leading-relaxed mb-8 transition-all duration-300 ${textColor}`} style={{ fontSize: `${textSize}px`, lineHeight: '1.6' }}>{text}</p>;
+  }
+
+  let start = text.lastIndexOf(' ', highlightIndex) + 1;
+  let end = text.indexOf(' ', highlightIndex);
+  if (end === -1) end = text.length;
+
+  const before = text.slice(0, start);
+  const current = text.slice(start, end);
+  const after = text.slice(end);
+
+  return (
+    <p className={`leading-relaxed mb-8 transition-all duration-300 ${textColor}`} style={{ fontSize: `${textSize}px`, lineHeight: '1.6' }}>
+      {before}
+      <span className="bg-yellow-300 text-gray-900 rounded px-0.5 shadow-sm transition-colors duration-200">{current}</span>
+      {after}
+    </p>
+  );
+};
+
+export default function ReadingAdventureApp() {
+  const [currentSceneId, setCurrentSceneId] = useState('start');
+  const [history, setHistory] = useState(['start']);
+  const [inventory, setInventory] = useState([]);
+  const [xp, setXp] = useState(0);
+  
+  // Accessibilité & Réglages
+  const [textSize, setTextSize] = useState(20);
+  const [isDyslexicFont, setIsDyslexicFont] = useState(false);
+  const [highContrast, setHighContrast] = useState(false);
+  const [isSimplifiedMode, setIsSimplifiedMode] = useState(true);
+  const [showSettings, setShowSettings] = useState(false);
+
+  // Audio & Voice
+  const [isSpeakingMain, setIsSpeakingMain] = useState(false);
+  const [speakingChoiceIndex, setSpeakingChoiceIndex] = useState(null);
+  const [currentWordIndex, setCurrentWordIndex] = useState(null);
+  
+  const [isListening, setIsListening] = useState(false);
+  const [spokenText, setSpokenText] = useState("");
+  const [feedbackMessage, setFeedbackMessage] = useState("");
+  const [matchedChoiceIndex, setMatchedChoiceIndex] = useState(null);
+  const [browserSupport, setBrowserSupport] = useState(true);
+  
+  const synthRef = useRef(window.speechSynthesis);
+  const recognitionRef = useRef(null);
+  const utteranceRef = useRef(null);
+
+  useEffect(() => {
+    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      recognitionRef.current = new SpeechRecognition();
+      recognitionRef.current.continuous = false;
+      recognitionRef.current.lang = 'fr-FR';
+      recognitionRef.current.interimResults = true;
+
+      recognitionRef.current.onresult = (event) => {
+        const result = event.results[event.resultIndex];
+        const transcript = result[0].transcript;
+        const isFinal = result.isFinal;
+        
+        setSpokenText(transcript);
+        const matchFound = checkVoiceCommand(transcript);
+
+        if (isFinal && !matchFound) {
+           setFeedbackMessage(isSimplifiedMode ? "Dis juste le mot en gras !" : "Je n'ai pas bien compris...");
+           setIsListening(false);
+        }
+      };
+
+      recognitionRef.current.onerror = (event) => {
+        setIsListening(false);
+        if (event.error === 'no-speech') setFeedbackMessage("Je n'ai rien entendu.");
+        else setFeedbackMessage("Erreur micro.");
+      };
+
+      recognitionRef.current.onend = () => {
+        if (matchedChoiceIndex === null) setIsListening(false);
+      };
+    } else {
+      setBrowserSupport(false);
+    }
+  }, [currentSceneId, inventory, matchedChoiceIndex, isSimplifiedMode]); 
+
+  const currentScene = storyData[currentSceneId];
+
+  const checkVoiceCommand = (transcript) => {
+    if (matchedChoiceIndex !== null) return true;
+
+    const matchedIndex = currentScene.choices.findIndex(choice => {
+      if (choice.requirement && !inventory.includes(choice.requirement)) return false;
+      return isMatch(transcript, choice.text, choice.keyword, isSimplifiedMode);
+    });
+
+    if (matchedIndex !== -1) {
+      recognitionRef.current.stop();
+      setIsListening(false);
+      setMatchedChoiceIndex(matchedIndex);
+      setFeedbackMessage("Bravo ! ✨");
+      setSpokenText(isSimplifiedMode ? currentScene.choices[matchedIndex].keyword.toUpperCase() : currentScene.choices[matchedIndex].text);
+
+      setTimeout(() => {
+        handleChoice(currentScene.choices[matchedIndex]);
+        setMatchedChoiceIndex(null);
+        setSpokenText("");
+        setFeedbackMessage("");
+      }, 1500);
+
+      return true;
+    }
+    return false;
+  };
+
+  const toggleListening = () => {
+    if (isListening) {
+      recognitionRef.current.stop();
+      setIsListening(false);
+      setFeedbackMessage("");
+    } else {
+      stopAllSpeaking();
+      setSpokenText("");
+      setFeedbackMessage(isSimplifiedMode ? "Dis le mot clé..." : "Je t'écoute...");
+      setMatchedChoiceIndex(null);
+      try {
+        recognitionRef.current.start();
+        setIsListening(true);
+      } catch (e) { console.log("Recognition error", e); }
+    }
+  };
+
+  const handleChoice = (choice) => {
+    stopAllSpeaking();
+    if (choice.reset) {
+      setCurrentSceneId('start');
+      setHistory(['start']);
+      setInventory([]);
+      setXp(0);
+      return;
+    }
+    const nextSceneData = storyData[choice.nextScene];
+    if (nextSceneData.item && !inventory.includes(nextSceneData.item)) {
+      setInventory(prev => [...prev, nextSceneData.item]);
+    }
+    setXp(prev => prev + (nextSceneData.xp || 10));
+    setHistory(prev => [...prev, choice.nextScene]);
+    setCurrentSceneId(choice.nextScene);
+  };
+
+  const handleGoBack = () => {
+    if (history.length > 1) {
+      const newHistory = [...history];
+      newHistory.pop();
+      setHistory(newHistory);
+      setCurrentSceneId(newHistory[newHistory.length - 1]);
+      stopAllSpeaking();
+      setMatchedChoiceIndex(null);
+      setSpokenText("");
+      setFeedbackMessage("");
+    }
+  };
+
+  const stopAllSpeaking = () => {
+    if (synthRef.current.speaking) {
+      synthRef.current.cancel();
+    }
+    setIsSpeakingMain(false);
+    setSpeakingChoiceIndex(null);
+    setCurrentWordIndex(null);
+  };
+
+  const speakText = (text, type, index = null) => {
+    if ((type === 'main' && isSpeakingMain) || (type === 'choice' && speakingChoiceIndex === index)) {
+      stopAllSpeaking();
+      return;
+    }
+
+    stopAllSpeaking(); 
+
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'fr-FR';
+    utterance.rate = 0.8;
+    utteranceRef.current = utterance;
+
+    if (type === 'main') setIsSpeakingMain(true);
+    if (type === 'choice') setSpeakingChoiceIndex(index);
+
+    utterance.onboundary = (event) => {
+      if (event.name === 'word') {
+        setCurrentWordIndex(event.charIndex);
+      }
+    };
+
+    utterance.onend = () => {
+      setIsSpeakingMain(false);
+      setSpeakingChoiceIndex(null);
+      setCurrentWordIndex(null);
+    };
+    
+    utterance.onerror = () => {
+      setIsSpeakingMain(false);
+      setSpeakingChoiceIndex(null);
+      setCurrentWordIndex(null);
+    };
+
+    synthRef.current.speak(utterance);
+  };
+
+  const toggleMainSpeech = () => speakText(currentScene.text, 'main');
+  const playChoice = (index, text) => speakText(text, 'choice', index);
+
+  const fontStyle = isDyslexicFont ? 'font-sans' : 'font-serif';
+  const bgColor = highContrast ? 'bg-gray-900' : 'bg-amber-50';
+  const textColor = highContrast ? 'text-yellow-300' : 'text-gray-800';
+  const cardColor = highContrast ? 'bg-gray-800 border-gray-700' : 'bg-white border-amber-100';
+
+  if (!browserSupport) return <div className="p-8 text-center">Navigateur non supporté pour la reconnaissance vocale.</div>;
+
+  return (
+    <div className={`min-h-screen ${bgColor} ${fontStyle} transition-colors duration-300 flex flex-col items-center p-4 md:p-8`}>
+      
+      {/* HEADER */}
+      <div className="w-full max-w-2xl flex justify-between items-center mb-6 bg-white/80 p-3 rounded-2xl shadow-sm backdrop-blur-sm border border-amber-100 z-10">
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-1 text-amber-600 font-bold bg-amber-100 px-3 py-1 rounded-full text-sm">
+            <Star size={16} fill="currentColor" />
+            <span>{xp} XP</span>
+          </div>
+          <div className="flex items-center gap-1 text-emerald-600 font-bold bg-emerald-100 px-3 py-1 rounded-full text-sm">
+            <Backpack size={16} />
+            <span>{inventory.length} objets</span>
+          </div>
+        </div>
+        <button onClick={() => setShowSettings(!showSettings)} className="p-2 hover:bg-gray-100 rounded-full text-gray-600">
+          <Settings size={20} />
+        </button>
+      </div>
+
+      {/* PARAMÈTRES */}
+      {showSettings && (
+        <div className="w-full max-w-2xl mb-6 p-4 bg-white rounded-xl shadow-lg border border-indigo-100 animate-in fade-in slide-in-from-top-4">
+          <h3 className="font-bold text-indigo-900 mb-3 flex items-center gap-2">
+            <Type size={18} /> Réglages de Lecture
+          </h3>
+          <div className="space-y-4">
+            <label className="flex items-center gap-3 p-3 bg-indigo-50 rounded-lg cursor-pointer border border-indigo-100">
+              <div className={`w-10 h-6 rounded-full p-1 transition-colors ${isSimplifiedMode ? 'bg-indigo-600' : 'bg-gray-300'}`}>
+                <div className={`bg-white w-4 h-4 rounded-full shadow-md transform transition-transform ${isSimplifiedMode ? 'translate-x-4' : 'translate-x-0'}`}></div>
+              </div>
+              <input type="checkbox" className="hidden" checked={isSimplifiedMode} onChange={() => setIsSimplifiedMode(!isSimplifiedMode)} />
+              <div>
+                <span className="font-bold text-indigo-900 block">Mode Débutant (Mots-clés)</span>
+                <span className="text-xs text-gray-500">Affiche et écoute uniquement les mots importants.</span>
+              </div>
+            </label>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <label className="text-sm text-gray-600">Taille du texte</label>
+                <input type="range" min="16" max="32" value={textSize} onChange={(e) => setTextSize(Number(e.target.value))} className="w-full accent-indigo-600" />
+              </div>
+              <div className="flex flex-col gap-2">
+                <label className="flex items-center gap-2 cursor-pointer p-2 hover:bg-gray-50 rounded-lg">
+                  <input type="checkbox" checked={isDyslexicFont} onChange={() => setIsDyslexicFont(!isDyslexicFont)} className="rounded text-indigo-600" />
+                  <span className="text-sm font-sans">Police simplifiée</span>
+                </label>
+                <label className="flex items-center gap-2 cursor-pointer p-2 hover:bg-gray-50 rounded-lg">
+                  <input type="checkbox" checked={highContrast} onChange={() => setHighContrast(!highContrast)} className="rounded text-indigo-600" />
+                  <span className="text-sm font-bold">Mode Contraste Élevé</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ZONE PRINCIPALE */}
+      <div className={`w-full max-w-2xl ${cardColor} rounded-3xl shadow-xl overflow-hidden border-2 transition-all duration-300 relative pb-56`}>
+        
+        {/* Bouton Retour */}
+        {history.length > 1 && (
+          <button onClick={handleGoBack} className="absolute top-4 left-4 p-2 bg-black/5 hover:bg-black/10 rounded-full z-10 transition-colors">
+            <Reply size={20} className={textColor} />
+          </button>
+        )}
+
+        {/* Image Scène */}
+        <div className="h-48 md:h-64 bg-gradient-to-br from-indigo-100 to-purple-100 flex items-center justify-center text-8xl relative overflow-hidden">
+           <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
+           <span className="animate-bounce-slow drop-shadow-lg filter">{currentScene.image}</span>
+        </div>
+
+        {/* Texte Scène avec TTS Highlight */}
+        <div className="p-6 md:p-8">
+          <div className="flex justify-between items-start mb-4">
+            <h2 className={`text-xl font-bold opacity-70 uppercase tracking-wide ${textColor}`}>
+              {currentScene.title}
+            </h2>
+            <button 
+              onClick={toggleMainSpeech} 
+              className={`p-2 rounded-full transition-all ${isSpeakingMain ? 'bg-yellow-400 text-yellow-900 shadow-lg scale-110' : 'bg-indigo-50 text-indigo-600 hover:bg-indigo-100'}`}
+              title="Lire l'histoire"
+            >
+              <Volume2 size={24} />
+            </button>
+          </div>
+
+          <HighlightedText 
+            text={currentScene.text} 
+            highlightIndex={isSpeakingMain ? currentWordIndex : null}
+            textSize={textSize}
+            textColor={textColor}
+          />
+
+          {/* Feedback Inventaire */}
+          {currentScene.item && !inventory.includes(currentScene.item) && (
+             <div className="mb-6 bg-yellow-50 border border-yellow-200 p-4 rounded-xl flex items-center gap-3 animate-pulse">
+               <Star className="text-yellow-500" />
+               <span className="text-yellow-800 font-bold">Objet découvert : {currentScene.itemLabel} !</span>
+             </div>
+          )}
+
+          <div className="border-t border-gray-200 my-4"></div>
+
+          {/* CHOIX */}
+          <div className="space-y-4">
+            <div className="flex items-center gap-2 mb-2">
+              <div className="p-1.5 bg-indigo-100 rounded-full">
+                {isSimplifiedMode ? <Wand2 size={16} className="text-indigo-600" /> : <Mic size={16} className="text-indigo-600" />}
+              </div>
+              <span className={`text-sm font-bold uppercase tracking-wider ${highContrast ? 'text-gray-300' : 'text-gray-500'}`}>
+                {isSimplifiedMode ? "Dis le mot magique :" : "Lis une phrase à haute voix :"}
+              </span>
+            </div>
+
+            {currentScene.choices.map((choice, index) => {
+              const isLocked = choice.requirement && !inventory.includes(choice.requirement);
+              return (
+                <div key={index} className="transition-all duration-300">
+                  <Button 
+                    choice={choice}
+                    index={index}
+                    isSimplifiedMode={isSimplifiedMode}
+                    disabled={isLocked}
+                    isMatched={matchedChoiceIndex === index}
+                    isSpeaking={speakingChoiceIndex === index}
+                    highlightIndex={speakingChoiceIndex === index ? currentWordIndex : null}
+                    onPlay={playChoice}
+                  />
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* INTERFACE VOCALE FLOTTANTE */}
+        <div className="absolute bottom-0 left-0 right-0 p-4 bg-white/95 backdrop-blur-md border-t border-indigo-100 flex flex-col items-center z-20 shadow-[0_-5px_20px_rgba(0,0,0,0.1)]">
+          
+          <div className="mb-3 h-8 flex items-center justify-center w-full">
+             {spokenText && (
+               <span className={`text-lg font-medium truncate max-w-full px-4 ${matchedChoiceIndex !== null ? 'text-emerald-600 font-bold' : 'text-indigo-800'}`}>
+                 "{spokenText}"
+               </span>
+             )}
+             {!spokenText && feedbackMessage && (
+               <span className={`text-sm font-medium animate-pulse ${feedbackMessage.includes('Bravo') ? 'text-emerald-600 text-lg font-bold' : 'text-orange-500'}`}>
+                 {feedbackMessage}
+               </span>
+             )}
+          </div>
+
+          <div className="relative">
+             {isListening && (
+               <>
+                <div className="absolute inset-0 bg-red-400 rounded-full animate-ping opacity-20"></div>
+                <div className="absolute inset-[-10px] bg-red-400 rounded-full animate-pulse opacity-10"></div>
+               </>
+             )}
+             
+            <button 
+              onClick={toggleListening}
+              className={`
+                relative w-20 h-20 rounded-full flex items-center justify-center shadow-xl transition-all transform hover:scale-105 active:scale-95 border-4
+                ${isListening 
+                  ? 'bg-red-500 border-red-100 text-white' 
+                  : 'bg-indigo-600 border-indigo-100 text-white hover:bg-indigo-700'
+                }
+                ${matchedChoiceIndex !== null ? 'bg-emerald-500 border-emerald-200' : ''}
+              `}
+            >
+              {matchedChoiceIndex !== null ? <CheckCircle2 size={40} /> : (isListening ? <MicOff size={32} /> : <Mic size={36} />)}
+            </button>
+          </div>
+          
+          <span className="text-xs text-gray-400 mt-3 font-medium uppercase tracking-widest">
+            {isListening ? (isSimplifiedMode ? "Dis un mot..." : "Je t'écoute...") : "Appuie pour parler"}
+          </span>
+        </div>
+
+      </div>
+    </div>
+  );
+}

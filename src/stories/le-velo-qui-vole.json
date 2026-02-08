@@ -1,0 +1,105 @@
+{
+  "title": "Le Vélo qui vole",
+  "description": "Un vélo ailé cherche le vent parfait pour franchir une vallée.",
+  "coverImage": "🚲",
+  "difficulty": "moyen",
+  "estimatedTime": "9 min",
+  "startScene": "start",
+  "scenes": {
+    "start": {
+      "id": "start",
+      "title": "Le sommet de départ",
+      "text": "Le vélo a des ailes. Pour voler, il faut soit une boussole, soit une plume porte-bonheur.",
+      "image": "⛰️",
+      "xp": 5,
+      "choices": [
+        {
+          "text": "Chercher une boussole",
+          "nextScene": "boussole",
+          "keyword": "boussole"
+        },
+        {
+          "text": "Chercher une plume",
+          "nextScene": "plume",
+          "keyword": "plume"
+        }
+      ]
+    },
+    "boussole": {
+      "id": "boussole",
+      "title": "La boussole du vent",
+      "text": "La boussole tourne vers un courant d'air stable.",
+      "image": "🧭",
+      "xp": 10,
+      "item": "boussole_vent",
+      "itemLabel": "Boussole du vent",
+      "choices": [
+        {
+          "text": "Aller au tremplin",
+          "nextScene": "tremplin",
+          "keyword": "tremplin"
+        }
+      ]
+    },
+    "plume": {
+      "id": "plume",
+      "title": "La plume légère",
+      "text": "Une plume scintillante rend les ailes plus légères.",
+      "image": "🪶",
+      "xp": 10,
+      "item": "plume_legere",
+      "itemLabel": "Plume légère",
+      "choices": [
+        {
+          "text": "Aller au tremplin",
+          "nextScene": "tremplin",
+          "keyword": "tremplin"
+        }
+      ]
+    },
+    "tremplin": {
+      "id": "tremplin",
+      "title": "Le grand tremplin",
+      "text": "La vallée est immense. Il faut choisir le bon vent pour voler.",
+      "image": "🛤️",
+      "xp": 12,
+      "choices": [
+        {
+          "text": "Suivre la boussole",
+          "nextScene": "fin_vol",
+          "requirement": "boussole_vent",
+          "fallbackText": "Sans boussole, tu ne sais pas quel vent suivre.",
+          "keyword": "boussole"
+        },
+        {
+          "text": "Utiliser la plume",
+          "nextScene": "fin_vol",
+          "requirement": "plume_legere",
+          "fallbackText": "Sans plume, les ailes sont trop lourdes.",
+          "keyword": "plume"
+        },
+        {
+          "text": "Revenir au sommet",
+          "nextScene": "start",
+          "keyword": "sommet"
+        }
+      ]
+    },
+    "fin_vol": {
+      "id": "fin_vol",
+      "title": "Le vol parfait",
+      "text": "Le vélo vole au-dessus de la vallée et atterrit en douceur. Bravo !",
+      "image": "🌈",
+      "xp": 50,
+      "isEnd": true,
+      "choices": [
+        {
+          "text": "Recommencer l'aventure",
+          "nextScene": "start",
+          "reset": true,
+          "keyword": "Recommencer"
+        }
+      ]
+    }
+  }
+}

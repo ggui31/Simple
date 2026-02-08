@@ -1,0 +1,82 @@
+{
+  "title": "Titre de l'Histoire",
+  "description": "Une courte description de l'aventure (1-2 phrases).",
+  "coverImage": "🎭",
+  "difficulty": "facile",
+  "estimatedTime": "5 min",
+  "startScene": "start",
+  "scenes": {
+    "start": {
+      "id": "start",
+      "title": "Titre de la Première Scène",
+      "text": "Le texte narratif de la scène. C'est ce que l'enfant va lire ou écouter.",
+      "image": "🌟",
+      "xp": 10,
+      "choices": [
+        {
+          "text": "Premier choix possible",
+          "nextScene": "scene_2",
+          "keyword": "premier"
+        },
+        {
+          "text": "Deuxième choix possible",
+          "nextScene": "scene_3",
+          "keyword": "deuxième"
+        }
+      ]
+    },
+    "scene_2": {
+      "id": "scene_2",
+      "title": "Scène avec un Objet",
+      "text": "Tu découvres un objet intéressant !",
+      "image": "🔑",
+      "xp": 15,
+      "item": "key",
+      "itemLabel": "Clé Magique",
+      "choices": [
+        {
+          "text": "Continuer l'aventure",
+          "nextScene": "scene_finale",
+          "keyword": "continuer"
+        }
+      ]
+    },
+    "scene_3": {
+      "id": "scene_3",
+      "title": "Scène Alternative",
+      "text": "Un autre chemin s'offre à toi...",
+      "image": "🛤️",
+      "xp": 10,
+      "choices": [
+        {
+          "text": "Utiliser la clé magique",
+          "nextScene": "scene_finale",
+          "requirement": "key",
+          "fallbackText": "Il te manque quelque chose...",
+          "keyword": "clé"
+        },
+        {
+          "text": "Revenir au début",
+          "nextScene": "start",
+          "keyword": "revenir"
+        }
+      ]
+    },
+    "scene_finale": {
+      "id": "scene_finale",
+      "title": "Victoire !",
+      "text": "Bravo, tu as terminé l'aventure !",
+      "image": "🏆",
+      "xp": 100,
+      "isEnd": true,
+      "choices": [
+        {
+          "text": "Recommencer l'aventure",
+          "nextScene": "start",
+          "reset": true,
+          "keyword": "recommencer"
+        }
+      ]
+    }
+  }
+}

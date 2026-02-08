@@ -1,0 +1,105 @@
+{
+  "title": "La Cité des Papillons",
+  "description": "Les papillons ont perdu leur route. Aide-les à retrouver le grand arbre refuge.",
+  "coverImage": "🦋",
+  "difficulty": "facile",
+  "estimatedTime": "8 min",
+  "startScene": "start",
+  "scenes": {
+    "start": {
+      "id": "start",
+      "title": "La place des ailes",
+      "text": "Des papillons tournent en rond. Il leur faut un signe pour retrouver le refuge.",
+      "image": "🏙️",
+      "xp": 5,
+      "choices": [
+        {
+          "text": "Allumer une lanterne",
+          "nextScene": "lanterne",
+          "keyword": "lanterne"
+        },
+        {
+          "text": "Chercher le parfum des fleurs",
+          "nextScene": "parfum",
+          "keyword": "parfum"
+        }
+      ]
+    },
+    "lanterne": {
+      "id": "lanterne",
+      "title": "La lanterne dorée",
+      "text": "Tu trouves une lanterne qui brille comme un soleil miniature.",
+      "image": "🏮",
+      "xp": 10,
+      "item": "lanterne_doree",
+      "itemLabel": "Lanterne dorée",
+      "choices": [
+        {
+          "text": "Suivre le grand arbre",
+          "nextScene": "arbre",
+          "keyword": "arbre"
+        }
+      ]
+    },
+    "parfum": {
+      "id": "parfum",
+      "title": "Le parfum des fleurs",
+      "text": "Un flacon de parfum floral attire doucement les papillons.",
+      "image": "🌸",
+      "xp": 10,
+      "item": "parfum_floral",
+      "itemLabel": "Parfum floral",
+      "choices": [
+        {
+          "text": "Suivre le grand arbre",
+          "nextScene": "arbre",
+          "keyword": "arbre"
+        }
+      ]
+    },
+    "arbre": {
+      "id": "arbre",
+      "title": "Le grand arbre refuge",
+      "text": "Le grand arbre est là, mais l'entrée est cachée par des feuilles.",
+      "image": "🌳",
+      "xp": 10,
+      "choices": [
+        {
+          "text": "Guider avec la lanterne",
+          "nextScene": "fin_refuge",
+          "requirement": "lanterne_doree",
+          "fallbackText": "Sans lanterne, la lumière manque.",
+          "keyword": "lanterne"
+        },
+        {
+          "text": "Guider avec le parfum",
+          "nextScene": "fin_refuge",
+          "requirement": "parfum_floral",
+          "fallbackText": "Sans parfum, ils ne suivent pas.",
+          "keyword": "parfum"
+        },
+        {
+          "text": "Revenir à la place",
+          "nextScene": "start",
+          "keyword": "place"
+        }
+      ]
+    },
+    "fin_refuge": {
+      "id": "fin_refuge",
+      "title": "La route retrouvée",
+      "text": "Les papillons entrent dans le refuge. La cité devient légère et joyeuse.",
+      "image": "🎉",
+      "xp": 40,
+      "isEnd": true,
+      "choices": [
+        {
+          "text": "Recommencer l'aventure",
+          "nextScene": "start",
+          "reset": true,
+          "keyword": "Recommencer"
+        }
+      ]
+    }
+  }
+}

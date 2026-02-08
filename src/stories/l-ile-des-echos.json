@@ -1,0 +1,101 @@
+{
+  "title": "L’Île des Échos",
+  "description": "Chaque mot prononcé crée un écho magique qui ouvre des passages.",
+  "coverImage": "🏝️",
+  "difficulty": "facile",
+  "estimatedTime": "7 min",
+  "startScene": "start",
+  "scenes": {
+    "start": {
+      "id": "start",
+      "title": "La plage des murmures",
+      "text": "L'île répond aux mots. Deux chemins t'appellent.",
+      "image": "🌴",
+      "xp": 5,
+      "choices": [
+        {
+          "text": "Explorer la grotte",
+          "nextScene": "grotte",
+          "keyword": "grotte"
+        },
+        {
+          "text": "Suivre la falaise",
+          "nextScene": "falaise",
+          "keyword": "falaise"
+        }
+      ]
+    },
+    "grotte": {
+      "id": "grotte",
+      "title": "La grotte des échos",
+      "text": "Un écho répète un mot secret : \"Ami\".",
+      "image": "🗣️",
+      "xp": 10,
+      "item": "mot_cle",
+      "itemLabel": "Mot clé : Ami",
+      "choices": [
+        {
+          "text": "Aller à la porte",
+          "nextScene": "porte",
+          "keyword": "porte"
+        }
+      ]
+    },
+    "falaise": {
+      "id": "falaise",
+      "title": "La falaise chantante",
+      "text": "Le vent forme des échos qui guident tes pas.",
+      "image": "🌬️",
+      "xp": 8,
+      "choices": [
+        {
+          "text": "Répéter l'écho",
+          "nextScene": "grotte",
+          "keyword": "écho"
+        },
+        {
+          "text": "Aller à la porte",
+          "nextScene": "porte",
+          "keyword": "porte"
+        }
+      ]
+    },
+    "porte": {
+      "id": "porte",
+      "title": "La porte de pierre",
+      "text": "Une porte réagit aux mots prononcés.",
+      "image": "🪨",
+      "xp": 10,
+      "choices": [
+        {
+          "text": "Prononcer le mot ami",
+          "nextScene": "fin_ami",
+          "requirement": "mot_cle",
+          "fallbackText": "La porte reste silencieuse.",
+          "keyword": "ami"
+        },
+        {
+          "text": "Revenir à la plage",
+          "nextScene": "start",
+          "keyword": "plage"
+        }
+      ]
+    },
+    "fin_ami": {
+      "id": "fin_ami",
+      "title": "Le passage s'ouvre",
+      "text": "La porte s'ouvre et l'île révèle un jardin secret.",
+      "image": "🌺",
+      "xp": 40,
+      "isEnd": true,
+      "choices": [
+        {
+          "text": "Recommencer l'aventure",
+          "nextScene": "start",
+          "reset": true,
+          "keyword": "recommencer"
+        }
+      ]
+    }
+  }
+}

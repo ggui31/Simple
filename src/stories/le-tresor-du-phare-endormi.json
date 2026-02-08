@@ -1,0 +1,101 @@
+{
+  "title": "Le Trésor du Phare Endormi",
+  "description": "Une tempête a éteint le phare. Retrouve la lentille perdue pour rallumer sa lumière avant la nuit.",
+  "coverImage": "🗼",
+  "difficulty": "moyen",
+  "estimatedTime": "10 min",
+  "startScene": "start",
+  "scenes": {
+    "start": {
+      "id": "start",
+      "title": "Le port sous la tempête",
+      "text": "Les vagues grondent et le phare s'est éteint. Les bateaux ont besoin de sa lumière.",
+      "image": "🌊",
+      "xp": 5,
+      "choices": [
+        {
+          "text": "Aller au phare",
+          "nextScene": "phare",
+          "keyword": "phare"
+        },
+        {
+          "text": "Explorer la plage",
+          "nextScene": "plage",
+          "keyword": "plage"
+        }
+      ]
+    },
+    "plage": {
+      "id": "plage",
+      "title": "La plage aux débris",
+      "text": "Tu trouves une lentille brillante coincée dans du bois flotté.",
+      "image": "🔍",
+      "xp": 10,
+      "item": "lentille",
+      "itemLabel": "Lentille du phare",
+      "choices": [
+        {
+          "text": "Retourner au phare",
+          "nextScene": "phare",
+          "keyword": "phare"
+        }
+      ]
+    },
+    "phare": {
+      "id": "phare",
+      "title": "L'escalier du phare",
+      "text": "L'escalier tourne jusqu'au sommet, là où la lampe attend.",
+      "image": "🌀",
+      "xp": 8,
+      "choices": [
+        {
+          "text": "Monter au sommet",
+          "nextScene": "sommet",
+          "keyword": "sommet"
+        },
+        {
+          "text": "Revenir au port",
+          "nextScene": "start",
+          "keyword": "port"
+        }
+      ]
+    },
+    "sommet": {
+      "id": "sommet",
+      "title": "La lanterne éteinte",
+      "text": "La grande lampe est silencieuse. Il manque la lentille qui guide la lumière.",
+      "image": "🕯️",
+      "xp": 10,
+      "choices": [
+        {
+          "text": "Installer la lentille",
+          "nextScene": "fin_lumiere",
+          "requirement": "lentille",
+          "fallbackText": "Il manque la lentille du phare.",
+          "keyword": "lentille"
+        },
+        {
+          "text": "Redescendre",
+          "nextScene": "phare",
+          "keyword": "redescendre"
+        }
+      ]
+    },
+    "fin_lumiere": {
+      "id": "fin_lumiere",
+      "title": "Le phare rallumé",
+      "text": "La lumière balaye la mer. Les bateaux sont sauvés !",
+      "image": "✨",
+      "xp": 50,
+      "isEnd": true,
+      "choices": [
+        {
+          "text": "Recommencer l'aventure",
+          "nextScene": "start",
+          "reset": true,
+          "keyword": "recommencer"
+        }
+      ]
+    }
+  }
+}

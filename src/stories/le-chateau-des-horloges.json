@@ -1,0 +1,121 @@
+{
+  "title": "Le Château des Horloges",
+  "description": "Un engrenage s'est bloqué : remet le temps en marche.",
+  "coverImage": "⏰",
+  "difficulty": "moyen",
+  "estimatedTime": "9 min",
+  "startScene": "start",
+  "scenes": {
+    "start": {
+      "id": "start",
+      "title": "Le hall du château",
+      "text": "Les horloges se sont arrêtées. Deux salles peuvent aider.",
+      "image": "🏰",
+      "xp": 5,
+      "choices": [
+        {
+          "text": "Entrer dans la salle des engrenages",
+          "nextScene": "engrenages",
+          "keyword": "engrenages"
+        },
+        {
+          "text": "Monter à la salle du pendule",
+          "nextScene": "pendule",
+          "keyword": "pendule"
+        }
+      ]
+    },
+    "engrenages": {
+      "id": "engrenages",
+      "title": "La salle des engrenages",
+      "text": "Un grand engrenage brille au sol.",
+      "image": "⚙️",
+      "xp": 10,
+      "item": "grand_engrenage",
+      "itemLabel": "Grand engrenage",
+      "choices": [
+        {
+          "text": "Aller au cœur",
+          "nextScene": "coeur",
+          "keyword": "cœur"
+        }
+      ]
+    },
+    "pendule": {
+      "id": "pendule",
+      "title": "La salle du pendule",
+      "text": "Le poids du pendule repose sur un coussin.",
+      "image": "🪝",
+      "xp": 10,
+      "item": "poids_pendule",
+      "itemLabel": "Poids du pendule",
+      "choices": [
+        {
+          "text": "Aller au cœur",
+          "nextScene": "coeur",
+          "keyword": "cœur"
+        }
+      ]
+    },
+    "coeur": {
+      "id": "coeur",
+      "title": "Le cœur mécanique",
+      "text": "La grande horloge est arrêtée. Il faut une pièce manquante.",
+      "image": "🧠",
+      "xp": 12,
+      "choices": [
+        {
+          "text": "Installer l'engrenage",
+          "nextScene": "fin_engrenage",
+          "requirement": "grand_engrenage",
+          "fallbackText": "Il manque un engrenage.",
+          "keyword": "engrenage"
+        },
+        {
+          "text": "Accrocher le poids",
+          "nextScene": "fin_poids",
+          "requirement": "poids_pendule",
+          "fallbackText": "Le poids manque.",
+          "keyword": "poids"
+        },
+        {
+          "text": "Retourner au hall",
+          "nextScene": "start",
+          "keyword": "hall"
+        }
+      ]
+    },
+    "fin_engrenage": {
+      "id": "fin_engrenage",
+      "title": "Le temps repart",
+      "text": "L'engrenage s'emboîte et les horloges chantent.",
+      "image": "🎶",
+      "xp": 45,
+      "isEnd": true,
+      "choices": [
+        {
+          "text": "Recommencer l'aventure",
+          "nextScene": "start",
+          "reset": true,
+          "keyword": "recommencer"
+        }
+      ]
+    },
+    "fin_poids": {
+      "id": "fin_poids",
+      "title": "Le pendule relancé",
+      "text": "Le poids relance le mouvement et le château revit.",
+      "image": "🕰️",
+      "xp": 45,
+      "isEnd": true,
+      "choices": [
+        {
+          "text": "Recommencer l'aventure",
+          "nextScene": "start",
+          "reset": true,
+          "keyword": "recommencer"
+        }
+      ]
+    }
+  }
+}

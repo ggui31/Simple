@@ -1,0 +1,105 @@
+{
+  "title": "Le Cirque des Ombres",
+  "description": "Des ombres farceuses ont caché les accessoires. Aide le cirque à jouer.",
+  "coverImage": "🎪",
+  "difficulty": "moyen",
+  "estimatedTime": "10 min",
+  "startScene": "start",
+  "scenes": {
+    "start": {
+      "id": "start",
+      "title": "La piste vide",
+      "text": "Le cirque est prêt, mais les accessoires ont disparu. Deux ombres rient derrière les rideaux.",
+      "image": "🕶️",
+      "xp": 5,
+      "choices": [
+        {
+          "text": "Chercher le chapeau",
+          "nextScene": "chapeau",
+          "keyword": "chapeau"
+        },
+        {
+          "text": "Chercher la corde",
+          "nextScene": "corde",
+          "keyword": "corde"
+        }
+      ]
+    },
+    "chapeau": {
+      "id": "chapeau",
+      "title": "Le chapeau du magicien",
+      "text": "Dans une malle, tu trouves un chapeau brillant.",
+      "image": "🎩",
+      "xp": 10,
+      "item": "chapeau_magique",
+      "itemLabel": "Chapeau magique",
+      "choices": [
+        {
+          "text": "Aller en coulisses",
+          "nextScene": "coulisses",
+          "keyword": "coulisses"
+        }
+      ]
+    },
+    "corde": {
+      "id": "corde",
+      "title": "La corde du funambule",
+      "text": "Sous la scène, tu trouves une corde bien rangée.",
+      "image": "🪢",
+      "xp": 10,
+      "item": "corde_funambule",
+      "itemLabel": "Corde du funambule",
+      "choices": [
+        {
+          "text": "Aller en coulisses",
+          "nextScene": "coulisses",
+          "keyword": "coulisses"
+        }
+      ]
+    },
+    "coulisses": {
+      "id": "coulisses",
+      "title": "Les coulisses sombres",
+      "text": "Les ombres demandent : quel accessoire veux-tu rendre au cirque ?",
+      "image": "🧩",
+      "xp": 12,
+      "choices": [
+        {
+          "text": "Rendre le chapeau",
+          "nextScene": "fin_spectacle",
+          "requirement": "chapeau_magique",
+          "fallbackText": "Tu n'as pas de chapeau.",
+          "keyword": "chapeau"
+        },
+        {
+          "text": "Rendre la corde",
+          "nextScene": "fin_spectacle",
+          "requirement": "corde_funambule",
+          "fallbackText": "Tu n'as pas de corde.",
+          "keyword": "corde"
+        },
+        {
+          "text": "Retourner à la piste",
+          "nextScene": "start",
+          "keyword": "piste"
+        }
+      ]
+    },
+    "fin_spectacle": {
+      "id": "fin_spectacle",
+      "title": "Le spectacle commence",
+      "text": "Les accessoires sont de retour. Les ombres applaudissent et le cirque joue enfin.",
+      "image": "🎉",
+      "xp": 50,
+      "isEnd": true,
+      "choices": [
+        {
+          "text": "Recommencer l'aventure",
+          "nextScene": "start",
+          "reset": true,
+          "keyword": "Recommencer"
+        }
+      ]
+    }
+  }
+}

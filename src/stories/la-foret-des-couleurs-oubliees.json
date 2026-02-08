@@ -9,7 +9,7 @@
     "start": {
       "id": "start",
       "title": "La lisière grise",
-      "text": "La forêt est devenue terne. Deux chemins mènent aux pigments perdus.",
+      "text": "La forêt est devenue terne. Deux chemins mènent aux pigments perdus. Ton but : retrouver une couleur pour réveiller la forêt.",
       "image": "🌫️",
       "xp": 5,
       "choices": [
@@ -97,7 +97,7 @@
           "text": "Recommencer l'aventure",
           "nextScene": "start",
           "reset": true,
-          "keyword": "recommencer"
+          "keyword": "Recommencer"
         }
       ]
     },
@@ -113,7 +113,7 @@
           "text": "Recommencer l'aventure",
           "nextScene": "start",
           "reset": true,
-          "keyword": "recommencer"
+          "keyword": "Recommencer"
         }
       ]
     }

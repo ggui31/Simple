@@ -9,7 +9,7 @@
     "start": {
       "id": "start",
       "title": "Le sommet de départ",
-      "text": "Le vélo a des ailes. Pour voler, il faut soit une boussole, soit une plume porte-bonheur.",
+      "text": "Le vélo a des ailes, et il tremble d'impatience au bord du sommet. Pour voler, il faut soit une boussole qui trouve un bon vent, soit une plume porte-bonheur. Ton objectif : franchir la vallée et atterrir en douceur.",
       "image": "⛰️",
       "xp": 5,
       "choices": [
@@ -28,7 +28,7 @@
     "boussole": {
       "id": "boussole",
       "title": "La boussole du vent",
-      "text": "La boussole tourne vers un courant d'air stable.",
+      "text": "La boussole tourne, puis se fixe vers un courant d'air stable. Elle te montre une direction précise, comme si le vent avait un chemin.",
       "image": "🧭",
       "xp": 10,
       "item": "boussole_vent",
@@ -44,7 +44,7 @@
     "plume": {
       "id": "plume",
       "title": "La plume légère",
-      "text": "Une plume scintillante rend les ailes plus légères.",
+      "text": "Une plume scintillante tombe près de toi. Quand tu la touches, les ailes semblent plus légères, comme si l'air aidait déjà.",
       "image": "🪶",
       "xp": 10,
       "item": "plume_legere",
@@ -60,7 +60,7 @@
     "tremplin": {
       "id": "tremplin",
       "title": "Le grand tremplin",
-      "text": "La vallée est immense. Il faut choisir le bon vent pour voler.",
+      "text": "La vallée est immense, et tu ne vois pas le fond. Pour voler, il faut choisir le bon vent, sinon le vélo risque de tourner en rond.",
       "image": "🛤️",
       "xp": 12,
       "choices": [

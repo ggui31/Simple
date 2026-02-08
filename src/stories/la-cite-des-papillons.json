@@ -9,7 +9,7 @@
     "start": {
       "id": "start",
       "title": "La place des ailes",
-      "text": "Des papillons tournent en rond. Il leur faut un signe pour retrouver le refuge.",
+      "text": "Des papillons tournent en rond. Il leur faut un signe pour retrouver le refuge. Ton but : les guider jusqu'au grand arbre.",
       "image": "🏙️",
       "xp": 5,
       "choices": [

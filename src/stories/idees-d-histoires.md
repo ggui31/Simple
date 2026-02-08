@@ -1,10 +1,12 @@
 # Idées d’histoires à écrire
 
-- **Le Train des Étoiles** — Un train magique traverse le ciel : il faut choisir les bonnes constellations pour arriver à temps.
-- **La Bibliothèque des Murmures** — Des livres chuchotent des énigmes pour retrouver un chapitre perdu.
-- **Le Lac aux Nuages** — Un lac reflète les nuages : une aventure pour calmer une tempête.
-- **La Cité des Papillons** — Les papillons perdent leur route : aider à retrouver le grand arbre refuge.
-- **Le Robot du Marché** — Un petit robot livre des fruits et apprend à écouter les habitants.
-- **La Sorcière des Plantes** — Une jardinière magique cherche la graine qui soigne le village.
-- **Le Vélo qui vole** — Un vélo ailé doit trouver le vent parfait pour franchir une vallée.
-- **Le Cirque des Ombres** — Des ombres farceuses ont caché les accessoires du spectacle.
+- **La Ville des Ballons Perdus** — Des ballons s’échappent et font des bêtises. Les attraper sans les faire éclater.
+- **La Course des Escargots** — Une course lente mais maligne. Choisir les bons chemins, éviter les flaques et gagner sans tricher.
+- **Le Secret du Glacier** — Un glacier craque et révèle une grotte. Retrouver un objet ancien avant que la neige ne tombe.
+- **Le Village des Chats-Poissons** — Un village au bord de l’eau. Réparer un petit pont et aider tout le monde à se comprendre.
+- **Le Jardin des Ombrelles** — Le vent emporte les ombrelles colorées. Les rassembler pour protéger le pique-nique.
+- **La Ville des Ballons Perdus** — Des ballons s’échappent et font des bêtises. Les attraper sans les faire éclater.
+- **La Course des Escargots** — Une course lente mais maligne. Choisir les bons chemins, éviter les flaques et gagner sans tricher.
+- **Le Secret du Glacier** — Un glacier craque et révèle une grotte. Retrouver un objet ancien avant que la neige ne tombe.
+- **Le Village des Chats-Poissons** — Un village au bord de l’eau. Réparer un petit pont et aider tout le monde à se comprendre.
+- **Le Jardin des Ombrelles** — Le vent emporte les ombrelles colorées. Les rassembler pour protéger le pique-nique.

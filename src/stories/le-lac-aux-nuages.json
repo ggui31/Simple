@@ -9,7 +9,7 @@
     "start": {
       "id": "start",
       "title": "Le bord du lac",
-      "text": "Le lac reflète des nuages agités. Une tempête approche si rien ne change.",
+      "text": "Le lac reflète des nuages agités. Une tempête approche si rien ne change. Ton but : calmer les nuages avant l'orage.",
       "image": "🌊",
       "xp": 5,
       "choices": [

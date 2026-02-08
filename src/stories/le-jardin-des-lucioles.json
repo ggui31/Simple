@@ -9,7 +9,7 @@
     "start": {
       "id": "start",
       "title": "La porte du jardin",
-      "text": "Des milliers de lucioles volent sans direction. Il faut les guider.",
+      "text": "Des milliers de lucioles volent sans direction. Ton but : les guider jusqu'au lac des étoiles.",
       "image": "🌿",
       "xp": 5,
       "choices": [
@@ -97,7 +97,7 @@
           "text": "Recommencer l'aventure",
           "nextScene": "start",
           "reset": true,
-          "keyword": "recommencer"
+          "keyword": "Recommencer"
         }
       ]
     },
@@ -113,7 +113,7 @@
           "text": "Recommencer l'aventure",
           "nextScene": "start",
           "reset": true,
-          "keyword": "recommencer"
+          "keyword": "Recommencer"
         }
       ]
     }

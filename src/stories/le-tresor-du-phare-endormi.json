@@ -9,7 +9,7 @@
     "start": {
       "id": "start",
       "title": "Le port sous la tempête",
-      "text": "Les vagues grondent et le phare s'est éteint. Les bateaux ont besoin de sa lumière.",
+      "text": "Les vagues grondent et le phare s'est éteint. Les bateaux ont besoin de sa lumière pour rentrer au port. Ta mission : retrouver la lentille perdue et rallumer le phare avant la nuit.",
       "image": "🌊",
       "xp": 5,
       "choices": [
@@ -28,7 +28,7 @@
     "plage": {
       "id": "plage",
       "title": "La plage aux débris",
-      "text": "Tu trouves une lentille brillante coincée dans du bois flotté.",
+      "text": "Le vent pousse des débris sur le sable. Tu trouves une lentille brillante coincée dans du bois flotté.",
       "image": "🔍",
       "xp": 10,
       "item": "lentille",
@@ -44,7 +44,7 @@
     "phare": {
       "id": "phare",
       "title": "L'escalier du phare",
-      "text": "L'escalier tourne jusqu'au sommet, là où la lampe attend.",
+      "text": "L'escalier tourne jusqu'au sommet, là où la lampe attend. Chaque marche craque, et tu entends la mer tout en bas.",
       "image": "🌀",
       "xp": 8,
       "choices": [
@@ -63,7 +63,7 @@
     "sommet": {
       "id": "sommet",
       "title": "La lanterne éteinte",
-      "text": "La grande lampe est silencieuse. Il manque la lentille qui guide la lumière.",
+      "text": "La grande lampe est silencieuse, et la vitre est vide. Il manque la lentille qui guide la lumière pour éclairer la mer.",
       "image": "🕯️",
       "xp": 10,
       "choices": [
@@ -77,14 +77,14 @@
         {
           "text": "Redescendre",
           "nextScene": "phare",
-          "keyword": "redescendre"
+          "keyword": "Redescendre"
         }
       ]
     },
     "fin_lumiere": {
       "id": "fin_lumiere",
       "title": "Le phare rallumé",
-      "text": "La lumière balaye la mer. Les bateaux sont sauvés !",
+      "text": "La lumière balaye la mer et traverse la pluie. Les bateaux retrouvent leur route : ils sont sauvés !",
       "image": "✨",
       "xp": 50,
       "isEnd": true,
@@ -93,7 +93,7 @@
           "text": "Recommencer l'aventure",
           "nextScene": "start",
           "reset": true,
-          "keyword": "recommencer"
+          "keyword": "Recommencer"
         }
       ]
     }

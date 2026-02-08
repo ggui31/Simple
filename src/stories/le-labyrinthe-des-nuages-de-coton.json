@@ -1,0 +1,119 @@
+{
+  "title": "Le Labyrinthe des Nuages de Coton",
+  "description": "Un labyrinthe doux dans le ciel. Retrouve la sortie en suivant des signes et en te souvenant d'une petite suite.",
+  "coverImage": "☁️",
+  "difficulty": "difficile",
+  "estimatedTime": "12 min",
+  "startScene": "start",
+  "scenes": {
+    "start": {
+      "id": "start",
+      "title": "L'entrée cotonneuse",
+      "text": "Tu arrives dans un labyrinthe fait de nuages de coton. Un oiseau te dit : \"La sortie est cachée.\" Ta mission : trouver la sortie et rapporter le ruban du ciel.",
+      "image": "🕊️",
+      "xp": 5,
+      "choices": [
+        { "text": "Suivre le signe Soleil", "nextScene": "soleil", "keyword": "Soleil" },
+        { "text": "Suivre le signe Lune", "nextScene": "lune", "keyword": "Lune" }
+      ]
+    },
+    "soleil": {
+      "id": "soleil",
+      "title": "Le couloir du Soleil",
+      "text": "Le couloir est chaud et doux. Un panneau dit : \"Premier signe : SOLEIL.\"",
+      "image": "☀️",
+      "xp": 12,
+      "item": "suite_signes",
+      "itemLabel": "Suite : SOLEIL, LUNE, ÉTOILE",
+      "choices": [
+        { "text": "Aller vers une porte blanche", "nextScene": "porte", "keyword": "porte" }
+      ]
+    },
+    "lune": {
+      "id": "lune",
+      "title": "Le couloir de la Lune",
+      "text": "Tout est calme et un peu frais. Un panneau dit : \"Un bon chemin se suit avec des signes.\"",
+      "image": "🌙",
+      "xp": 10,
+      "choices": [
+        { "text": "Aller vers une porte blanche", "nextScene": "porte", "keyword": "porte" },
+        { "text": "Revenir à l'entrée", "nextScene": "start", "keyword": "entrée" }
+      ]
+    },
+    "porte": {
+      "id": "porte",
+      "title": "La grande porte",
+      "text": "Une grande porte en coton bloque le passage. Elle dit : \"Dis le mot de passe et la suite des signes.\"",
+      "image": "🚪",
+      "xp": 12,
+      "choices": [
+        { "text": "Apprendre le mot de passe", "nextScene": "mot", "keyword": "passe" },
+        { "text": "Choisir la suite des signes", "nextScene": "suite", "keyword": "suite" }
+      ]
+    },
+    "mot": {
+      "id": "mot",
+      "title": "Le mot de passe",
+      "text": "Un petit nuage te chuchote : \"Mot de passe : COTON LÉGER\". Garde-le en tête.",
+      "image": "🔐",
+      "xp": 12,
+      "item": "mot_passe",
+      "itemLabel": "Mot de passe : COTON LÉGER",
+      "choices": [
+        { "text": "Revenir à la porte", "nextScene": "porte", "keyword": "porte" }
+      ]
+    },
+    "suite": {
+      "id": "suite",
+      "title": "La suite à retenir",
+      "text": "La porte demande : \"Quelle est la suite ?\"",
+      "image": "🧩",
+      "xp": 15,
+      "choices": [
+        {
+          "text": "Dire SOLEIL, LUNE, ÉTOILE",
+          "nextScene": "ruban",
+          "requirement": "suite_signes",
+          "fallbackText": "Tu n'as pas appris la suite.",
+          "keyword": "SOLEIL"
+        },
+        { "text": "Dire LUNE, SOLEIL, ÉTOILE", "nextScene": "perdu", "keyword": "LUNE" },
+        { "text": "Dire ÉTOILE, LUNE, SOLEIL", "nextScene": "perdu", "keyword": "ÉTOILE" }
+      ]
+    },
+    "perdu": {
+      "id": "perdu",
+      "title": "Oups",
+      "text": "La porte fait \"non\". Elle dit : \"Ce n'est pas la bonne suite.\"",
+      "image": "😅",
+      "xp": 5,
+      "choices": [
+        { "text": "Revenir choisir la suite", "nextScene": "suite", "keyword": "suite" }
+      ]
+    },
+    "ruban": {
+      "id": "ruban",
+      "title": "Le ruban du ciel",
+      "text": "Derrière la porte, tu vois un ruban brillant. Il faut dire le mot de passe pour le prendre et sortir.",
+      "image": "🎗️",
+      "xp": 15,
+      "item": "ruban_ciel",
+      "itemLabel": "Ruban du ciel",
+      "choices": [
+        { "text": "Dire COTON LÉGER", "nextScene": "fin", "requirement": "mot_passe", "fallbackText": "Tu ne connais pas le mot de passe.", "keyword": "COTON" },
+        { "text": "Retourner apprendre le mot de passe", "nextScene": "mot", "keyword": "passe" }
+      ]
+    },
+    "fin": {
+      "id": "fin",
+      "title": "La sortie",
+      "text": "Le labyrinthe s'ouvre, et tu sors avec le ruban du ciel. Les nuages te saluent, et tu redescends content.",
+      "image": "🏁",
+      "xp": 70,
+      "isEnd": true,
+      "choices": [
+        { "text": "Recommencer l'aventure", "nextScene": "start", "reset": true, "keyword": "Recommencer" }
+      ]
+    }
+  }
+}

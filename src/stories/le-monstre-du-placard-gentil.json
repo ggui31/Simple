@@ -1,0 +1,106 @@
+{
+  "title": "Le Monstre du Placard Gentil",
+  "description": "Un monstre a peur du noir. Aide-le à trouver une lumière douce et à se souvenir d'une phrase magique pour dormir.",
+  "coverImage": "👾",
+  "difficulty": "difficile",
+  "estimatedTime": "10 min",
+  "startScene": "start",
+  "scenes": {
+    "start": {
+      "id": "start",
+      "title": "La chambre calme",
+      "text": "Dans la chambre, un placard grince. Une petite voix dit : \"Je suis gentil, mais j'ai peur du noir…\" Ta mission : aider le monstre à se sentir en sécurité pour qu'il puisse dormir.",
+      "image": "🛏️",
+      "xp": 5,
+      "choices": [
+        { "text": "Chercher une lumière douce", "nextScene": "lumiere", "keyword": "lumière" },
+        { "text": "Chercher une phrase magique", "nextScene": "phrase", "keyword": "phrase" }
+      ]
+    },
+    "lumiere": {
+      "id": "lumiere",
+      "title": "Le tiroir des lampes",
+      "text": "Dans un tiroir, tu trouves deux choses : une grosse lampe forte et une petite veilleuse douce.",
+      "image": "💡",
+      "xp": 10,
+      "choices": [
+        { "text": "Prendre la veilleuse douce", "nextScene": "retour", "keyword": "veilleuse" },
+        { "text": "Prendre la lampe forte", "nextScene": "trop_fort", "keyword": "lampe" }
+      ]
+    },
+    "trop_fort": {
+      "id": "trop_fort",
+      "title": "Trop de lumière",
+      "text": "La lampe forte éblouit. Le monstre ferme les yeux et dit : \"Ouille, c'est trop fort…\" Il lui faut une lumière douce.",
+      "image": "😵",
+      "xp": 5,
+      "choices": [
+        { "text": "Revenir au tiroir", "nextScene": "lumiere", "keyword": "tiroir" }
+      ]
+    },
+    "retour": {
+      "id": "retour",
+      "title": "La veilleuse",
+      "text": "La veilleuse brille doucement, comme une étoile près du lit.",
+      "image": "🌙",
+      "xp": 10,
+      "item": "veilleuse",
+      "itemLabel": "Veilleuse douce",
+      "choices": [
+        { "text": "Aller au placard", "nextScene": "placard", "keyword": "placard" }
+      ]
+    },
+    "phrase": {
+      "id": "phrase",
+      "title": "La phrase à retenir",
+      "text": "Un doudou chuchote une phrase qui calme : \"BONNE NUIT, PETIT COURAGE\". Garde-la en tête.",
+      "image": "🧸",
+      "xp": 12,
+      "item": "phrase_magique",
+      "itemLabel": "Phrase : BONNE NUIT, PETIT COURAGE",
+      "choices": [
+        { "text": "Aller au placard", "nextScene": "placard", "keyword": "placard" }
+      ]
+    },
+    "placard": {
+      "id": "placard",
+      "title": "La porte du placard",
+      "text": "Le monstre est derrière la porte. Il veut une veilleuse douce et la phrase magique.",
+      "image": "🚪",
+      "xp": 12,
+      "choices": [
+        {
+          "text": "Donner la veilleuse",
+          "nextScene": "mot",
+          "requirement": "veilleuse",
+          "fallbackText": "Tu n'as pas de veilleuse douce.",
+          "keyword": "veilleuse"
+        },
+        { "text": "Dire la phrase magique", "nextScene": "mot", "requirement": "phrase_magique", "fallbackText": "Tu ne connais pas la phrase.", "keyword": "phrase" },
+        { "text": "Retourner dans la chambre", "nextScene": "start", "keyword": "chambre" }
+      ]
+    },
+    "mot": {
+      "id": "mot",
+      "title": "Le bonsoir",
+      "text": "Le monstre sourit, mais il veut tout : la veilleuse et la phrase. C'est la dernière étape.",
+      "image": "😊",
+      "xp": 12,
+      "choices": [
+        { "text": "Dire BONNE NUIT, PETIT COURAGE", "nextScene": "fin", "requirement": "phrase_magique", "fallbackText": "Il te manque la phrase.", "keyword": "BONNE" },
+        { "text": "Poser la veilleuse", "nextScene": "fin", "requirement": "veilleuse", "fallbackText": "Il te manque la veilleuse.", "keyword": "veilleuse" }
+      ]
+    },
+    "fin": {
+      "id": "fin",
+      "title": "Dodo tranquille",
+      "text": "La veilleuse brille. Tu dis la phrase magique, et le monstre baille. Le placard devient un petit coin rassurant. Bonne nuit !",
+      "image": "😴",
+      "xp": 60,
+      "isEnd": true,
+      "choices": [
+        { "text": "Recommencer l'aventure", "nextScene": "start", "reset": true, "keyword": "Recommencer" }
+      ]
+    }
+  }
+}

@@ -9,7 +9,7 @@
     "start": {
       "id": "start",
       "title": "La grotte timide",
-      "text": "Le dragon garde ses flammes. Il a besoin de confiance.",
+      "text": "Le dragon garde ses flammes au fond de sa gorge, parce qu'il a peur de se brûler. Il a besoin de confiance. Ta mission : l'aider à faire un feu utile, sans danger.",
       "image": "🪨",
       "xp": 5,
       "choices": [
@@ -28,7 +28,7 @@
     "lac": {
       "id": "lac",
       "title": "Le lac calme",
-      "text": "La respiration tranquille du lac apprend au dragon un souffle doux.",
+      "text": "Au bord du lac, l'eau bouge doucement. En respirant avec toi, le dragon apprend un souffle calme et régulier.",
       "image": "🫧",
       "xp": 10,
       "item": "souffle_doux",
@@ -44,7 +44,7 @@
     "forge": {
       "id": "forge",
       "title": "La forge chaleureuse",
-      "text": "Le forgeron prête des gants épais pour tenir la braise.",
+      "text": "Dans la forge, la chaleur est forte mais rassurante. Le forgeron te prête des gants épais pour tenir la braise sans te faire mal.",
       "image": "⚒️",
       "xp": 10,
       "item": "gants",
@@ -60,7 +60,7 @@
     "epreuve": {
       "id": "epreuve",
       "title": "L'épreuve du feu",
-      "text": "Un feu de camp attend. Le dragon veut aider sans se brûler.",
+      "text": "Un feu de camp attend, mais il est presque éteint. Le dragon veut aider sans se brûler, et il te regarde pour savoir quoi faire.",
       "image": "🔥",
       "xp": 12,
       "choices": [
@@ -69,7 +69,7 @@
           "nextScene": "fin_souffle",
           "requirement": "souffle_doux",
           "fallbackText": "Le dragon ne sait pas encore souffler doucement.",
-          "keyword": "souffler"
+          "keyword": "Souffler"
         },
         {
           "text": "Tenir la braise avec les gants",
@@ -88,7 +88,7 @@
     "fin_souffle": {
       "id": "fin_souffle",
       "title": "Un souffle de courage",
-      "text": "Le dragon souffle doucement et le feu danse sans danger.",
+      "text": "Le dragon souffle doucement, et le feu danse sans danger. Cette fois, il n'a pas peur : il contrôle sa force.",
       "image": "🌟",
       "xp": 45,
       "isEnd": true,
@@ -97,14 +97,14 @@
           "text": "Recommencer l'aventure",
           "nextScene": "start",
           "reset": true,
-          "keyword": "recommencer"
+          "keyword": "Recommencer"
         }
       ]
     },
     "fin_gants": {
       "id": "fin_gants",
       "title": "Les braises protégées",
-      "text": "Avec les gants, le dragon aide et devient confiant.",
+      "text": "Avec les gants, le dragon peut bouger la braise sans se brûler. Il se sent utile, et sa confiance grandit.",
       "image": "🧤",
       "xp": 45,
       "isEnd": true,
@@ -113,7 +113,7 @@
           "text": "Recommencer l'aventure",
           "nextScene": "start",
           "reset": true,
-          "keyword": "recommencer"
+          "keyword": "Recommencer"
         }
       ]
     }

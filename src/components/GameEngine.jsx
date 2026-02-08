@@ -4,7 +4,7 @@ import { isMatch } from '../utils/textUtils';
 import Button from './Button';
 import HighlightedText from './HighlightedText';
 
-export default function GameEngine({ storyData, onBack }) {
+export default function GameEngine({ storyData }) {
   const startScene = storyData.startScene || 'start';
   const scenes = storyData.scenes;
 
@@ -219,16 +219,6 @@ export default function GameEngine({ storyData, onBack }) {
 
       {/* HEADER / SIDEBAR */}
       <div className="flex-none w-full md:w-auto md:h-min max-w-2xl md:max-w-none flex justify-between md:flex-col md:justify-start items-center md:gap-4 bg-white/80 p-3 rounded-2xl shadow-sm backdrop-blur-sm border border-amber-100 z-10">
-        <div className="flex items-center gap-4">
-          {/* Bouton retour à la sélection */}
-          <button
-            onClick={() => { stopAllSpeaking(); onBack(); }}
-            className="p-2 hover:bg-gray-100 rounded-full text-gray-600 transition-colors"
-            title="Retour aux histoires"
-          >
-            <Reply size={20} />
-          </button>
-        </div>
         <button onClick={() => setShowSettings(!showSettings)} className="p-2 hover:bg-gray-100 rounded-full text-gray-600">
           <Settings size={20} />
         </button>

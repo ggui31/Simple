@@ -10,7 +10,6 @@ export default function App() {
     return (
       <GameEngine
         storyData={selectedStory}
-        onBack={() => setSelectedStory(null)}
       />
     );
   }

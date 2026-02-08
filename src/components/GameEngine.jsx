@@ -215,10 +215,10 @@ export default function GameEngine({ storyData, onBack }) {
   if (!browserSupport) return <div className="p-8 text-center">Navigateur non supporté pour la reconnaissance vocale.</div>;
 
   return (
-    <div className={`h-screen overflow-hidden ${bgColor} ${fontStyle} transition-colors duration-300 flex flex-col items-center p-2 md:p-4`}>
+    <div className={`h-screen overflow-hidden ${bgColor} ${fontStyle} transition-colors duration-300 flex flex-col md:flex-row items-center md:items-start md:justify-center p-2 md:p-4 gap-4`}>
 
-      {/* HEADER */}
-      <div className="flex-none w-full max-w-2xl flex justify-between items-center mb-4 bg-white/80 p-3 rounded-2xl shadow-sm backdrop-blur-sm border border-amber-100 z-10">
+      {/* HEADER / SIDEBAR */}
+      <div className="flex-none w-full md:w-auto md:h-min max-w-2xl md:max-w-none flex justify-between md:flex-col md:justify-start items-center md:gap-4 bg-white/80 p-3 rounded-2xl shadow-sm backdrop-blur-sm border border-amber-100 z-10">
         <div className="flex items-center gap-4">
           {/* Bouton retour à la sélection */}
           <button
@@ -234,9 +234,10 @@ export default function GameEngine({ storyData, onBack }) {
         </button>
       </div>
 
-      {/* PARAMÈTRES */}
-      {showSettings && (
-        <div className="w-full max-w-2xl mb-6 p-4 bg-white rounded-xl shadow-lg border border-indigo-100 animate-in fade-in slide-in-from-top-4">
+      <div className="flex-1 w-full max-w-2xl flex flex-col min-h-0 h-full">
+        {/* PARAMÈTRES */}
+        {showSettings && (
+          <div className="w-full mb-6 p-4 bg-white rounded-xl shadow-lg border border-indigo-100 animate-in fade-in slide-in-from-top-4 flex-none">
           <h3 className="font-bold text-indigo-900 mb-3 flex items-center gap-2">
             <Type size={18} /> Réglages de Lecture
           </h3>
@@ -284,7 +285,7 @@ export default function GameEngine({ storyData, onBack }) {
       )}
 
       {/* ZONE PRINCIPALE */}
-      <div className={`flex-1 w-full max-w-2xl ${cardColor} rounded-3xl shadow-xl overflow-hidden border-2 transition-all duration-300 relative flex flex-col min-h-0 mb-2 md:mb-4`}>
+      <div className={`flex-1 w-full ${cardColor} rounded-3xl shadow-xl overflow-hidden border-2 transition-all duration-300 relative flex flex-col min-h-0 mb-2 md:mb-4`}>
 
         {/* Bouton Retour Scène */}
         {history.length > 1 && (
@@ -407,6 +408,7 @@ export default function GameEngine({ storyData, onBack }) {
           </span>
         </div>
 
+      </div>
       </div>
     </div>
   );

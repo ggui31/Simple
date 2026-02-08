@@ -1,7 +1,7 @@
 import React from 'react';
 import { Volume2, CheckCircle2 } from 'lucide-react';
 
-const Button = ({ choice, index, isSimplifiedMode, disabled = false, isMatched = false, isSpeaking, highlightIndex, onPlay }) => {
+const Button = ({ choice, index, isSimplifiedMode, disabled = false, isMatched = false, isSpeaking, highlightIndex, onPlay, showChoiceListenButtons }) => {
   const baseStyle = "px-4 py-3 rounded-xl font-bold transition-all transform shadow-sm flex items-center justify-between gap-2 relative overflow-hidden";
 
   let variantStyle = "";
@@ -64,7 +64,7 @@ const Button = ({ choice, index, isSimplifiedMode, disabled = false, isMatched =
       {renderText()}
 
       <div className="flex items-center gap-2 z-20">
-        {!disabled && !isMatched && (
+        {!isMatched && (disabled || showChoiceListenButtons) && (
           <button
             onClick={(e) => {
               e.stopPropagation();

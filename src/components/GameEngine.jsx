@@ -19,6 +19,7 @@ export default function GameEngine({ storyData, onBack }) {
   const [highContrast, setHighContrast] = useState(false);
   const [isSimplifiedMode, setIsSimplifiedMode] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
+  const [showChoiceListenButtons, setShowChoiceListenButtons] = useState(false);
 
   // Audio & Voice
   const [isSpeakingMain, setIsSpeakingMain] = useState(false);
@@ -34,6 +35,15 @@ export default function GameEngine({ storyData, onBack }) {
   const synthRef = useRef(window.speechSynthesis);
   const recognitionRef = useRef(null);
   const utteranceRef = useRef(null);
+
+  useEffect(() => {
+    stopAllSpeaking();
+    const timer = setTimeout(() => {
+      speakText(scenes[currentSceneId].text, 'main');
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [currentSceneId]);
 
   useEffect(() => {
     if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
@@ -205,10 +215,10 @@ export default function GameEngine({ storyData, onBack }) {
   if (!browserSupport) return <div className="p-8 text-center">Navigateur non supporté pour la reconnaissance vocale.</div>;
 
   return (
-    <div className={`min-h-screen ${bgColor} ${fontStyle} transition-colors duration-300 flex flex-col items-center p-4 md:p-8`}>
+    <div className={`h-screen overflow-hidden ${bgColor} ${fontStyle} transition-colors duration-300 flex flex-col items-center p-2 md:p-4`}>
 
       {/* HEADER */}
-      <div className="w-full max-w-2xl flex justify-between items-center mb-6 bg-white/80 p-3 rounded-2xl shadow-sm backdrop-blur-sm border border-amber-100 z-10">
+      <div className="flex-none w-full max-w-2xl flex justify-between items-center mb-4 bg-white/80 p-3 rounded-2xl shadow-sm backdrop-blur-sm border border-amber-100 z-10">
         <div className="flex items-center gap-4">
           {/* Bouton retour à la sélection */}
           <button
@@ -218,14 +228,6 @@ export default function GameEngine({ storyData, onBack }) {
           >
             <Reply size={20} />
           </button>
-          <div className="flex items-center gap-1 text-amber-600 font-bold bg-amber-100 px-3 py-1 rounded-full text-sm">
-            <Star size={16} fill="currentColor" />
-            <span>{xp} XP</span>
-          </div>
-          <div className="flex items-center gap-1 text-emerald-600 font-bold bg-emerald-100 px-3 py-1 rounded-full text-sm">
-            <Backpack size={16} />
-            <span>{inventory.length} objets</span>
-          </div>
         </div>
         <button onClick={() => setShowSettings(!showSettings)} className="p-2 hover:bg-gray-100 rounded-full text-gray-600">
           <Settings size={20} />
@@ -250,6 +252,17 @@ export default function GameEngine({ storyData, onBack }) {
               </div>
             </label>
 
+            <label className="flex items-center gap-3 p-3 bg-indigo-50 rounded-lg cursor-pointer border border-indigo-100">
+              <div className={`w-10 h-6 rounded-full p-1 transition-colors ${showChoiceListenButtons ? 'bg-indigo-600' : 'bg-gray-300'}`}>
+                <div className={`bg-white w-4 h-4 rounded-full shadow-md transform transition-transform ${showChoiceListenButtons ? 'translate-x-4' : 'translate-x-0'}`}></div>
+              </div>
+              <input type="checkbox" className="hidden" checked={showChoiceListenButtons} onChange={() => setShowChoiceListenButtons(!showChoiceListenButtons)} />
+              <div>
+                <span className="font-bold text-indigo-900 block">Afficher les boutons d'écoute</span>
+                <span className="text-xs text-gray-500">Affiche l'option d'écoute pour toutes les réponses.</span>
+              </div>
+            </label>
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <label className="text-sm text-gray-600">Taille du texte</label>
@@ -271,7 +284,7 @@ export default function GameEngine({ storyData, onBack }) {
       )}
 
       {/* ZONE PRINCIPALE */}
-      <div className={`w-full max-w-2xl ${cardColor} rounded-3xl shadow-xl overflow-hidden border-2 transition-all duration-300 relative pb-56`}>
+      <div className={`flex-1 w-full max-w-2xl ${cardColor} rounded-3xl shadow-xl overflow-hidden border-2 transition-all duration-300 relative flex flex-col min-h-0 mb-2 md:mb-4`}>
 
         {/* Bouton Retour Scène */}
         {history.length > 1 && (
@@ -281,13 +294,13 @@ export default function GameEngine({ storyData, onBack }) {
         )}
 
         {/* Image Scène */}
-        <div className="h-48 md:h-64 bg-gradient-to-br from-indigo-100 to-purple-100 flex items-center justify-center text-8xl relative overflow-hidden">
+        <div className="flex-none h-32 md:h-48 bg-gradient-to-br from-indigo-100 to-purple-100 flex items-center justify-center text-8xl relative overflow-hidden">
           <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
           <span className="animate-bounce-slow drop-shadow-lg filter">{currentScene.image}</span>
         </div>
 
-        {/* Texte Scène avec TTS Highlight */}
-        <div className="p-6 md:p-8">
+        {/* Contenu Scrollable */}
+        <div className="flex-1 overflow-y-auto p-4 md:p-6 pb-32">
           <div className="flex justify-between items-start mb-4">
             <h2 className={`text-xl font-bold opacity-70 uppercase tracking-wide ${textColor}`}>
               {currentScene.title}
@@ -342,6 +355,7 @@ export default function GameEngine({ storyData, onBack }) {
                     isSpeaking={speakingChoiceIndex === index}
                     highlightIndex={speakingChoiceIndex === index ? currentWordIndex : null}
                     onPlay={playChoice}
+                    showChoiceListenButtons={showChoiceListenButtons}
                   />
                 </div>
               );

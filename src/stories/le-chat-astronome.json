@@ -1,0 +1,123 @@
+{
+  "title": "Le Chat Astronome",
+  "description": "Un chat observe le ciel et a perdu une étoile filante. Aide-le à la retrouver et à ouvrir le dôme avec un mot de passe.",
+  "coverImage": "🐱",
+  "difficulty": "difficile",
+  "estimatedTime": "12 min",
+  "startScene": "start",
+  "scenes": {
+    "start": {
+      "id": "start",
+      "title": "Le toit de l'observatoire",
+      "text": "Minou l'astronome miaule fort : une étoile filante est tombée, et il faut la retrouver avant le matin. Ta mission : trouver l'étoile filante et revenir au dôme.",
+      "image": "🔭",
+      "xp": 5,
+      "choices": [
+        { "text": "Regarder avec le télescope", "nextScene": "telescope", "keyword": "télescope" },
+        { "text": "Suivre les traces de lumière", "nextScene": "traces", "keyword": "traces" }
+      ]
+    },
+    "telescope": {
+      "id": "telescope",
+      "title": "Le télescope",
+      "text": "Tu vois une trace lumineuse qui pointe vers trois dessins dans le ciel : une Casserole, un Lion et un Cygne.",
+      "image": "🌟",
+      "xp": 10,
+      "item": "indice_constellation",
+      "itemLabel": "Indice : la Casserole",
+      "choices": [
+        { "text": "Descendre dans la ville", "nextScene": "ville", "keyword": "ville" }
+      ]
+    },
+    "traces": {
+      "id": "traces",
+      "title": "Les traces de lumière",
+      "text": "Sur les tuiles, tu vois des paillettes. Elles mènent vers une petite place où un panneau montre des constellations.",
+      "image": "✨",
+      "xp": 10,
+      "choices": [
+        { "text": "Aller voir le panneau", "nextScene": "panneau", "keyword": "panneau" },
+        { "text": "Aller au dôme", "nextScene": "dome", "keyword": "dôme" }
+      ]
+    },
+    "panneau": {
+      "id": "panneau",
+      "title": "Le panneau des étoiles",
+      "text": "Le panneau dit : \"La Grande Casserole aide à trouver le nord.\" Minou te glisse un mot important : \"Mot de passe : MIAOU LUNE.\" Garde-le en tête.",
+      "image": "🪧",
+      "xp": 12,
+      "item": "mot_passe",
+      "itemLabel": "Mot de passe : MIAOU LUNE",
+      "choices": [
+        { "text": "Aller vers la colline", "nextScene": "colline", "keyword": "colline" }
+      ]
+    },
+    "ville": {
+      "id": "ville",
+      "title": "La ruelle calme",
+      "text": "Dans une ruelle, un chat noir t'indique une colline. Il dit que la lumière est tombée là-bas.",
+      "image": "🏘️",
+      "xp": 10,
+      "choices": [
+        { "text": "Aller vers la colline", "nextScene": "colline", "keyword": "colline" },
+        { "text": "Retourner au toit", "nextScene": "start", "keyword": "toit" }
+      ]
+    },
+    "colline": {
+      "id": "colline",
+      "title": "La colline des herbes",
+      "text": "La colline est douce et un peu humide. Tu vois une petite pierre brillante. Pour la prendre, tu dois répondre à une devinette simple.",
+      "image": "🌿",
+      "xp": 12,
+      "choices": [
+        { "text": "Répondre : la Casserole", "nextScene": "etoile", "requirement": "indice_constellation", "fallbackText": "Tu n'es pas sûr… il te manque un indice.", "keyword": "Casserole" },
+        { "text": "Répondre : le Lion", "nextScene": "mauvaise", "keyword": "Lion" },
+        { "text": "Répondre : le Cygne", "nextScene": "mauvaise", "keyword": "Cygne" }
+      ]
+    },
+    "mauvaise": {
+      "id": "mauvaise",
+      "title": "Pas tout à fait",
+      "text": "La pierre ne brille plus. Une voix dit : \"Essaye encore, avec le bon dessin.\"",
+      "image": "🙈",
+      "xp": 5,
+      "choices": [
+        { "text": "Revenir à la colline", "nextScene": "colline", "keyword": "colline" }
+      ]
+    },
+    "etoile": {
+      "id": "etoile",
+      "title": "L'étoile filante",
+      "text": "La pierre brille très fort. C'est l'étoile filante ! Tu la prends doucement.",
+      "image": "💎",
+      "xp": 15,
+      "item": "etoile_filante",
+      "itemLabel": "Étoile filante",
+      "choices": [
+        { "text": "Retourner au dôme", "nextScene": "dome", "keyword": "dôme" }
+      ]
+    },
+    "dome": {
+      "id": "dome",
+      "title": "La porte du dôme",
+      "text": "La porte est fermée. Il faut dire le mot de passe pour entrer et poser l'étoile.",
+      "image": "🚪",
+      "xp": 12,
+      "choices": [
+        { "text": "Dire MIAOU LUNE", "nextScene": "fin", "requirement": "mot_passe", "fallbackText": "Tu n'es pas sûr du mot de passe.", "keyword": "MIAOU" },
+        { "text": "Aller relire le panneau", "nextScene": "panneau", "keyword": "panneau" }
+      ]
+    },
+    "fin": {
+      "id": "fin",
+      "title": "L'étoile sauvée",
+      "text": "Le dôme s'ouvre. Minou pose l'étoile filante dans une boîte douce. Le ciel brille, et toi aussi, tu souris.",
+      "image": "🎁",
+      "xp": 60,
+      "isEnd": true,
+      "choices": [
+        { "text": "Recommencer l'aventure", "nextScene": "start", "reset": true, "keyword": "Recommencer" }
+      ]
+    }
+  }
+}

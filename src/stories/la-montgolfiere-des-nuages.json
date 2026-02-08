@@ -9,7 +9,7 @@
     "start": {
       "id": "start",
       "title": "Le décollage",
-      "text": "La montgolfière est prête. Un panier contient une carte des vents.",
+      "text": "La montgolfière est prête, attachée à la corde. Le pilote te confie la corde de guidage et te montre le panier : une carte des vents peut t'aider. Ta mission : rejoindre le plateau des nuages sans te faire surprendre par l'orage.",
       "image": "🧭",
       "xp": 5,
       "choices": [
@@ -21,14 +21,14 @@
         {
           "text": "Décoller tout de suite",
           "nextScene": "ciel",
-          "keyword": "décoller"
+          "keyword": "Décoller"
         }
       ]
     },
     "carte": {
       "id": "carte",
       "title": "La carte précieuse",
-      "text": "Tu glisses la carte des vents dans ton sac.",
+      "text": "Tu glisses la carte des vents dans ton sac. Elle montre des flèches et des signes, comme un vrai plan de pilote.",
       "image": "🗺️",
       "xp": 8,
       "item": "carte_vents",
@@ -44,7 +44,7 @@
     "ciel": {
       "id": "ciel",
       "title": "Le ciel ouvert",
-      "text": "Le ballon flotte entre les nuages. Les vents changent vite.",
+      "text": "Le ballon monte doucement et flotte entre les nuages. Le paysage devient tout petit, et les vents changent vite autour de toi.",
       "image": "☁️",
       "xp": 8,
       "choices": [
@@ -63,7 +63,7 @@
     "vent_est": {
       "id": "vent_est",
       "title": "Le couloir de l'orage",
-      "text": "Un nuage sombre approche. La route est risquée.",
+      "text": "Au loin, un gros nuage sombre approche. La route est plus rapide, mais aussi plus risquée.",
       "image": "⛈️",
       "xp": 10,
       "choices": [
@@ -84,7 +84,7 @@
     "vent_ouest": {
       "id": "vent_ouest",
       "title": "Le vent doux",
-      "text": "Un courant tranquille mène vers un plateau lumineux.",
+      "text": "Un courant tranquille te pousse doucement vers l'ouest. Devant toi, un plateau lumineux semble t'attendre pour atterrir.",
       "image": "🌤️",
       "xp": 10,
       "choices": [
@@ -103,7 +103,7 @@
     "plateau": {
       "id": "plateau",
       "title": "Le plateau des nuages",
-      "text": "Tu découvres un jardin suspendu au-dessus du monde.",
+      "text": "Tu poses la montgolfière en douceur et tu découvres un jardin suspendu au-dessus du monde. Le voyage a été difficile, mais tu es arrivé en sécurité.",
       "image": "🏞️",
       "xp": 40,
       "isEnd": true,
@@ -112,14 +112,14 @@
           "text": "Recommencer l'aventure",
           "nextScene": "start",
           "reset": true,
-          "keyword": "recommencer"
+          "keyword": "Recommencer"
         }
       ]
     },
     "fin_orage": {
       "id": "fin_orage",
       "title": "Le défi du ciel",
-      "text": "Tu traverses l'orage et apprends le courage des pilotes.",
+      "text": "Tu traverses l'orage jusqu'au bout. Quand le calme revient, tu comprends pourquoi les pilotes respectent les nuages.",
       "image": "⚡",
       "xp": 40,
       "isEnd": true,
@@ -128,7 +128,7 @@
           "text": "Recommencer l'aventure",
           "nextScene": "start",
           "reset": true,
-          "keyword": "recommencer"
+          "keyword": "Recommencer"
         }
       ]
     }

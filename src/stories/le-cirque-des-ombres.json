@@ -9,7 +9,7 @@
     "start": {
       "id": "start",
       "title": "La piste vide",
-      "text": "Le cirque est prêt, mais les accessoires ont disparu. Deux ombres rient derrière les rideaux.",
+      "text": "Le cirque est prêt, mais les accessoires ont disparu juste avant le spectacle. Deux ombres rient derrière les rideaux. Ta mission : retrouver les accessoires et aider le cirque à commencer.",
       "image": "🕶️",
       "xp": 5,
       "choices": [
@@ -28,7 +28,7 @@
     "chapeau": {
       "id": "chapeau",
       "title": "Le chapeau du magicien",
-      "text": "Dans une malle, tu trouves un chapeau brillant.",
+      "text": "Dans une vieille malle, tu trouves un chapeau brillant. Il sent la poussière et la magie.",
       "image": "🎩",
       "xp": 10,
       "item": "chapeau_magique",
@@ -44,7 +44,7 @@
     "corde": {
       "id": "corde",
       "title": "La corde du funambule",
-      "text": "Sous la scène, tu trouves une corde bien rangée.",
+      "text": "Sous la scène, tu trouves une corde bien rangée. Elle est solide, et elle servira pour marcher très haut.",
       "image": "🪢",
       "xp": 10,
       "item": "corde_funambule",
@@ -60,7 +60,7 @@
     "coulisses": {
       "id": "coulisses",
       "title": "Les coulisses sombres",
-      "text": "Les ombres demandent : quel accessoire veux-tu rendre au cirque ?",
+      "text": "Dans les coulisses, tout est sombre et silencieux. Les ombres demandent : quel accessoire veux-tu rendre au cirque pour lancer le spectacle ?",
       "image": "🧩",
       "xp": 12,
       "choices": [

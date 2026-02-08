@@ -42,6 +42,19 @@ export default function StorySelector({ stories, onSelectStory }) {
 
     window.speechSynthesis.speak(utterance);
   };
+  // Grouper les histoires par difficulté
+  const difficultyOrder = { facile: 1, moyen: 2, difficile: 3 };
+  const groupedStories = stories.reduce((acc, story) => {
+    const difficulty = story.difficulty || 'facile';
+    if (!acc[difficulty]) acc[difficulty] = [];
+    acc[difficulty].push(story);
+    return acc;
+  }, {});
+
+  // Trier les groupes par ordre de difficulté
+  const sortedDifficulties = Object.keys(groupedStories).sort(
+    (a, b) => difficultyOrder[a] - difficultyOrder[b]
+  );
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 flex flex-col items-center p-4 md:p-8">
@@ -59,9 +72,25 @@ export default function StorySelector({ stories, onSelectStory }) {
         </p>
       </div>
 
-      {/* GRILLE D'HISTOIRES */}
-      <div className="w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {stories.map((story, index) => {
+      {/* HISTOIRES GROUPÉES PAR DIFFICULTÉ */}
+      <div className="w-full max-w-6xl space-y-12">
+        {sortedDifficulties.map((difficulty) => {
+          const storiesInGroup = groupedStories[difficulty];
+          const diff = difficultyConfig[difficulty] || difficultyConfig.facile;
+
+          return (
+            <div key={difficulty} className="space-y-4">
+              {/* Titre de la section */}
+              <div className="flex items-center gap-3 mb-6">
+                <div className={`px-4 py-2 rounded-xl ${diff.color} border-2 font-bold text-lg`}>
+                  {diff.label}
+                </div>
+                <div className="flex-1 h-px bg-gradient-to-r from-gray-300 to-transparent"></div>
+              </div>
+
+              {/* GRILLE D'HISTOIRES */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {storiesInGroup.map((story, index) => {
           const diff = difficultyConfig[story.difficulty] || difficultyConfig.facile;
           const sceneCount = Object.keys(story.scenes).length;
 
@@ -96,7 +125,7 @@ export default function StorySelector({ stories, onSelectStory }) {
 
               {/* Contenu */}
               <div className="p-5">
-                <h2 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-indigo-700 transition-colors">
+                <h2 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-indigo-700 transition-colors min-h-[3.5rem]">
                   {story.title}
                 </h2>
                 <p className="text-sm text-gray-500 mb-4 line-clamp-2 leading-relaxed">
@@ -124,6 +153,10 @@ export default function StorySelector({ stories, onSelectStory }) {
                     <ArrowRight size={16} className="transform group-hover:translate-x-1 transition-transform" />
                   </span>
                 </div>
+              </div>
+            </div>
+          );
+        })}
               </div>
             </div>
           );

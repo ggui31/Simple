@@ -9,7 +9,7 @@
     "start": {
       "id": "start",
       "title": "Le jardin secret",
-      "text": "La sorcière des plantes te confie une mission : trouver la graine qui soigne.",
+      "text": "La sorcière des plantes te confie une mission importante : trouver la graine qui soigne le village. Pour réussir, tu devras rassembler ce qu'il faut pour l'aider à pousser. Ton objectif : faire grandir la graine.",
       "image": "🌿",
       "xp": 5,
       "choices": [
@@ -28,7 +28,7 @@
     "serre": {
       "id": "serre",
       "title": "La serre chaude",
-      "text": "Dans la serre, un pot contient de la terre spéciale.",
+      "text": "Dans la serre, l'air est chaud et humide. Un pot contient de la terre spéciale, parfaite pour une graine fragile.",
       "image": "🪴",
       "xp": 10,
       "item": "terre_speciale",
@@ -44,7 +44,7 @@
     "riviere": {
       "id": "riviere",
       "title": "La rivière claire",
-      "text": "Près de la rivière, tu recueilles une eau lumineuse.",
+      "text": "Près de la rivière, l'eau est si claire qu'elle brille. Tu recueilles une eau lumineuse dans un petit flacon.",
       "image": "💧",
       "xp": 10,
       "item": "eau_lumineuse",
@@ -60,7 +60,7 @@
     "autel": {
       "id": "autel",
       "title": "L'autel des graines",
-      "text": "Sur l'autel, une graine attend. Elle pousse seulement avec la bonne aide.",
+      "text": "Sur l'autel, une graine attend dans une petite coupe. Elle peut soigner le village, mais elle pousse seulement avec la bonne aide.",
       "image": "🌱",
       "xp": 12,
       "choices": [
@@ -88,7 +88,7 @@
     "fin_soin": {
       "id": "fin_soin",
       "title": "La plante qui soigne",
-      "text": "La graine pousse et une plante lumineuse apparaît. Le village est sauvé.",
+      "text": "La graine pousse vite, et une plante lumineuse apparaît. La sorcière sourit : le village est sauvé.",
       "image": "🌟",
       "xp": 50,
       "isEnd": true,

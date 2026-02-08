@@ -9,7 +9,7 @@
     "start": {
       "id": "start",
       "title": "La plage des murmures",
-      "text": "L'île répond aux mots. Deux chemins t'appellent.",
+      "text": "L'île répond aux mots. Deux chemins t'appellent. Ton but : trouver le mot secret et ouvrir la porte.",
       "image": "🌴",
       "xp": 5,
       "choices": [
@@ -93,7 +93,7 @@
           "text": "Recommencer l'aventure",
           "nextScene": "start",
           "reset": true,
-          "keyword": "recommencer"
+          "keyword": "Recommencer"
         }
       ]
     }

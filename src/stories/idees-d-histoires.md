@@ -1,10 +1,10 @@
 # Idées d’histoires à écrire
 
-- **Le Tambour de la Montagne** — Un tambour magique réveille les échos : retrouver ses deux baguettes pour calmer l'avalanche.
-- **Le Village des Parapluies** — Les parapluies se sont envolés : aider à les rassembler avant la grande pluie.
-- **La Cuisine des Nuages** — Un chef cuisine des nuages : choisir les bons ingrédients pour créer un arc-en-ciel.
-- **Le Pont des Trois Rires** — Un pont n'apparaît qu'avec trois rires : trouver comment faire rire les gardiens.
-- **La Cabane des Cartes Postales** — Des cartes postales ouvrent des portes : retrouver la carte de la bonne destination.
-- **Le Jardin des Cailloux Chantants** — Des cailloux chantent faux : les accorder pour guider un sentier.
-- **La Piste du Renard Curieux** — Un renard suit des traces mystérieuses : choisir les bons indices pour retrouver son ami.
-- **Le Théâtre des Marionnettes** — Les marionnettes ont perdu leurs ficelles : aider à réparer le spectacle.
+- **Le Train des Étoiles** — Un train magique traverse le ciel : il faut choisir les bonnes constellations pour arriver à temps.
+- **La Bibliothèque des Murmures** — Des livres chuchotent des énigmes pour retrouver un chapitre perdu.
+- **Le Lac aux Nuages** — Un lac reflète les nuages : une aventure pour calmer une tempête.
+- **La Cité des Papillons** — Les papillons perdent leur route : aider à retrouver le grand arbre refuge.
+- **Le Robot du Marché** — Un petit robot livre des fruits et apprend à écouter les habitants.
+- **La Sorcière des Plantes** — Une jardinière magique cherche la graine qui soigne le village.
+- **Le Vélo qui vole** — Un vélo ailé doit trouver le vent parfait pour franchir une vallée.
+- **Le Cirque des Ombres** — Des ombres farceuses ont caché les accessoires du spectacle.

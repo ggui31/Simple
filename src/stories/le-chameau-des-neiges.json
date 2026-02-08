@@ -9,7 +9,7 @@
     "start": {
       "id": "start",
       "title": "Le Sommet du Pic Glacé",
-      "text": "Tu es en haut de la montagne. Il fait très froid ! Le gardien du ski te dit qu'un animal très étrange s'est perdu ce matin. Il n'a pas voulu dire lequel...",
+      "text": "Tu es en haut de la montagne. Il fait très froid ! Le gardien du ski te dit qu'un animal s'est perdu ce matin. Ton but : le retrouver, le réchauffer, puis le ramener au village.",
       "image": "🏔️",
       "xp": 10,
       "choices": [
@@ -27,13 +27,13 @@
       "itemLabel": "Écharpe Rouge",
       "choices": [
         { "text": "Prendre l'écharpe rouge", "nextScene": "forest_edge", "keyword": "écharpe" },
-        { "text": "Laisser l'écharpe là", "nextScene": "forest_edge", "keyword": "laisser" }
+        { "text": "Laisser l'écharpe là", "nextScene": "forest_edge", "keyword": "Laisser" }
       ]
     },
     "black_slope": {
       "id": "black_slope",
       "title": "La Piste Noire",
-      "text": "Wouhou ! Tu vas super vite ! Le vent siffle à tes oreilles. Tu remarques des traces bizarres dans la neige... On dirait de grosses assiettes rondes !",
+      "text": "Wouhou ! Tu vas super vite ! Le vent siffle à tes oreilles. Tu remarques de grandes traces rondes dans la neige.",
       "image": "⛷️",
       "xp": 20,
       "choices": [
@@ -43,19 +43,19 @@
     },
     "forest_edge": {
       "id": "forest_edge",
-      "title": "L'Orée de la Forêt",
-      "text": "Les pistes se rejoignent ici. Tu entends un bruit drôle : 'Blater !'. Ce n'est pas le cri d'un ours, ni d'un loup. Cela vient de derrière le gros sapin.",
+      "title": "Le bord de la forêt",
+      "text": "Les pistes se rejoignent ici. Tu entends un drôle de bruit derrière un grand sapin.",
       "image": "🌲",
       "xp": 15,
       "choices": [
         { "text": "Aller voir derrière le sapin", "nextScene": "camel_encounter", "keyword": "sapin" },
-        { "text": "Crier pour demander qui est là", "nextScene": "camel_encounter", "keyword": "crier" }
+        { "text": "Crier pour demander qui est là", "nextScene": "camel_encounter", "keyword": "Crier" }
       ]
     },
     "camel_encounter": {
       "id": "camel_encounter",
-      "title": "Une Rencontre Insolite",
-      "text": "Incroyable ! C'est un chameau ! Il est assis dans la neige et il tremble de tous ses membres. Le pauvre a deux bosses gelées. Il te regarde avec des yeux tristes.",
+      "title": "Une drôle de rencontre",
+      "text": "Oh ! C'est un chameau ! Il est assis dans la neige et il tremble. Il te regarde avec des yeux tristes.",
       "image": "🐫",
       "xp": 30,
       "choices": [
@@ -67,7 +67,7 @@
           "keyword": "écharpe"
         },
         { "text": "Lui faire un gros câlin", "nextScene": "cold_hug", "keyword": "câlin" },
-        { "text": "Retourner chercher un vêtement", "nextScene": "start", "keyword": "retourner" }
+        { "text": "Retourner chercher un vêtement", "nextScene": "start", "keyword": "Retourner" }
       ]
     },
     "cold_hug": {
@@ -83,7 +83,7 @@
     "happy_camel": {
       "id": "happy_camel",
       "title": "Le Chameau Réchauffé",
-      "text": "Tu enroules l'écharpe autour de son long cou. Il arrête de trembler et te fait un bisou baveux ! Il s'appelle Ali et s'était échappé du Cirque des Neiges.",
+      "text": "Tu enroules l'écharpe autour de son long cou. Il arrête de trembler et il te fait un gros bisou ! Il s'appelle Ali. Il s'est échappé du cirque.",
       "image": "🎪",
       "xp": 50,
       "choices": [
@@ -93,12 +93,12 @@
     "victory": {
       "id": "victory",
       "title": "Héros de la Station",
-      "text": "Tu arrives au village sur le dos du chameau ! Tout le monde applaudit. Le directeur du cirque t'offre un chocolat chaud géant pour te remercier.",
+      "text": "Tu arrives au village sur le dos du chameau ! Tout le monde clape des mains. Le chef du cirque t'offre un grand chocolat chaud pour te remercier.",
       "image": "🏆",
       "xp": 100,
       "isEnd": true,
       "choices": [
-        { "text": "Recommencer l'aventure", "nextScene": "start", "reset": true, "keyword": "recommencer" }
+        { "text": "Recommencer l'aventure", "nextScene": "start", "reset": true, "keyword": "Recommencer" }
       ]
     }
   }

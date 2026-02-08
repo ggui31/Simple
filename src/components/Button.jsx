@@ -1,7 +1,7 @@
 import React from 'react';
 import { Volume2, CheckCircle2 } from 'lucide-react';
 
-const Button = ({ choice, index, isSimplifiedMode, disabled = false, isMatched = false, isSpeaking, highlightIndex, onPlay, showChoiceListenButtons }) => {
+const Button = ({ choice, index, isSimplifiedMode, disabled = false, isMatched = false, isSpeaking, highlightIndex, onPlay, showChoiceListenButtons, onClick }) => {
   const baseStyle = "px-4 py-3 rounded-xl font-bold transition-all transform shadow-sm flex items-center justify-between gap-2 relative overflow-hidden";
 
   let variantStyle = "";
@@ -53,7 +53,10 @@ const Button = ({ choice, index, isSimplifiedMode, disabled = false, isMatched =
   };
 
   return (
-    <div className={`${baseStyle} ${variantStyle} w-full h-auto min-h-[60px] transition-all duration-500 ease-out`}>
+    <div 
+      className={`${baseStyle} ${variantStyle} w-full h-auto min-h-[60px] transition-all duration-500 ease-out`}
+      onClick={onClick}
+    >
       {!disabled && !isMatched && (
         <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-indigo-400/50"></div>
       )}

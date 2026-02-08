@@ -1,5 +1,5 @@
-import React from 'react';
-import { BookOpen, Star, ArrowRight, Map } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { BookOpen, Star, ArrowRight, Map, Volume2, StopCircle } from 'lucide-react';
 
 const difficultyConfig = {
   facile: { color: 'bg-emerald-100 text-emerald-700 border-emerald-200', label: '⭐ Facile' },
@@ -8,6 +8,54 @@ const difficultyConfig = {
 };
 
 export default function StorySelector({ stories, onSelectStory }) {
+  const [speakingStoryIndex, setSpeakingStoryIndex] = useState(null);
+
+  useEffect(() => {
+    return () => {
+      window.speechSynthesis.cancel();
+    };
+  }, []);
+
+  const handleSpeakDescription = (story, index, e) => {
+    e.stopPropagation();
+
+    if (speakingStoryIndex === index) {
+      window.speechSynthesis.cancel();
+      setSpeakingStoryIndex(null);
+      return;
+    }
+
+    window.speechSynthesis.cancel();
+    setSpeakingStoryIndex(index);
+
+    const utterance = new SpeechSynthesisUtterance(story.description);
+    utterance.lang = 'fr-FR';
+    utterance.rate = 0.9;
+
+    utterance.onend = () => {
+      setSpeakingStoryIndex(null);
+    };
+
+    utterance.onerror = () => {
+      setSpeakingStoryIndex(null);
+    };
+
+    window.speechSynthesis.speak(utterance);
+  };
+  // Grouper les histoires par difficulté
+  const difficultyOrder = { facile: 1, moyen: 2, difficile: 3 };
+  const groupedStories = stories.reduce((acc, story) => {
+    const difficulty = story.difficulty || 'facile';
+    if (!acc[difficulty]) acc[difficulty] = [];
+    acc[difficulty].push(story);
+    return acc;
+  }, {});
+
+  // Trier les groupes par ordre de difficulté
+  const sortedDifficulties = Object.keys(groupedStories).sort(
+    (a, b) => difficultyOrder[a] - difficultyOrder[b]
+  );
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 flex flex-col items-center p-4 md:p-8">
 
@@ -24,17 +72,40 @@ export default function StorySelector({ stories, onSelectStory }) {
         </p>
       </div>
 
-      {/* GRILLE D'HISTOIRES */}
-      <div className="w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {stories.map((story, index) => {
+      {/* HISTOIRES GROUPÉES PAR DIFFICULTÉ */}
+      <div className="w-full max-w-6xl space-y-12">
+        {sortedDifficulties.map((difficulty) => {
+          const storiesInGroup = groupedStories[difficulty];
+          const diff = difficultyConfig[difficulty] || difficultyConfig.facile;
+
+          return (
+            <div key={difficulty} className="space-y-4">
+              {/* Titre de la section */}
+              <div className="flex items-center gap-3 mb-6">
+                <div className={`px-4 py-2 rounded-xl ${diff.color} border-2 font-bold text-lg`}>
+                  {diff.label}
+                </div>
+                <div className="flex-1 h-px bg-gradient-to-r from-gray-300 to-transparent"></div>
+              </div>
+
+              {/* GRILLE D'HISTOIRES */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {storiesInGroup.map((story, index) => {
           const diff = difficultyConfig[story.difficulty] || difficultyConfig.facile;
           const sceneCount = Object.keys(story.scenes).length;
 
           return (
-            <button
+            <div
               key={index}
+              role="button"
+              tabIndex={0}
               onClick={() => onSelectStory(story)}
-              className="group bg-white rounded-2xl shadow-md hover:shadow-xl border-2 border-transparent hover:border-indigo-300 transition-all duration-300 transform hover:scale-[1.03] active:scale-[0.98] text-left overflow-hidden"
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  onSelectStory(story);
+                }
+              }}
+              className="group cursor-pointer bg-white rounded-2xl shadow-md hover:shadow-xl border-2 border-transparent hover:border-indigo-300 transition-all duration-300 transform hover:scale-[1.03] active:scale-[0.98] text-left overflow-hidden"
             >
               {/* Image de couverture */}
               <div className="h-40 bg-gradient-to-br from-indigo-100 to-purple-100 flex items-center justify-center text-7xl relative overflow-hidden">
@@ -42,11 +113,19 @@ export default function StorySelector({ stories, onSelectStory }) {
                 <span className="group-hover:animate-bounce drop-shadow-lg transition-transform duration-300 group-hover:scale-110">
                   {story.coverImage}
                 </span>
+
+                <button
+                  onClick={(e) => handleSpeakDescription(story, index, e)}
+                  className={`absolute bottom-3 right-3 p-2 rounded-full transition-all shadow-sm z-10 ${speakingStoryIndex === index ? 'bg-indigo-100 text-indigo-600 ring-2 ring-indigo-200' : 'bg-white/90 text-indigo-600 hover:bg-white hover:scale-110'}`}
+                  title="Écouter la description"
+                >
+                  {speakingStoryIndex === index ? <StopCircle size={20} /> : <Volume2 size={20} />}
+                </button>
               </div>
 
               {/* Contenu */}
               <div className="p-5">
-                <h2 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-indigo-700 transition-colors">
+                <h2 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-indigo-700 transition-colors min-h-[3.5rem]">
                   {story.title}
                 </h2>
                 <p className="text-sm text-gray-500 mb-4 line-clamp-2 leading-relaxed">
@@ -68,14 +147,18 @@ export default function StorySelector({ stories, onSelectStory }) {
                 </div>
 
                 {/* Bouton Jouer */}
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-end">
                   <span className="text-sm font-bold text-indigo-600 group-hover:text-indigo-800 transition-colors flex items-center gap-1">
                     Jouer
                     <ArrowRight size={16} className="transform group-hover:translate-x-1 transition-transform" />
                   </span>
                 </div>
               </div>
-            </button>
+            </div>
+          );
+        })}
+              </div>
+            </div>
           );
         })}
       </div>

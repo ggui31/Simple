@@ -1,0 +1,120 @@
+{
+  "title": "Le Marchand de Sons",
+  "description": "Les sons disparaissent du village. Retrouve la cloche, le tambour et la flûte, puis joue-les dans le bon ordre avec un mot de passe.",
+  "coverImage": "🔔",
+  "difficulty": "difficile",
+  "estimatedTime": "12 min",
+  "startScene": "start",
+  "scenes": {
+    "start": {
+      "id": "start",
+      "title": "La place trop calme",
+      "text": "Le village est trop silencieux. Même les oiseaux ne chantent plus. Le Marchand de sons te dit : \"Il faut retrouver trois sons et les rendre à la fontaine.\" Ta mission : récupérer la cloche, le tambour et la flûte.",
+      "image": "🏘️",
+      "xp": 5,
+      "choices": [
+        { "text": "Chercher la cloche", "nextScene": "cloche", "keyword": "cloche" },
+        { "text": "Chercher le tambour", "nextScene": "tambour", "keyword": "tambour" },
+        { "text": "Chercher la flûte", "nextScene": "flute", "keyword": "flûte" }
+      ]
+    },
+    "cloche": {
+      "id": "cloche",
+      "title": "Le clocher",
+      "text": "Au pied du clocher, tu trouves une petite cloche qui ne fait plus de bruit. Tu la prends doucement.",
+      "image": "🔔",
+      "xp": 10,
+      "item": "son_cloche",
+      "itemLabel": "Son : cloche (ding)",
+      "choices": [
+        { "text": "Revenir à la place", "nextScene": "start", "keyword": "place" }
+      ]
+    },
+    "tambour": {
+      "id": "tambour",
+      "title": "La cabane des jeux",
+      "text": "Dans une cabane, un petit tambour attend. Quand tu le touches, tu entends presque un \"boum\".",
+      "image": "🥁",
+      "xp": 10,
+      "item": "son_tambour",
+      "itemLabel": "Son : tambour (boum)",
+      "choices": [
+        { "text": "Revenir à la place", "nextScene": "start", "keyword": "place" }
+      ]
+    },
+    "flute": {
+      "id": "flute",
+      "title": "Le banc du parc",
+      "text": "Sur un banc, une flûte est posée. Elle est froide, mais tu sens qu'elle veut chanter.",
+      "image": "🎶",
+      "xp": 10,
+      "item": "son_flute",
+      "itemLabel": "Son : flûte (fiii)",
+      "choices": [
+        { "text": "Aller chez le Marchand", "nextScene": "marchand", "keyword": "Marchand" }
+      ]
+    },
+    "marchand": {
+      "id": "marchand",
+      "title": "Le mot de passe",
+      "text": "Le Marchand sourit : \"Pour ouvrir la fontaine, il faut un mot de passe. C'est : TIN TAM TOU. Retiens-le.\"",
+      "image": "🔐",
+      "xp": 12,
+      "item": "mot_passe",
+      "itemLabel": "Mot de passe : TIN TAM TOU",
+      "choices": [
+        { "text": "Aller à la fontaine", "nextScene": "fontaine", "keyword": "fontaine" }
+      ]
+    },
+    "fontaine": {
+      "id": "fontaine",
+      "title": "La fontaine muette",
+      "text": "La fontaine est fermée par une grille. Il faut dire le mot de passe et jouer les sons dans le bon ordre.",
+      "image": "⛲",
+      "xp": 12,
+      "choices": [
+        { "text": "Dire TIN TAM TOU", "nextScene": "ordre", "requirement": "mot_passe", "fallbackText": "Tu ne sais plus le mot de passe.", "keyword": "TIN" },
+        { "text": "Retourner voir le Marchand", "nextScene": "marchand", "keyword": "Marchand" }
+      ]
+    },
+    "ordre": {
+      "id": "ordre",
+      "title": "L'ordre des sons",
+      "text": "Une petite voix dit : \"D'abord ding, puis boum, puis fiii.\" Tu dois choisir l'ordre.",
+      "image": "🧩",
+      "xp": 15,
+      "choices": [
+        {
+          "text": "Jouer Cloche, Tambour, Flûte",
+          "nextScene": "fin",
+          "requirement": "son_cloche",
+          "fallbackText": "Il te manque au moins un son.",
+          "keyword": "Cloche"
+        },
+        { "text": "Jouer Tambour, Cloche, Flûte", "nextScene": "faux", "keyword": "Tambour" },
+        { "text": "Jouer Flûte, Tambour, Cloche", "nextScene": "faux", "keyword": "Flûte" }
+      ]
+    },
+    "faux": {
+      "id": "faux",
+      "title": "Mauvais ordre",
+      "text": "La grille ne bouge pas. La voix dit : \"Écoute bien : ding, boum, fiii.\"",
+      "image": "🙃",
+      "xp": 5,
+      "choices": [
+        { "text": "Revenir choisir l'ordre", "nextScene": "ordre", "keyword": "ordre" }
+      ]
+    },
+    "fin": {
+      "id": "fin",
+      "title": "Les sons reviennent",
+      "text": "La fontaine s'ouvre. Ding, boum, fiii… et tout le village retrouve ses sons. Les oiseaux chantent de nouveau.",
+      "image": "🌟",
+      "xp": 70,
+      "isEnd": true,
+      "choices": [
+        { "text": "Recommencer l'aventure", "nextScene": "start", "reset": true, "keyword": "Recommencer" }
+      ]
+    }
+  }
+}

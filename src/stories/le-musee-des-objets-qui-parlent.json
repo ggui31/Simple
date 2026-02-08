@@ -9,7 +9,7 @@
     "start": {
       "id": "start",
       "title": "Le hall du musée",
-      "text": "Les vitrines chuchotent. Deux salles semblent importantes.",
+      "text": "Les vitrines chuchotent, comme si le musée avait un secret. Deux salles semblent importantes. Ton objectif : trouver le bon indice et ouvrir le coffre sans te tromper.",
       "image": "🗝️",
       "xp": 5,
       "choices": [
@@ -28,7 +28,7 @@
     "horloge": {
       "id": "horloge",
       "title": "La salle de l'horloge",
-      "text": "L'horloge parle d'une aiguille secrète.",
+      "text": "L'horloge parle d'une aiguille secrète, cachée entre deux heures. Elle te donne un indice, mais seulement si tu écoutes bien.",
       "image": "🕰️",
       "xp": 10,
       "item": "indice_aiguille",
@@ -44,7 +44,7 @@
     "miroir": {
       "id": "miroir",
       "title": "La salle du miroir",
-      "text": "Le miroir murmure qu'il faut suivre un reflet.",
+      "text": "Le miroir murmure qu'il faut suivre un reflet, pas tes yeux. Il te montre une lueur qui change quand tu bouges.",
       "image": "🪞",
       "xp": 10,
       "item": "indice_reflet",
@@ -60,7 +60,7 @@
     "coffre": {
       "id": "coffre",
       "title": "Le coffre parlant",
-      "text": "Le coffre propose un puzzle : aiguille ou reflet ?",
+      "text": "Le coffre propose un puzzle : aiguille ou reflet ? Il te dit que seule la bonne idée peut ouvrir la serrure.",
       "image": "📦",
       "xp": 12,
       "choices": [
@@ -88,7 +88,7 @@
     "fin_aiguille": {
       "id": "fin_aiguille",
       "title": "Le secret des heures",
-      "text": "Le coffre s'ouvre et révèle un trésor d'histoires.",
+      "text": "Le coffre s'ouvre et révèle un trésor d'histoires. Tu comprends que l'horloge te guidait depuis le début.",
       "image": "📜",
       "xp": 45,
       "isEnd": true,
@@ -97,14 +97,14 @@
           "text": "Recommencer l'aventure",
           "nextScene": "start",
           "reset": true,
-          "keyword": "recommencer"
+          "keyword": "Recommencer"
         }
       ]
     },
     "fin_reflet": {
       "id": "fin_reflet",
       "title": "La lumière du miroir",
-      "text": "Le reflet montre un passage secret vers la sortie.",
+      "text": "Le reflet montre un passage secret vers la sortie. Tu suis la lueur, et le musée semble enfin se taire.",
       "image": "🔆",
       "xp": 45,
       "isEnd": true,
@@ -113,7 +113,7 @@
           "text": "Recommencer l'aventure",
           "nextScene": "start",
           "reset": true,
-          "keyword": "recommencer"
+          "keyword": "Recommencer"
         }
       ]
     }

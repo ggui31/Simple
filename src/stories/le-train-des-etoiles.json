@@ -9,7 +9,7 @@
     "start": {
       "id": "start",
       "title": "Le quai de la nuit",
-      "text": "Un train d'étoiles t'attend. Le chef de bord dit : il faut une carte du ciel pour choisir les constellations.",
+      "text": "Un train d'étoiles t'attend sur un quai silencieux. Le chef de bord dit qu'il faut une carte du ciel pour choisir les constellations au bon moment. Ton objectif : guider le train et arriver à temps à la gare des constellations.",
       "image": "🌙",
       "xp": 5,
       "choices": [
@@ -28,7 +28,7 @@
     "carte": {
       "id": "carte",
       "title": "La carte du ciel",
-      "text": "La carte scintille et montre des constellations comme des chemins.",
+      "text": "La carte scintille et montre des constellations comme des chemins. En la regardant, tu comprends qu'un choix trop vite peut te faire perdre du temps.",
       "image": "🗺️",
       "xp": 10,
       "item": "carte_ciel",
@@ -44,7 +44,7 @@
     "wagon": {
       "id": "wagon",
       "title": "Le wagon des fenêtres",
-      "text": "Par les fenêtres, tu vois des constellations briller. Deux aiguillages s'approchent.",
+      "text": "Par les fenêtres, tu vois des constellations briller comme des panneaux dans le ciel. Deux aiguillages s'approchent, et tu dois décider vite.",
       "image": "✨",
       "xp": 8,
       "choices": [
@@ -103,7 +103,7 @@
     "retard": {
       "id": "retard",
       "title": "Le passage difficile",
-      "text": "Le train secoue et perd du temps, mais il continue.",
+      "text": "Le train secoue fort et perd du temps dans les nuages. Pourtant, il continue d'avancer, et tu peux encore te rattraper.",
       "image": "🌪️",
       "xp": 6,
       "choices": [

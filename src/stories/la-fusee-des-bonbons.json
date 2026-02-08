@@ -1,0 +1,148 @@
+{
+  "title": "La Fusée des Bonbons",
+  "description": "Une fusée sucrée doit décoller, mais il manque des ingrédients. À toi de la réparer et de trouver le mot de passe du cockpit.",
+  "coverImage": "🍬",
+  "difficulty": "difficile",
+  "estimatedTime": "12 min",
+  "startScene": "start",
+  "scenes": {
+    "start": {
+      "id": "start",
+      "title": "L'atelier sucré",
+      "text": "La fusée en bonbons est prête, mais elle ne démarre pas. Le mécanicien te dit : \"Il manque de quoi coller une fissure, et aussi une étincelle.\" Ta mission : réparer la fusée et entrer dans le cockpit.",
+      "image": "🛠️",
+      "xp": 5,
+      "choices": [
+        { "text": "Chercher des bonbons collants", "nextScene": "bonbons", "keyword": "bonbons" },
+        { "text": "Chercher une étincelle", "nextScene": "etincelle", "keyword": "étincelle" }
+      ]
+    },
+    "bonbons": {
+      "id": "bonbons",
+      "title": "Le tiroir à bonbons",
+      "text": "Tu ouvres un grand tiroir. Il y a des bonbons mous, des bonbons durs, et des bonbons très collants.",
+      "image": "🍭",
+      "xp": 10,
+      "choices": [
+        { "text": "Prendre les bonbons collants", "nextScene": "atelier", "keyword": "collants", "reset": false, "requirement": null }
+      ],
+      "item": "bonbons_collants",
+      "itemLabel": "Bonbons collants"
+    },
+    "etincelle": {
+      "id": "etincelle",
+      "title": "La boîte à éclairs",
+      "text": "Sur une étagère, une petite boîte fait des \"tic tic\". Dedans, une mini étincelle danse comme une luciole.",
+      "image": "⚡",
+      "xp": 10,
+      "item": "mini_etincelle",
+      "itemLabel": "Mini étincelle",
+      "choices": [
+        { "text": "Prendre la mini étincelle", "nextScene": "atelier", "keyword": "étincelle" }
+      ]
+    },
+    "atelier": {
+      "id": "atelier",
+      "title": "La fusée fissurée",
+      "text": "Tu reviens près de la fusée. Une petite fissure traverse le sucre du moteur. Le mécanicien te dit : \"Choisis bien quoi mettre dessus.\"",
+      "image": "🚀",
+      "xp": 10,
+      "choices": [
+        {
+          "text": "Coller la fissure avec les bonbons collants",
+          "nextScene": "code",
+          "requirement": "bonbons_collants",
+          "fallbackText": "Tu n'as pas de bonbons collants.",
+          "keyword": "collants"
+        },
+        {
+          "text": "Coller la fissure avec des bonbons durs",
+          "nextScene": "ratage",
+          "keyword": "durs"
+        },
+        {
+          "text": "Retourner chercher des bonbons",
+          "nextScene": "bonbons",
+          "keyword": "bonbons"
+        }
+      ]
+    },
+    "ratage": {
+      "id": "ratage",
+      "title": "Ça ne tient pas",
+      "text": "Les bonbons durs glissent et tombent. La fissure s'ouvre encore. Il faut quelque chose de collant.",
+      "image": "😬",
+      "xp": 5,
+      "choices": [
+        { "text": "Revenir à la fusée", "nextScene": "atelier", "keyword": "fusée" }
+      ]
+    },
+    "code": {
+      "id": "code",
+      "title": "Le mot de passe",
+      "text": "La fissure est réparée. Un petit panneau du cockpit s'allume. Le mécanicien chuchote : \"Le mot de passe, c'est : SUCRE ÉTOILE. Garde-le en tête.\"",
+      "image": "🔐",
+      "xp": 12,
+      "item": "mot_passe",
+      "itemLabel": "Mot de passe : SUCRE ÉTOILE",
+      "choices": [
+        { "text": "Aller au cockpit", "nextScene": "cockpit", "keyword": "cockpit" }
+      ]
+    },
+    "cockpit": {
+      "id": "cockpit",
+      "title": "La porte du cockpit",
+      "text": "La porte a un micro et une lumière rouge. Pour entrer, il faut dire le bon mot de passe.",
+      "image": "🎤",
+      "xp": 12,
+      "choices": [
+        {
+          "text": "Dire SUCRE ÉTOILE",
+          "nextScene": "demarrage",
+          "requirement": "mot_passe",
+          "fallbackText": "Tu hésites… tu n'es pas sûr du mot de passe.",
+          "keyword": "SUCRE"
+        },
+        { "text": "Retourner voir le mécanicien", "nextScene": "code", "keyword": "mécanicien" }
+      ]
+    },
+    "demarrage": {
+      "id": "demarrage",
+      "title": "Dernier test",
+      "text": "Tu entres dans le cockpit. Un bouton demande : \"Étincelle : oui ou non ?\" Tu dois choisir.",
+      "image": "🧪",
+      "xp": 15,
+      "choices": [
+        {
+          "text": "Mettre la mini étincelle",
+          "nextScene": "fin_decollage",
+          "requirement": "mini_etincelle",
+          "fallbackText": "Tu n'as pas l'étincelle.",
+          "keyword": "étincelle"
+        },
+        { "text": "Ne rien mettre", "nextScene": "panne", "keyword": "rien" }
+      ]
+    },
+    "panne": {
+      "id": "panne",
+      "title": "La panne",
+      "text": "Le moteur fait \"pouf\" et s'arrête. Il te manque une étincelle pour démarrer.",
+      "image": "🧯",
+      "xp": 5,
+      "choices": [
+        { "text": "Retourner chercher une étincelle", "nextScene": "etincelle", "keyword": "étincelle" }
+      ]
+    },
+    "fin_decollage": {
+      "id": "fin_decollage",
+      "title": "Décollage sucré",
+      "text": "L'étincelle brille, le moteur ronronne, et la fusée décolle ! Tu regardes les nuages par le hublot, tout fier de ta mission.",
+      "image": "🌈",
+      "xp": 60,
+      "isEnd": true,
+      "choices": [
+        { "text": "Recommencer l'aventure", "nextScene": "start", "reset": true, "keyword": "Recommencer" }
+      ]
+    }
+  }
+}

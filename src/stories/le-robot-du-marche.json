@@ -9,7 +9,7 @@
     "start": {
       "id": "start",
       "title": "Le marché du matin",
-      "text": "Le robot livreur a une liste, mais il se perd entre les étals.",
+      "text": "Le robot livreur a une liste, mais il se perd entre les étals. Ton but : l'aider à trouver la bonne adresse et à faire une belle livraison.",
       "image": "🍎",
       "xp": 5,
       "choices": [

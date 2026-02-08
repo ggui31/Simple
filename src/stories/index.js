@@ -16,6 +16,11 @@ import sorcierePlantes from './la-sorciere-des-plantes.json';
 import veloVole from './le-velo-qui-vole.json';
 import cirqueOmbres from './le-cirque-des-ombres.json';
 import championBaleine from './le-champion-et-la-baleine-de-course.json';
+import fuseeBonbons from './la-fusee-des-bonbons.json';
+import chatAstronome from './le-chat-astronome.json';
+import monstrePlacard from './le-monstre-du-placard-gentil.json';
+import marchandSons from './le-marchand-de-sons.json';
+import labyrintheCoton from './le-labyrinthe-des-nuages-de-coton.json';
 
 const stories = [
   leChameau,
@@ -36,6 +41,11 @@ const stories = [
   veloVole,
   cirqueOmbres,
   championBaleine,
+  fuseeBonbons,
+  chatAstronome,
+  monstrePlacard,
+  marchandSons,
+  labyrintheCoton,
 ];
 
 export default stories;

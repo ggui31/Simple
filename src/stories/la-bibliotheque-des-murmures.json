@@ -1,6 +1,6 @@
 {
   "title": "La Bibliothèque des Murmures",
-  "description": "Des livres chuchotent des énigmes. Retrouve un chapitre perdu.",
+  "description": "Des livres chuchotent. Retrouve une page perdue.",
   "coverImage": "📚",
   "difficulty": "facile",
   "estimatedTime": "8 min",
@@ -9,7 +9,7 @@
     "start": {
       "id": "start",
       "title": "La porte silencieuse",
-      "text": "La bibliothèque est calme, mais tu entends des murmures entre les rayons.",
+      "text": "La bibliothèque est calme, mais tu entends des murmures entre les rayons. Ton but : retrouver la page perdue.",
       "image": "🚪",
       "xp": 5,
       "choices": [
@@ -44,7 +44,7 @@
     "cartes": {
       "id": "cartes",
       "title": "Le rayon des cartes",
-      "text": "Une carte pliée chuchote : le chapitre perdu est derrière une étagère.",
+      "text": "Une carte pliée chuchote : la page perdue est derrière une étagère.",
       "image": "🧾",
       "xp": 10,
       "item": "indice_etagere",
@@ -87,8 +87,8 @@
     },
     "fin_chapitre": {
       "id": "fin_chapitre",
-      "title": "Le chapitre retrouvé",
-      "text": "Le passage s'ouvre et tu retrouves le chapitre perdu. Les livres applaudissent en chuchotant.",
+      "title": "La page retrouvée",
+      "text": "Le passage s'ouvre et tu retrouves la page perdue. Les livres applaudissent en chuchotant.",
       "image": "🏆",
       "xp": 45,
       "isEnd": true,

@@ -21,6 +21,7 @@ export default function GameEngine({ storyData, onBack }) {
   const [showSettings, setShowSettings] = useState(false);
   const [showChoiceListenButtons, setShowChoiceListenButtons] = useState(false);
   const [recognitionThreshold, setRecognitionThreshold] = useState(75);
+  const [enableHighlight, setEnableHighlight] = useState(false);
 
   // Audio & Voice
   const [isSpeakingMain, setIsSpeakingMain] = useState(false);
@@ -128,7 +129,7 @@ export default function GameEngine({ storyData, onBack }) {
     }
   };
 
-  const handleChoice = (choice) => {
+  const handleChoice = (choice, isTestMode = false) => {
     stopAllSpeaking();
     if (choice.reset) {
       setCurrentSceneId(startScene);
@@ -138,10 +139,12 @@ export default function GameEngine({ storyData, onBack }) {
       return;
     }
     const nextSceneData = scenes[choice.nextScene];
-    if (nextSceneData.item && !inventory.includes(nextSceneData.item)) {
+    if (nextSceneData.item && !inventory.includes(nextSceneData.item) && !isTestMode) {
       setInventory(prev => [...prev, nextSceneData.item]);
     }
-    setXp(prev => prev + (nextSceneData.xp || 10));
+    if (!isTestMode) {
+      setXp(prev => prev + (nextSceneData.xp || 10));
+    }
     setHistory(prev => [...prev, choice.nextScene]);
     setCurrentSceneId(choice.nextScene);
   };
@@ -216,10 +219,10 @@ export default function GameEngine({ storyData, onBack }) {
   if (!browserSupport) return <div className="p-8 text-center">Navigateur non supporté pour la reconnaissance vocale.</div>;
 
   return (
-    <div className={`h-screen overflow-hidden ${bgColor} ${fontStyle} transition-colors duration-300 flex flex-col items-center p-2 md:p-4`}>
+    <div className={`h-screen overflow-hidden ${bgColor} ${fontStyle} transition-colors duration-300 flex flex-col md:flex-row items-center md:items-start md:justify-center p-2 md:p-4 gap-4`}>
 
-      {/* HEADER */}
-      <div className="flex-none w-full max-w-2xl flex justify-between items-center mb-4 bg-white/80 p-3 rounded-2xl shadow-sm backdrop-blur-sm border border-amber-100 z-10">
+      {/* HEADER / SIDEBAR */}
+      <div className="flex-none w-full md:w-auto md:h-min max-w-2xl md:max-w-none flex justify-between md:flex-col md:justify-start items-center md:gap-4 bg-white/80 p-3 rounded-2xl shadow-sm backdrop-blur-sm border border-amber-100 z-10">
         <div className="flex items-center gap-4">
           {/* Bouton retour à la sélection */}
           <button
@@ -235,9 +238,10 @@ export default function GameEngine({ storyData, onBack }) {
         </button>
       </div>
 
-      {/* PARAMÈTRES */}
-      {showSettings && (
-        <div className="w-full max-w-2xl mb-6 p-4 bg-white rounded-xl shadow-lg border border-indigo-100 animate-in fade-in slide-in-from-top-4">
+      <div className="flex-1 w-full max-w-2xl flex flex-col min-h-0 h-full">
+        {/* PARAMÈTRES */}
+        {showSettings && (
+          <div className="w-full mb-6 p-4 bg-white rounded-xl shadow-lg border border-indigo-100 animate-in fade-in slide-in-from-top-4 flex-none">
           <h3 className="font-bold text-indigo-900 mb-3 flex items-center gap-2">
             <Type size={18} /> Réglages de Lecture
           </h3>
@@ -261,6 +265,17 @@ export default function GameEngine({ storyData, onBack }) {
               <div>
                 <span className="font-bold text-indigo-900 block">Afficher les boutons d'écoute</span>
                 <span className="text-xs text-gray-500">Affiche l'option d'écoute pour toutes les réponses.</span>
+              </div>
+            </label>
+
+            <label className="flex items-center gap-3 p-3 bg-indigo-50 rounded-lg cursor-pointer border border-indigo-100">
+              <div className={`w-10 h-6 rounded-full p-1 transition-colors ${enableHighlight ? 'bg-indigo-600' : 'bg-gray-300'}`}>
+                <div className={`bg-white w-4 h-4 rounded-full shadow-md transform transition-transform ${enableHighlight ? 'translate-x-4' : 'translate-x-0'}`}></div>
+              </div>
+              <input type="checkbox" className="hidden" checked={enableHighlight} onChange={() => setEnableHighlight(!enableHighlight)} />
+              <div>
+                <span className="font-bold text-indigo-900 block">Surligneur de mots</span>
+                <span className="text-xs text-gray-500">Active le surlignage progressif lors de la lecture audio.</span>
               </div>
             </label>
 
@@ -289,17 +304,10 @@ export default function GameEngine({ storyData, onBack }) {
       )}
 
       {/* ZONE PRINCIPALE */}
-      <div className={`flex-1 w-full max-w-2xl ${cardColor} rounded-3xl shadow-xl overflow-hidden border-2 transition-all duration-300 relative flex flex-col min-h-0 mb-2 md:mb-4`}>
-
-        {/* Bouton Retour Scène */}
-        {history.length > 1 && (
-          <button onClick={handleGoBack} className="absolute top-4 left-4 p-2 bg-black/5 hover:bg-black/10 rounded-full z-10 transition-colors">
-            <Reply size={20} className={textColor} />
-          </button>
-        )}
+      <div className={`flex-1 w-full ${cardColor} rounded-3xl shadow-xl overflow-hidden border-2 transition-all duration-300 relative flex flex-col min-h-0 mb-2 md:mb-4`}>
 
         {/* Image Scène */}
-        <div className="flex-none h-32 md:h-48 bg-gradient-to-br from-indigo-100 to-purple-100 flex items-center justify-center text-8xl relative overflow-hidden">
+        <div className="flex-none h-24 md:h-36 bg-gradient-to-br from-indigo-100 to-purple-100 flex items-center justify-center text-7xl relative overflow-hidden">
           <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
           <span className="animate-bounce-slow drop-shadow-lg filter">{currentScene.image}</span>
         </div>
@@ -321,7 +329,7 @@ export default function GameEngine({ storyData, onBack }) {
 
           <HighlightedText
             text={currentScene.text}
-            highlightIndex={isSpeakingMain ? currentWordIndex : null}
+            highlightIndex={isSpeakingMain && enableHighlight ? currentWordIndex : null}
             textSize={textSize}
             textColor={textColor}
           />
@@ -358,9 +366,14 @@ export default function GameEngine({ storyData, onBack }) {
                     disabled={isLocked}
                     isMatched={matchedChoiceIndex === index}
                     isSpeaking={speakingChoiceIndex === index}
-                    highlightIndex={speakingChoiceIndex === index ? currentWordIndex : null}
+                    highlightIndex={speakingChoiceIndex === index && enableHighlight ? currentWordIndex : null}
                     onPlay={playChoice}
                     showChoiceListenButtons={showChoiceListenButtons}
+                    onClick={(e) => {
+                      if (e.ctrlKey && !isLocked) {
+                        handleChoice(choice, true);
+                      }
+                    }}
                   />
                 </div>
               );
@@ -412,6 +425,7 @@ export default function GameEngine({ storyData, onBack }) {
           </span>
         </div>
 
+      </div>
       </div>
     </div>
   );

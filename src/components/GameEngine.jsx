@@ -20,6 +20,7 @@ export default function GameEngine({ storyData, onBack }) {
   const [isSimplifiedMode, setIsSimplifiedMode] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [showChoiceListenButtons, setShowChoiceListenButtons] = useState(false);
+  const [recognitionThreshold, setRecognitionThreshold] = useState(75);
   const [enableHighlight, setEnableHighlight] = useState(false);
 
   // Audio & Voice
@@ -89,7 +90,7 @@ export default function GameEngine({ storyData, onBack }) {
 
     const matchedIndex = currentScene.choices.findIndex(choice => {
       if (choice.requirement && !inventory.includes(choice.requirement)) return false;
-      return isMatch(transcript, choice.text, choice.keyword, isSimplifiedMode);
+      return isMatch(transcript, choice.text, choice.keyword, isSimplifiedMode, recognitionThreshold);
     });
 
     if (matchedIndex !== -1) {
@@ -282,6 +283,10 @@ export default function GameEngine({ storyData, onBack }) {
               <div className="space-y-2">
                 <label className="text-sm text-gray-600">Taille du texte</label>
                 <input type="range" min="16" max="32" value={textSize} onChange={(e) => setTextSize(Number(e.target.value))} className="w-full accent-indigo-600" />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm text-gray-600">Sensibilité de reconnaissance: {recognitionThreshold}%</label>
+                <input type="range" min="0" max="100" step="5" value={recognitionThreshold} onChange={(e) => setRecognitionThreshold(Number(e.target.value))} className="w-full accent-indigo-600" />
               </div>
               <div className="flex flex-col gap-2">
                 <label className="flex items-center gap-2 cursor-pointer p-2 hover:bg-gray-50 rounded-lg">

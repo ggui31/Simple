@@ -1,5 +1,5 @@
-import React from 'react';
-import { BookOpen, Star, ArrowRight, Map } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { BookOpen, Star, ArrowRight, Map, Volume2, StopCircle } from 'lucide-react';
 
 const difficultyConfig = {
   facile: { color: 'bg-emerald-100 text-emerald-700 border-emerald-200', label: '⭐ Facile' },
@@ -8,6 +8,40 @@ const difficultyConfig = {
 };
 
 export default function StorySelector({ stories, onSelectStory }) {
+  const [speakingStoryIndex, setSpeakingStoryIndex] = useState(null);
+
+  useEffect(() => {
+    return () => {
+      window.speechSynthesis.cancel();
+    };
+  }, []);
+
+  const handleSpeakDescription = (story, index, e) => {
+    e.stopPropagation();
+
+    if (speakingStoryIndex === index) {
+      window.speechSynthesis.cancel();
+      setSpeakingStoryIndex(null);
+      return;
+    }
+
+    window.speechSynthesis.cancel();
+    setSpeakingStoryIndex(index);
+
+    const utterance = new SpeechSynthesisUtterance(story.description);
+    utterance.lang = 'fr-FR';
+    utterance.rate = 0.9;
+
+    utterance.onend = () => {
+      setSpeakingStoryIndex(null);
+    };
+
+    utterance.onerror = () => {
+      setSpeakingStoryIndex(null);
+    };
+
+    window.speechSynthesis.speak(utterance);
+  };
   // Grouper les histoires par difficulté
   const difficultyOrder = { facile: 1, moyen: 2, difficile: 3 };
   const groupedStories = stories.reduce((acc, story) => {
@@ -61,10 +95,17 @@ export default function StorySelector({ stories, onSelectStory }) {
           const sceneCount = Object.keys(story.scenes).length;
 
           return (
-            <button
+            <div
               key={index}
+              role="button"
+              tabIndex={0}
               onClick={() => onSelectStory(story)}
-              className="group bg-white rounded-2xl shadow-md hover:shadow-xl border-2 border-transparent hover:border-indigo-300 transition-all duration-300 transform hover:scale-[1.03] active:scale-[0.98] text-left overflow-hidden"
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  onSelectStory(story);
+                }
+              }}
+              className="group cursor-pointer bg-white rounded-2xl shadow-md hover:shadow-xl border-2 border-transparent hover:border-indigo-300 transition-all duration-300 transform hover:scale-[1.03] active:scale-[0.98] text-left overflow-hidden"
             >
               {/* Image de couverture */}
               <div className="h-40 bg-gradient-to-br from-indigo-100 to-purple-100 flex items-center justify-center text-7xl relative overflow-hidden">
@@ -72,6 +113,14 @@ export default function StorySelector({ stories, onSelectStory }) {
                 <span className="group-hover:animate-bounce drop-shadow-lg transition-transform duration-300 group-hover:scale-110">
                   {story.coverImage}
                 </span>
+
+                <button
+                  onClick={(e) => handleSpeakDescription(story, index, e)}
+                  className={`absolute bottom-3 right-3 p-2 rounded-full transition-all shadow-sm z-10 ${speakingStoryIndex === index ? 'bg-indigo-100 text-indigo-600 ring-2 ring-indigo-200' : 'bg-white/90 text-indigo-600 hover:bg-white hover:scale-110'}`}
+                  title="Écouter la description"
+                >
+                  {speakingStoryIndex === index ? <StopCircle size={20} /> : <Volume2 size={20} />}
+                </button>
               </div>
 
               {/* Contenu */}
@@ -98,14 +147,14 @@ export default function StorySelector({ stories, onSelectStory }) {
                 </div>
 
                 {/* Bouton Jouer */}
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-end">
                   <span className="text-sm font-bold text-indigo-600 group-hover:text-indigo-800 transition-colors flex items-center gap-1">
                     Jouer
                     <ArrowRight size={16} className="transform group-hover:translate-x-1 transition-transform" />
                   </span>
                 </div>
               </div>
-            </button>
+            </div>
           );
         })}
               </div>

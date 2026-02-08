@@ -31,24 +31,43 @@ export const isMatch = (spoken, target, keyword, isSimplified, threshold = 75) =
 
   // Mode Simplifié (Mot-clé)
   if (isSimplified && pKeyword) {
-    // Si le mot-clé phonétique est contenu dans la phrase parlée
-    if (pSpoken.includes(pKeyword)) return true;
+    const isKeywordIncluded = pSpoken.includes(pKeyword);
+    const keywordSimilarity = calculateSimilarity(pSpoken, pKeyword);
+    const isMatched = isKeywordIncluded || keywordSimilarity >= threshold;
 
-    // Ou si la similarité avec le mot-clé est suffisante (ex: mot mal prononcé seul)
-    if (calculateSimilarity(pSpoken, pKeyword) >= threshold) return true;
+    console.groupCollapsed(`🎤 Analyse Vocale (Simplifiée) : "${keyword}"`);
+    console.log(`🗣️ Entendu : "${spoken}"`);
+    console.log(`🔑 Mot-clé : "${keyword}"`);
+    console.log(`🔊 Phonèmes Entendus : /${pSpoken}/`);
+    console.log(`🔊 Phonèmes Mot-clé : /${pKeyword}/`);
+    console.log(`📊 Similarité Mot-clé : ${keywordSimilarity.toFixed(1)}%`);
+    console.log(`🧩 Inclus : ${isKeywordIncluded ? "Oui" : "Non"}`);
+    console.log(`✅ Résultat : ${isMatched ? "MATCH" : "NO MATCH"}`);
+    console.groupEnd();
 
-    return false;
+    return isMatched;
   }
 
   // Mode Normal (Phrase complète)
 
   // 1. Calcul de similarité globale
   const similarity = calculateSimilarity(pSpoken, pTarget);
-  if (similarity >= threshold) return true;
 
   // 2. Fallback : Inclusion stricte (si la cible est contenue phonétiquement dans le discours)
   // Utile si l'utilisateur dit une phrase plus longue contenant la cible exacte
-  if (pTarget.length > 3 && pSpoken.includes(pTarget)) return true;
+  const isIncluded = pTarget.length > 3 && pSpoken.includes(pTarget);
 
-  return false;
+  const isMatched = similarity >= threshold || isIncluded;
+
+  console.groupCollapsed(`🎤 Analyse Vocale : "${target}"`);
+  console.log(`🗣️ Entendu : "${spoken}"`);
+  console.log(`🎯 Attendu : "${target}"`);
+  console.log(`🔊 Phonèmes Entendus : /${pSpoken}/`);
+  console.log(`🔊 Phonèmes Attendus : /${pTarget}/`);
+  console.log(`📊 Similarité : ${similarity.toFixed(1)}% (Seuil: ${threshold}%)`);
+  console.log(`🧩 Inclus : ${isIncluded ? "Oui" : "Non"}`);
+  console.log(`✅ Résultat : ${isMatched ? "MATCH" : "NO MATCH"}`);
+  console.groupEnd();
+
+  return isMatched;
 };

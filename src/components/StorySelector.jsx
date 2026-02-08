@@ -84,6 +84,14 @@ export default function StorySelector({ stories, onSelectStory }) {
                 <span className="group-hover:animate-bounce drop-shadow-lg transition-transform duration-300 group-hover:scale-110">
                   {story.coverImage}
                 </span>
+
+                <button
+                  onClick={(e) => handleSpeakDescription(story, index, e)}
+                  className={`absolute bottom-3 right-3 p-2 rounded-full transition-all shadow-sm z-10 ${speakingStoryIndex === index ? 'bg-indigo-100 text-indigo-600 ring-2 ring-indigo-200' : 'bg-white/90 text-indigo-600 hover:bg-white hover:scale-110'}`}
+                  title="Écouter la description"
+                >
+                  {speakingStoryIndex === index ? <StopCircle size={20} /> : <Volume2 size={20} />}
+                </button>
               </div>
 
               {/* Contenu */}
@@ -110,14 +118,7 @@ export default function StorySelector({ stories, onSelectStory }) {
                 </div>
 
                 {/* Bouton Jouer */}
-                <div className="flex items-center justify-between">
-                  <button
-                    onClick={(e) => handleSpeakDescription(story, index, e)}
-                    className={`p-2 rounded-full transition-colors z-10 ${speakingStoryIndex === index ? 'bg-indigo-100 text-indigo-600' : 'bg-gray-100 text-gray-500 hover:bg-indigo-50 hover:text-indigo-500'}`}
-                    title="Écouter la description"
-                  >
-                    {speakingStoryIndex === index ? <StopCircle size={20} /> : <Volume2 size={20} />}
-                  </button>
+                <div className="flex items-center justify-end">
                   <span className="text-sm font-bold text-indigo-600 group-hover:text-indigo-800 transition-colors flex items-center gap-1">
                     Jouer
                     <ArrowRight size={16} className="transform group-hover:translate-x-1 transition-transform" />

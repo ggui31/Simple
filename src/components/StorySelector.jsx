@@ -1,5 +1,5 @@
 import React from 'react';
-import { BookOpen, Star, ArrowRight, Map } from 'lucide-react';
+import { BookOpen, Star, ArrowRight, Map, ArrowLeft } from 'lucide-react';
 
 const difficultyConfig = {
   facile: { color: 'bg-emerald-100 text-emerald-700 border-emerald-200', label: '⭐ Facile' },
@@ -7,7 +7,7 @@ const difficultyConfig = {
   difficile: { color: 'bg-red-100 text-red-700 border-red-200', label: '⭐⭐⭐ Difficile' },
 };
 
-export default function StorySelector({ stories, onSelectStory }) {
+export default function StorySelector({ stories, onSelectStory, onBack }) {
   // Grouper les histoires par difficulté
   const difficultyOrder = { facile: 1, moyen: 2, difficile: 3 };
   const groupedStories = stories.reduce((acc, story) => {
@@ -24,6 +24,19 @@ export default function StorySelector({ stories, onSelectStory }) {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 flex flex-col items-center p-4 md:p-8">
+
+      {/* BOUTON RETOUR (optionnel) */}
+      {onBack && (
+        <div className="w-full max-w-6xl mb-4">
+          <button
+            onClick={onBack}
+            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/80 text-gray-700 hover:bg-white transition-colors group"
+          >
+            <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
+            <span className="font-medium">Retour</span>
+          </button>
+        </div>
+      )}
 
       {/* EN-TÊTE */}
       <div className="text-center mb-10 mt-4">

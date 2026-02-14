@@ -1,4 +1,5 @@
 import { frenchPhonetic, calculateSimilarity } from './phonetics.js';
+import { parseSpokenNumber, numberToFrench } from './numberUtils.js';
 
 /**
  * Normalise un texte pour la comparaison vocale :
@@ -70,4 +71,74 @@ export const isMatch = (spoken, target, keyword, isSimplified, threshold = 75) =
   console.groupEnd();
 
   return isMatched;
+};
+
+/**
+ * Vérifie si le nombre prononcé correspond au nombre attendu.
+ * Gère les variations : "vingt-trois", "vingt trois", "23", "le nombre vingt-trois"
+ * @param {string} spoken - Le texte prononcé par l'utilisateur
+ * @param {number} expectedNumber - Le nombre attendu
+ * @param {number} threshold - Seuil de similarité phonétique (0-100). Défaut 75.
+ * @returns {boolean} True si le nombre correspond
+ */
+export const isNumberMatch = (spoken, expectedNumber, threshold = 75) => {
+  if (!spoken || expectedNumber === null || expectedNumber === undefined) {
+    return false;
+  }
+
+  // Parse le nombre prononcé
+  const parsedNumber = parseSpokenNumber(spoken);
+  
+  // Égalité stricte si le parsing réussit
+  if (parsedNumber === expectedNumber) {
+    console.groupCollapsed(`🔢 Analyse Nombre : ${expectedNumber}`);
+    console.log(`🗣️ Entendu : "${spoken}"`);
+    console.log(`🎯 Attendu : ${expectedNumber} (${numberToFrench(expectedNumber)})`);
+    console.log(`✅ Nombre parsé : ${parsedNumber}`);
+    console.log(`✅ Résultat : MATCH EXACT`);
+    console.groupEnd();
+    return true;
+  }
+
+  // Fallback: Comparaison phonétique si le parsing échoue
+  // Utile pour les variations de prononciation
+  const pSpoken = frenchPhonetic(spoken);
+  const expectedFrench = numberToFrench(expectedNumber);
+  const pExpected = frenchPhonetic(expectedFrench);
+  
+  // Aussi essayer avec variantes (avec/sans tirets)
+  const expectedVariants = [
+    expectedFrench,
+    expectedFrench.replace(/-/g, ' '),
+    expectedNumber.toString()
+  ];
+  
+  for (const variant of expectedVariants) {
+    const pVariant = frenchPhonetic(variant);
+    const similarity = calculateSimilarity(pSpoken, pVariant);
+    const isIncluded = pSpoken.includes(pVariant);
+    
+    if (similarity >= threshold || isIncluded) {
+      console.groupCollapsed(`🔢 Analyse Nombre (Phonétique) : ${expectedNumber}`);
+      console.log(`🗣️ Entendu : "${spoken}"`);
+      console.log(`🎯 Attendu : ${expectedNumber} (${expectedFrench})`);
+      console.log(`🔊 Phonèmes Entendus : /${pSpoken}/`);
+      console.log(`🔊 Phonèmes Attendus : /${pVariant}/`);
+      console.log(`📊 Similarité : ${similarity.toFixed(1)}%`);
+      console.log(`✅ Résultat : MATCH PHONÉTIQUE`);
+      console.groupEnd();
+      return true;
+    }
+  }
+
+  console.groupCollapsed(`🔢 Analyse Nombre : ${expectedNumber}`);
+  console.log(`🗣️ Entendu : "${spoken}"`);
+  console.log(`🎯 Attendu : ${expectedNumber} (${expectedFrench})`);
+  console.log(`❌ Nombre parsé : ${parsedNumber}`);
+  console.log(`🔊 Phonèmes Entendus : /${pSpoken}/`);
+  console.log(`🔊 Phonèmes Attendus : /${pExpected}/`);
+  console.log(`❌ Résultat : NO MATCH`);
+  console.groupEnd();
+
+  return false;
 };

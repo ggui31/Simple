@@ -1,6 +1,8 @@
 import { frenchPhonetic, calculateSimilarity } from './phonetics.js';
 import { parseSpokenNumber, numberToFrench } from './numberUtils.js';
 
+const DEBUG = false;
+
 /**
  * Normalise un texte pour la comparaison vocale :
  * minuscules, suppression des accents et caractères spéciaux.
@@ -36,15 +38,17 @@ export const isMatch = (spoken, target, keyword, isSimplified, threshold = 75) =
     const keywordSimilarity = calculateSimilarity(pSpoken, pKeyword);
     const isMatched = isKeywordIncluded || keywordSimilarity >= threshold;
 
-    console.groupCollapsed(`🎤 Analyse Vocale (Simplifiée) : "${keyword}"`);
-    console.log(`🗣️ Entendu : "${spoken}"`);
-    console.log(`🔑 Mot-clé : "${keyword}"`);
-    console.log(`🔊 Phonèmes Entendus : /${pSpoken}/`);
-    console.log(`🔊 Phonèmes Mot-clé : /${pKeyword}/`);
-    console.log(`📊 Similarité Mot-clé : ${keywordSimilarity.toFixed(1)}%`);
-    console.log(`🧩 Inclus : ${isKeywordIncluded ? "Oui" : "Non"}`);
-    console.log(`✅ Résultat : ${isMatched ? "MATCH" : "NO MATCH"}`);
-    console.groupEnd();
+    if (DEBUG) {
+      console.groupCollapsed(`🎤 Analyse Vocale (Simplifiée) : "${keyword}"`);
+      console.log(`🗣️ Entendu : "${spoken}"`);
+      console.log(`🔑 Mot-clé : "${keyword}"`);
+      console.log(`🔊 Phonèmes Entendus : /${pSpoken}/`);
+      console.log(`🔊 Phonèmes Mot-clé : /${pKeyword}/`);
+      console.log(`📊 Similarité Mot-clé : ${keywordSimilarity.toFixed(1)}%`);
+      console.log(`🧩 Inclus : ${isKeywordIncluded ? "Oui" : "Non"}`);
+      console.log(`✅ Résultat : ${isMatched ? "MATCH" : "NO MATCH"}`);
+      console.groupEnd();
+    }
 
     return isMatched;
   }
@@ -60,15 +64,17 @@ export const isMatch = (spoken, target, keyword, isSimplified, threshold = 75) =
 
   const isMatched = similarity >= threshold || isIncluded;
 
-  console.groupCollapsed(`🎤 Analyse Vocale : "${target}"`);
-  console.log(`🗣️ Entendu : "${spoken}"`);
-  console.log(`🎯 Attendu : "${target}"`);
-  console.log(`🔊 Phonèmes Entendus : /${pSpoken}/`);
-  console.log(`🔊 Phonèmes Attendus : /${pTarget}/`);
-  console.log(`📊 Similarité : ${similarity.toFixed(1)}% (Seuil: ${threshold}%)`);
-  console.log(`🧩 Inclus : ${isIncluded ? "Oui" : "Non"}`);
-  console.log(`✅ Résultat : ${isMatched ? "MATCH" : "NO MATCH"}`);
-  console.groupEnd();
+  if (DEBUG) {
+    console.groupCollapsed(`🎤 Analyse Vocale : "${target}"`);
+    console.log(`🗣️ Entendu : "${spoken}"`);
+    console.log(`🎯 Attendu : "${target}"`);
+    console.log(`🔊 Phonèmes Entendus : /${pSpoken}/`);
+    console.log(`🔊 Phonèmes Attendus : /${pTarget}/`);
+    console.log(`📊 Similarité : ${similarity.toFixed(1)}% (Seuil: ${threshold}%)`);
+    console.log(`🧩 Inclus : ${isIncluded ? "Oui" : "Non"}`);
+    console.log(`✅ Résultat : ${isMatched ? "MATCH" : "NO MATCH"}`);
+    console.groupEnd();
+  }
 
   return isMatched;
 };
@@ -91,12 +97,14 @@ export const isNumberMatch = (spoken, expectedNumber, threshold = 75) => {
   
   // Égalité stricte si le parsing réussit
   if (parsedNumber === expectedNumber) {
-    console.groupCollapsed(`🔢 Analyse Nombre : ${expectedNumber}`);
-    console.log(`🗣️ Entendu : "${spoken}"`);
-    console.log(`🎯 Attendu : ${expectedNumber} (${numberToFrench(expectedNumber)})`);
-    console.log(`✅ Nombre parsé : ${parsedNumber}`);
-    console.log(`✅ Résultat : MATCH EXACT`);
-    console.groupEnd();
+    if (DEBUG) {
+      console.groupCollapsed(`🔢 Analyse Nombre : ${expectedNumber}`);
+      console.log(`🗣️ Entendu : "${spoken}"`);
+      console.log(`🎯 Attendu : ${expectedNumber} (${numberToFrench(expectedNumber)})`);
+      console.log(`✅ Nombre parsé : ${parsedNumber}`);
+      console.log(`✅ Résultat : MATCH EXACT`);
+      console.groupEnd();
+    }
     return true;
   }
 
@@ -119,26 +127,30 @@ export const isNumberMatch = (spoken, expectedNumber, threshold = 75) => {
     const isIncluded = pSpoken.includes(pVariant);
     
     if (similarity >= threshold || isIncluded) {
-      console.groupCollapsed(`🔢 Analyse Nombre (Phonétique) : ${expectedNumber}`);
-      console.log(`🗣️ Entendu : "${spoken}"`);
-      console.log(`🎯 Attendu : ${expectedNumber} (${expectedFrench})`);
-      console.log(`🔊 Phonèmes Entendus : /${pSpoken}/`);
-      console.log(`🔊 Phonèmes Attendus : /${pVariant}/`);
-      console.log(`📊 Similarité : ${similarity.toFixed(1)}%`);
-      console.log(`✅ Résultat : MATCH PHONÉTIQUE`);
-      console.groupEnd();
+      if (DEBUG) {
+        console.groupCollapsed(`🔢 Analyse Nombre (Phonétique) : ${expectedNumber}`);
+        console.log(`🗣️ Entendu : "${spoken}"`);
+        console.log(`🎯 Attendu : ${expectedNumber} (${expectedFrench})`);
+        console.log(`🔊 Phonèmes Entendus : /${pSpoken}/`);
+        console.log(`🔊 Phonèmes Attendus : /${pVariant}/`);
+        console.log(`📊 Similarité : ${similarity.toFixed(1)}%`);
+        console.log(`✅ Résultat : MATCH PHONÉTIQUE`);
+        console.groupEnd();
+      }
       return true;
     }
   }
 
-  console.groupCollapsed(`🔢 Analyse Nombre : ${expectedNumber}`);
-  console.log(`🗣️ Entendu : "${spoken}"`);
-  console.log(`🎯 Attendu : ${expectedNumber} (${expectedFrench})`);
-  console.log(`❌ Nombre parsé : ${parsedNumber}`);
-  console.log(`🔊 Phonèmes Entendus : /${pSpoken}/`);
-  console.log(`🔊 Phonèmes Attendus : /${pExpected}/`);
-  console.log(`❌ Résultat : NO MATCH`);
-  console.groupEnd();
+  if (DEBUG) {
+    console.groupCollapsed(`🔢 Analyse Nombre : ${expectedNumber}`);
+    console.log(`🗣️ Entendu : "${spoken}"`);
+    console.log(`🎯 Attendu : ${expectedNumber} (${expectedFrench})`);
+    console.log(`❌ Nombre parsé : ${parsedNumber}`);
+    console.log(`🔊 Phonèmes Entendus : /${pSpoken}/`);
+    console.log(`🔊 Phonèmes Attendus : /${pExpected}/`);
+    console.log(`❌ Résultat : NO MATCH`);
+    console.groupEnd();
+  }
 
   return false;
 };

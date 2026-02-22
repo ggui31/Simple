@@ -6,6 +6,8 @@ const UNITS = ['zéro', 'un', 'deux', 'trois', 'quatre', 'cinq', 'six', 'sept', 
 const TEENS = ['dix', 'onze', 'douze', 'treize', 'quatorze', 'quinze', 'seize', 'dix-sept', 'dix-huit', 'dix-neuf'];
 const TENS = ['', '', 'vingt', 'trente', 'quarante', 'cinquante', 'soixante', 'soixante-dix', 'quatre-vingt', 'quatre-vingt-dix'];
 
+const DEBUG = false;
+
 /**
  * Converts a number (0-100) to French words
  * @param {number} n - Number to convert
@@ -85,7 +87,7 @@ export function numberToFrench(n) {
 export function parseSpokenNumber(text) {
   if (!text) return null;
   
-  console.log('🔍 Parsing spoken text:', text);
+  if (DEBUG) console.log('🔍 Parsing spoken text:', text);
   
   // Normalize text: lowercase, trim
   const normalized = text.toLowerCase().trim();
@@ -93,7 +95,7 @@ export function parseSpokenNumber(text) {
   // Try direct numeric match first (e.g., "23", "5")
   const directNumber = parseInt(normalized, 10);
   if (!isNaN(directNumber) && directNumber >= 0 && directNumber <= 100) {
-    console.log('✅ Direct number match:', directNumber);
+    if (DEBUG) console.log('✅ Direct number match:', directNumber);
     return directNumber;
   }
   
@@ -103,7 +105,7 @@ export function parseSpokenNumber(text) {
     .replace(/\s*(c'est ça|voilà|merci)$/i, '')
     .trim();
   
-  console.log('🧹 Cleaned text:', cleaned);
+  if (DEBUG) console.log('🧹 Cleaned text:', cleaned);
   
   // Normalize hyphens and spaces for comparison
   const normalizedCleaned = cleaned.replace(/[\s\-]+/g, ' ').trim();
@@ -126,13 +128,13 @@ export function parseSpokenNumber(text) {
       const normalizedVariation = variation.replace(/[\s\-]+/g, ' ').trim();
       
       if (normalizedCleaned === normalizedVariation) {
-        console.log(`✅ Exact match found: ${i} (${frenchWord})`);
+        if (DEBUG) console.log(`✅ Exact match found: ${i} (${frenchWord})`);
         return i;
       }
       
       // Also check if the variation is contained in the cleaned text
       if (normalizedCleaned.includes(normalizedVariation) && normalizedVariation.length > 2) {
-        console.log(`✅ Partial match found: ${i} (${frenchWord})`);
+        if (DEBUG) console.log(`✅ Partial match found: ${i} (${frenchWord})`);
         return i;
       }
     }
@@ -177,7 +179,7 @@ export function parseSpokenNumber(text) {
     }
   }
   
-  console.log('❌ No match found for:', text);
+  if (DEBUG) console.log('❌ No match found for:', text);
   return null;
 }
 
